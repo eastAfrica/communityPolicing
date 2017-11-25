@@ -94,6 +94,8 @@ public class Tab1 extends Fragment {
                 Create create= new Create();
                 create.createObject(bitmap,description);
                 create.getObject();
+                Toast.makeText(getContext(), "Issue reported",
+                        Toast.LENGTH_SHORT).show();
             }
         });
         recordButton.setOnClickListener(new View.OnClickListener() {

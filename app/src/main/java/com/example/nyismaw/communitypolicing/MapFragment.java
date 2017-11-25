@@ -84,6 +84,7 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
         super.onCreate(savedInstanceState);
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
+
     }
 
     @Override
@@ -96,6 +97,23 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
+        View view= layoutInflater.inflate(R.layout.tab_2    , viewGroup, false);
+        Button button = view.findViewById(R.id.viewAccidents);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Create create = new Create();
+                List<Object> objects=create.getObject();
+                Log.e("Work please"," object is null? "+objects);
+            }
+        });
+        return super.onCreateView(layoutInflater, viewGroup, bundle);
     }
 
     @Override
@@ -172,24 +190,15 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
+        Log.e("make use of*****", "inside location changed");
+//        Create create= new Create();
+//        List<Object> objectList=create.getObject();
+//        Log.e("object list"," is it null "+objectList);
 
         //Place current location marker
-        LatLng latLng = new LatLng(lat1, long1);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-
-        CircleOptions addCircle = new CircleOptions().center(latLng).radius(radiusInMeters).fillColor(shadeColor).strokeColor(strokeColor).strokeWidth(8);
-        mCircle = mGoogleMap.addCircle(addCircle);
-
-        //move map camera
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
-
+//        map.addMarker(new MarkerOptions().position(new LatLng(1, 2))
+//                .title("My Location").icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_RED)));
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -216,6 +225,9 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
                     LatLng latLng = new LatLng(lat1, long1);
                     builder.include(latLng);
                     MarkerOptions markerOptions = new MarkerOptions();
+                    MarkerOptions markerOptions2 = new MarkerOptions();
+                    MarkerOptions markerOptions3 = new MarkerOptions();
+                    MarkerOptions markerOptions4 = new MarkerOptions();
 
                     markerOptions.position(latLng);
                     markerOptions.title("Current Location");
@@ -223,46 +235,46 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
                     List<Object> objectList=create.getObject();
                     googleMap.addMarker(markerOptions);
                     Log.e("object list"," is it null "+objectList);
-                    for(Object obj: objectList){
-
-                        MarkerOptions markerOptions2 = new MarkerOptions();
-                        final Issues issues= (Issues)obj;
-                        myLocation location1= issues.getLocation();
-                        markerOptions2.position(new LatLng(location1.getLatitude(),location1.getLongtude()));
-                        markerOptions2.title(issues.getTxt());
-                        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
-
-                        googleMap.addMarker(markerOptions2);
-                        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                                if(marker.getTitle().equals(issues.getTxt())) {
-
-                                    Dialog dialog = new Dialog(getContext());
-                                     dialog.setContentView(R.layout.popup);
-                                    TextView textView= dialog.findViewById(R.id.description);
-                                    textView.setText(issues.getTxt());
-                                    ImageView imageView = dialog.findViewById(R.id.imageViewForMap);
-                                    Bitmap mybitmap= BitmapFactory.decodeFile("images/"+issues.getId());
-                                    imageView.setImageBitmap(mybitmap);
-                                    // display toast
-
-                                }// if marker source is clicked
-                                return true;
-                     //           return false;
-                            }
-                        });
-                    }
-
+//                    for(Object obj: objectList){
 //
-//                    markerOptions3.position(new LatLng(-1.9530718,30.103130));
-//                    markerOptions3.title("Men at Work");
-//                    markerOptions3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-//                    googleMap.addMarker(markerOptions3);
-//                    markerOptions4.position(new LatLng(-1.9530718,30.113130));
-//                    markerOptions4.title("Traffic Jam");
-//                    markerOptions4.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                    googleMap.addMarker(markerOptions4);
+//                        MarkerOptions markerOptions2 = new MarkerOptions();
+//                        final Issues issues= (Issues)obj;
+//                        myLocation location1= issues.getLocation();
+//                        markerOptions2.position(new LatLng(location1.getLatitude(),location1.getLongtude()));
+//                        markerOptions2.title(issues.getTxt());
+//                        markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+//
+//                        googleMap.addMarker(markerOptions2);
+//                        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                            @Override
+//                            public boolean onMarkerClick(Marker marker) {
+//                                if(marker.getTitle().equals(issues.getTxt())) {
+//
+//                                    Dialog dialog = new Dialog(getContext());
+//                                     dialog.setContentView(R.layout.popup);
+//                                    TextView textView= dialog.findViewById(R.id.description);
+//                                    textView.setText(issues.getTxt());
+//                                    ImageView imageView = dialog.findViewById(R.id.imageViewForMap);
+//                                    Bitmap mybitmap= BitmapFactory.decodeFile("images/"+issues.getId());
+//                                    imageView.setImageBitmap(mybitmap);
+//                                    // display toast
+//
+//                                }// if marker source is clicked
+//                                return true;
+//                     //           return false;
+//                            }
+//                        });
+//                    }
+
+
+                    markerOptions3.position(new LatLng(-1.9530718,30.103130));
+                    markerOptions3.title("Men at Work");
+                    markerOptions3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    googleMap.addMarker(markerOptions3);
+                    markerOptions4.position(new LatLng(-1.9530718,30.113130));
+                    markerOptions4.title("Traffic Jam");
+                    markerOptions4.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    googleMap.addMarker(markerOptions4);
                 }
             }
         });

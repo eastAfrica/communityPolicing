@@ -87,38 +87,9 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
 
             }
         });
-        Button singoutbutton = findViewById(R.id.sign_out_button);
-        singoutbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
 
-        Button saveData = findViewById(R.id.disconnect_button);
-        Button imageButton = findViewById(R.id.Anonymous2);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-        });
-        saveData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Create create= new Create();
-             //   create.createObject(photo);
-              //  create.getObject();
-            }
-        });
-        Button anonymoussingoutbutton = findViewById(R.id.Anonymous);
-        anonymoussingoutbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInAnonymously();
-            }
-        });
+
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // [START initialize_auth]
@@ -132,9 +103,7 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        TextView textView = findViewById(R.id.user);
-        if (currentUser != null)
-            textView.setText(currentUser.getDisplayName());
+
     }
 
     @Override
@@ -239,9 +208,8 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
     }
 
     private void updateUI(FirebaseUser user) {
-        TextView textView = findViewById(R.id.user);
-        if (user != null)
-            textView.setText(user.getDisplayName());
+       if (user != null)
+           return;
     }
 
     private void linkAccount() {
@@ -292,7 +260,7 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
                     || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, new AppLocationListener1());
+                        mGoogleApiClient, mLocationRequest, new MapFragment());
             }
             if (mProviderName == null || mProviderName.equals("")) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
