@@ -38,6 +38,14 @@ public class Tab1 extends Fragment {
     private static final int CAMERA_REQUEST = 1888;
     private MediaRecorder recorder;
     private String OUTPUT_FILE;
+    static  Button stopButton;
+    static Button playButton;
+    static  Button recordButton;
+    MediaRecorder mediaRecorder;
+    MediaPlayer mediaPlayer;
+    String audioFilePath;
+
+    boolean isRecording = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,58 +65,23 @@ public class Tab1 extends Fragment {
 
 
 
+        recordButton = (Button) v.findViewById(R.id.button2);
+        playButton = (Button) v.findViewById(R.id.button3);
+        stopButton = (Button) v.findViewById(R.id.button4);
 
-        OUTPUT_FILE= Environment.getExternalStorageDirectory()+"/VoiceRecorder.3gpp";
+      //  if (!hasMicrophone())
+        {
+         //   stopButton.setEnabled(false);
+         //   playButton.setEnabled(false);
+         //   recordButton.setEnabled(false);
+       // } else {
+            playButton.setEnabled(false);
+            stopButton.setEnabled(false);
+        }
 
-        Button starts=(Button)v.findViewById(R.id.button2);
-        starts.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                File outfile=new File(OUTPUT_FILE);
-
-                if(outfile.exists()){
-                    outfile.delete();
-                }
-                try {
-                    StartRecord();
-                    Toast.makeText(getContext(), "Nada",
-                            Toast.LENGTH_SHORT).show();
-                } catch (IllegalStateException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-
-        });
-        Button stopb=(Button)v.findViewById(R.id.button4);
-        stopb.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getContext(), "Nada????stop????",
-                        Toast.LENGTH_SHORT).show();
-                StopRecord();
-            }
-
-        });
-        Button playb=(Button)v.findViewById(R.id.button3);
-        playb.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getContext(), "Nada????play????",
-                        Toast.LENGTH_SHORT).show();
-                StopRecord();
-            }
-
-        });
+        audioFilePath =
+                Environment.getExternalStorageDirectory().getAbsolutePath()
+                        + "/myaudio.3gp";
 
         return v;
     }
@@ -120,35 +93,57 @@ public class Tab1 extends Fragment {
         }
     }
 
+    public void recordAudio (View view) throws IOException
+    {
+        isRecording = true;
+        stopButton.setEnabled(true);
+        playButton.setEnabled(false);
+        recordButton.setEnabled(false);
 
-    protected void StopRecord() {
-        // TODO Auto-generated method stub
-        if(recorder!=null){
-            recorder.stop();
-        }
-    }
-
-
-
-    private void StartRecord() throws IllegalStateException, IOException {
-        // TODO Auto-generated method stub
-        recorder=new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile(OUTPUT_FILE);
-
-        recorder.prepare();
-
-        recorder.start();
-    }
-
-    private void LiberarMicro() {
-        // TODO Auto-generated method stub
-        if(recorder!=null){
-            recorder.release();
+        try {
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFile(audioFilePath);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecorder.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        mediaRecorder.start();
     }
 
+    public void stopClicked (View view)
+    {
+
+        stopButton.setEnabled(false);
+        playButton.setEnabled(true);
+
+        if (isRecording)
+        {
+            recordButton.setEnabled(false);
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            mediaRecorder = null;
+            isRecording = false;
+        } else {
+            mediaPlayer.release();
+            mediaPlayer = null;
+            recordButton.setEnabled(true);
+        }
+
+    }
+
+    public void playAudio (View view) throws IOException
+    {
+        playButton.setEnabled(false);
+        recordButton.setEnabled(false);
+        stopButton.setEnabled(true);
+
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setDataSource(audioFilePath);
+        mediaPlayer.prepare();
+        mediaPlayer.start();
+    }
 }
