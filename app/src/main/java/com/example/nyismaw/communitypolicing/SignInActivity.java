@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -42,6 +43,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import FirebaseApi.Create;
 import Model.CurrentLocation;
+import Model.User;
 
 public class SignInActivity extends AppCompatActivity  implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -106,8 +108,8 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
             @Override
             public void onClick(View v) {
                 Create create= new Create();
-                create.createObject(photo);
-                create.getObject();
+             //   create.createObject(photo);
+              //  create.getObject();
             }
         });
         Button anonymoussingoutbutton = findViewById(R.id.Anonymous);
@@ -149,7 +151,10 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
                 Log.e(TAG, "you have passed " + account.getDisplayName());
                 firebaseAuthWithGoogle(account);
                 Log.e(TAG, "result activty " + account.getDisplayName());
-
+                User user = new User();
+                user.setUsername(account.getDisplayName());
+                user.setEmail(account.getEmail());
+                CurrentUser.user=user;
                 Intent intent=new Intent(SignInActivity.this, MainTabActivity.class);
                 startActivity(intent);
 
@@ -287,7 +292,7 @@ public class SignInActivity extends AppCompatActivity  implements GoogleApiClien
                     || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, new AppLocationListener());
+                        mGoogleApiClient, mLocationRequest, new AppLocationListener1());
             }
             if (mProviderName == null || mProviderName.equals("")) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));

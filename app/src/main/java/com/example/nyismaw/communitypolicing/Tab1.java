@@ -20,9 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -31,6 +33,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import FirebaseApi.Create;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -56,14 +60,14 @@ public class Tab1 extends Fragment {
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
     public static final int RequestPermissionCode = 1;
     MediaPlayer mediaPlayer ;
-
+    View v;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.tab_1, container, false);
+        v = inflater.inflate(R.layout.tab_1, container, false);
 
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
         Button photoButton = (Button) v.findViewById(R.id.button1);
@@ -81,7 +85,17 @@ public class Tab1 extends Fragment {
         playButton = (Button) v.findViewById(R.id.button3);
         stopButton = (Button) v.findViewById(R.id.button4);
 
-
+        Button submit= v.findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View vw) {
+                EditText editText = v.findViewById(R.id.plain_text_input);
+                String description= editText.getText().toString();
+                Create create= new Create();
+                create.createObject(bitmap,description);
+                create.getObject();
+            }
+        });
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -165,11 +179,12 @@ public class Tab1 extends Fragment {
 
         return v;
     }
-
+    private Bitmap bitmap;
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == getActivity().RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            bitmap=photo;
         }
     }
 

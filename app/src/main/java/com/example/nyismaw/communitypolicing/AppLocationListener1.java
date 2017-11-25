@@ -17,14 +17,14 @@ import Model.CurrentLocation;
  * Created by nyismaw on 11/7/2017.
  */
 
-public class AppLocationListener implements LocationListener {
+public class AppLocationListener1 implements LocationListener {
 
-    public AppLocationListener() {
+    public AppLocationListener1() {
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.e("make use of*****", "inside location changed");
+     //   Log.e("make use of*****", "inside location changed");
         new CurrentLocation().setLocation(location);
 
     }

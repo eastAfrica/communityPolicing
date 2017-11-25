@@ -24,12 +24,11 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.google.firebase:firebase-auth:11.6.0'
-<<<<<<< HEAD
+
     implementation 'com.google.firebase:firebase-database:11.6.0'
     implementation 'com.google.firebase:firebase-storage:11.6.0'
-=======
+
     implementation 'com.android.support:design:26.1.0'
->>>>>>> f772dc2c75281063476811a7cf00f9d31e7e3712
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -41,8 +40,6 @@ dependencies {
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> f772dc2c75281063476811a7cf00f9d31e7e3712
+
 apply plugin: 'com.google.gms.google-services'

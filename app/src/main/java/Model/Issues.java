@@ -7,7 +7,7 @@ import android.location.Location;
  */
 
 public class Issues {
-    private int id;
+    private String id;
     private String txt;
     private myLocation location;
     private User userid;
@@ -19,11 +19,11 @@ public class Issues {
 
 
     }
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
