@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainTabActivity extends AppCompatActivity {
 
@@ -38,7 +41,7 @@ public class MainTabActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager2);
         pager.setAdapter(adapter);
 
-        // Assiging the Sliding Tab Layout View
+        // Assining the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
@@ -79,5 +82,6 @@ public class MainTabActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
