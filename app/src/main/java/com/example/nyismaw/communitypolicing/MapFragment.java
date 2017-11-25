@@ -82,8 +82,6 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                //  .setAccountName("Joryne")
-              //  .setAccountName("Joryne")
                 .addApi(LocationServices.API)
                 .build();
     }
