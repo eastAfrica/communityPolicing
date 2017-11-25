@@ -22,7 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainTabActivity">
-
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
