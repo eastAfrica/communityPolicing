@@ -36,6 +36,13 @@
 
     </Button>
         <Button
+            android:id="@+id/button5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_mic_off_black_24dp">
+
+        </Button>
+        <Button
             android:id="@+id/button3"
             android:layout_width="50dp"
             android:layout_height="50dp"
