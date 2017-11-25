@@ -49,6 +49,7 @@ public class Tab1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.tab_1, container, false);
 
@@ -69,12 +70,12 @@ public class Tab1 extends Fragment {
         playButton = (Button) v.findViewById(R.id.button3);
         stopButton = (Button) v.findViewById(R.id.button4);
 
-      //  if (!hasMicrophone())
+        if (!hasMicrophone())
         {
-         //   stopButton.setEnabled(false);
-         //   playButton.setEnabled(false);
-         //   recordButton.setEnabled(false);
-       // } else {
+            stopButton.setEnabled(false);
+           playButton.setEnabled(false);
+            recordButton.setEnabled(false);
+        } else {
             playButton.setEnabled(false);
             stopButton.setEnabled(false);
         }
@@ -92,7 +93,11 @@ public class Tab1 extends Fragment {
             imageView.setImageBitmap(photo);
         }
     }
-
+    protected boolean hasMicrophone() {
+        PackageManager pmanager = getActivity().getPackageManager();
+        return pmanager.hasSystemFeature(
+                PackageManager.FEATURE_MICROPHONE);
+    }
     public void recordAudio (View view) throws IOException
     {
         isRecording = true;
@@ -110,7 +115,6 @@ public class Tab1 extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         mediaRecorder.start();
     }
 
@@ -120,8 +124,7 @@ public class Tab1 extends Fragment {
         stopButton.setEnabled(false);
         playButton.setEnabled(true);
 
-        if (isRecording)
-        {
+        if (isRecording)        {
             recordButton.setEnabled(false);
             mediaRecorder.stop();
             mediaRecorder.release();
