@@ -42,7 +42,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class Tab1 extends Fragment {
 
     private static final int CAMERA_REQUEST = 1888;
-    static Button stopButton;
+    static Button buttonStop;
+    static Button buttonStopPlayingRecording;
     static Button playButton;
     static Button recordButton;
     String audioFilePath;
@@ -79,8 +80,8 @@ public class Tab1 extends Fragment {
 
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
-        stopButton = (Button) v.findViewById(R.id.button4);
-
+        buttonStop = (Button) v.findViewById(R.id.button4);
+        buttonStopPlayingRecording = (Button)v.findViewById(R.id.button5);
 
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +109,7 @@ public class Tab1 extends Fragment {
                     }
 
                     recordButton.setEnabled(false);
-                    stopButton.setEnabled(true);
+                    buttonStop.setEnabled(true);
 
                     Toast.makeText(getActivity(), "Recording started",
                             Toast.LENGTH_LONG).show();
@@ -117,15 +118,16 @@ public class Tab1 extends Fragment {
                 }
 
             }
+
         });
-        stopButton.setOnClickListener(new View.OnClickListener() {
+        buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mediaRecorder.stop();
-                stopButton.setEnabled(false);
-                //buttonPlayLastRecordAudio.setEnabled(true);
+                buttonStop.setEnabled(false);
+                playButton.setEnabled(true);
                 recordButton.setEnabled(true);
-               // buttonStopPlayingRecording.setEnabled(false);
+                buttonStopPlayingRecording.setEnabled(false);
 
                 Toast.makeText(getActivity(), "Recording Completed",
                         Toast.LENGTH_LONG).show();
@@ -137,9 +139,9 @@ public class Tab1 extends Fragment {
             public void onClick(View view) throws IllegalArgumentException,
                     SecurityException, IllegalStateException {
 
-                stopButton.setEnabled(false);
+                buttonStop.setEnabled(false);
                 recordButton.setEnabled(false);
-               // buttonStopPlayingRecording.setEnabled(true);
+                buttonStopPlayingRecording.setEnabled(true);
 
                 mediaPlayer = new MediaPlayer();
                 try {
@@ -155,11 +157,19 @@ public class Tab1 extends Fragment {
             }
         });
 
-           stopButton.setOnClickListener(new View.OnClickListener() {
-
+        buttonStop.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                stopClicked(v);
+            public void onClick(View view) {
+                buttonStop.setEnabled(false);
+                recordButton.setEnabled(true);
+                buttonStopPlayingRecording.setEnabled(false);
+                playButton.setEnabled(true);
+
+                if(mediaPlayer != null){
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    MediaRecorderReady();
+                }
             }
         });
 
@@ -181,7 +191,7 @@ public class Tab1 extends Fragment {
 
     public void recordAudio(View view) throws IOException {
         isRecording = true;
-        stopButton.setEnabled(true);
+        buttonStop.setEnabled(true);
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
 
@@ -200,7 +210,7 @@ public class Tab1 extends Fragment {
 
     public void stopClicked(View view) {
 
-        stopButton.setEnabled(false);
+        buttonStop.setEnabled(false);
         playButton.setEnabled(true);
 
         if (isRecording) {
@@ -210,7 +220,7 @@ public class Tab1 extends Fragment {
             mediaRecorder = null;
             isRecording = false;
         } else {
-//            mediaPlayer.release();
+           mediaPlayer.release();
             mediaPlayer = null;
             recordButton.setEnabled(true);
         }
@@ -220,7 +230,7 @@ public class Tab1 extends Fragment {
     public void playAudio(View view) throws IOException {
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
-        stopButton.setEnabled(true);
+        buttonStop.setEnabled(true);
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setDataSource(audioFilePath);
