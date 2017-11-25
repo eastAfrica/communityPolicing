@@ -43,6 +43,13 @@
             android:id="@+id/Anonymous"
             android:text="Anonymous sign in "
             />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Anonymous2"
+            android:text="Capture Image"
+            />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
