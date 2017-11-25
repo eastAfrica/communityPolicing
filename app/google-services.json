@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "367743624214",
+    "firebase_url": "https://communitypolicing-f24cf.firebaseio.com",
+    "project_id": "communitypolicing-f24cf",
+    "storage_bucket": "communitypolicing-f24cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367743624214:android:15ff82f797b05fcb",
+        "android_client_info": {
+          "package_name": "com.example.nyismaw.communitypolicing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "367743624214-uhnb3eponkfb6b1qgo09gr9c894ja5us.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nyismaw.communitypolicing",
+            "certificate_hash": "c95b8f9b068b02b2c58c8eb3bc77c42e7774d927"
+          }
+        },
+        {
+          "client_id": "367743624214-tjgnkpitqu7h9hs8tpluell4kcguh59o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nyismaw.communitypolicing",
+            "certificate_hash": "cfda29c8a27bd1490eedf9859b44794d871e5cca"
+          }
+        },
+        {
+          "client_id": "367743624214-54eqb8g21fnplgugfmneau79c1qv169i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgY-_pIORJaL8spOXbHDqgBNRHnCBIK6o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "367743624214-54eqb8g21fnplgugfmneau79c1qv169i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
