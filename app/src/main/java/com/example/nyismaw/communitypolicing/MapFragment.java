@@ -205,12 +205,23 @@ public class MapFragment extends SupportMapFragment implements  GoogleMap.OnCame
                     builder.include(latLng);
                     MarkerOptions markerOptions = new MarkerOptions();
                     MarkerOptions markerOptions2 = new MarkerOptions();
+                    MarkerOptions markerOptions3 = new MarkerOptions();
+                    MarkerOptions markerOptions4 = new MarkerOptions();
                     markerOptions.position(latLng);
-                    markerOptions2.position(new LatLng(-1.9530718,30.093130));
                     markerOptions.title("Current Location");
-                    markerOptions2.title("Fallen Tree Hazard");
                     googleMap.addMarker(markerOptions);
+                    markerOptions2.position(new LatLng(-1.9530718,30.093130));
+                    markerOptions2.title("Fallen Tree Hazard");
+                    markerOptions2.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     googleMap.addMarker(markerOptions2);
+                    markerOptions3.position(new LatLng(-1.9530718,30.103130));
+                    markerOptions3.title("Men at Work");
+                    markerOptions3.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    googleMap.addMarker(markerOptions3);
+                    markerOptions4.position(new LatLng(-1.9530718,30.113130));
+                    markerOptions4.title("Traffic Jam");
+                    markerOptions4.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    googleMap.addMarker(markerOptions4);
                 }
             }
         });
