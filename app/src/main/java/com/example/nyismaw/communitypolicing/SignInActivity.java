@@ -96,6 +96,10 @@ public class SignInActivity extends AppCompatActivity {
                 Log.e(TAG, "you have passed " + account.getDisplayName());
                 firebaseAuthWithGoogle(account);
                 Log.e(TAG, "result activty " + account.getDisplayName());
+
+                Intent intent=new Intent(SignInActivity.this, MainTabActivity.class);
+                startActivity(intent);
+
             } catch (ApiException e) {
                 Log.e(TAG, "Error here " + e.getStatusCode());
                 // Google Sign In failed, update UI appropriately
