@@ -84,7 +84,7 @@ public class Tab1 extends Fragment {
 
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
-        stopButton = (Button) v.findViewById(R.id.button4);
+        buttonStop = (Button) v.findViewById(R.id.button4);
 
         Button submit= v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
