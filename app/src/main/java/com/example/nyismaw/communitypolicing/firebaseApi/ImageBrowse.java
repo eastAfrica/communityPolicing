@@ -1,6 +1,5 @@
-package FirebaseApi;
+package com.example.nyismaw.communitypolicing.firebaseApi;
 
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;

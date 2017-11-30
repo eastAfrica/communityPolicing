@@ -1,18 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
+<fragment android:id="@+id/map33"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nyismaw.communitypolicing.MapFragment">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View Accidents"
-        android:id="@+id/viewAccidents"/>
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <!-- TODO: Update blank fragment layout -->
-</FrameLayout>
+    xmlns:android="http://schemas.android.com/apk/res/android" />

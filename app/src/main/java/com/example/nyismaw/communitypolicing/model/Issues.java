@@ -1,6 +1,4 @@
-package Model;
-
-import android.location.Location;
+package com.example.nyismaw.communitypolicing.model;
 
 /**
  * Created by nyismaw on 11/24/2017.

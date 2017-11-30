@@ -1,6 +1,7 @@
-package FirebaseApi;
+package com.example.nyismaw.communitypolicing.firebaseApi;
 
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
@@ -13,27 +14,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Accident;
-import Model.Issues;
-import Model.CurrentLocation;
-import Model.User;
-import Model.myLocation;
-
+import com.example.nyismaw.communitypolicing.model.Accident;
+import com.example.nyismaw.communitypolicing.model.Issues;
+import com.example.nyismaw.communitypolicing.model.CurrentLocation;
+import com.example.nyismaw.communitypolicing.model.myLocation;
+import com.example.nyismaw.communitypolicing.controller.filter.*;
 /**
  * Created by nyismaw on 11/24/2017.
  */
 
-public class Create {
+public class CreateEntities {
 
     FirebaseDatabase database;
     DatabaseReference myRef;
 
-    public Create() {
+    public CreateEntities() {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
     }
 
-    public void createObject(Object object,String description) {
+    public void createObject(Object object, String description) {
 
         String id = myRef.child("Issues").push().getKey();
         Issues issues = new Issues();
@@ -43,7 +43,9 @@ public class Create {
         accident.setSeverity("severe");
         accident.setId(id);
 
-        new UploadFile().UploadImage((Bitmap) object,id);
+        new UploadFile().UploadImage((Bitmap) object, id);
+        new UploadFile().uploadAudio(Environment.getExternalStorageDirectory().getAbsolutePath()
+                + "/myaudio.3gp",id);
         issues.setId(id);
         myLocation mylocation = new myLocation();
         mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
@@ -53,24 +55,18 @@ public class Create {
         issues.setUserid(CurrentUser.user);
         myRef.child(id).setValue(issues);
 
-   }
+    }
 
     public List<Object> getObject() {
-        Log.e("tag","get object is called");
+        //  Log.e("tag","get object is called");
         final List<Object> objects = new ArrayList<>();
 
         myRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                // Log.e("asdf","it gets ehre ");
-                Log.e("tag","on child added");
-
                 Issues issues = dataSnapshot.getValue(Issues.class);
-              //  if ((issues.getLocation().getLatitude()) > 10) {
-                    objects.add(issues);
-                    Log.e("Firebase ", "Abc " + dataSnapshot.getKey() + " was " + issues.getLocation().getLatitude() + " ");
+                FetchedIssues.addIssue(issues);
 
-               // }
             }
 
             @Override
@@ -95,5 +91,6 @@ public class Create {
             // ...
         });
         return objects;
+
     }
 }

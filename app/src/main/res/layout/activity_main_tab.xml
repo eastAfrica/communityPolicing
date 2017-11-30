@@ -5,19 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nyismaw.communitypolicing.MainTabActivity">
+    tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
 
     <include
         android:id="@+id/tool_bar"
         layout="@layout/tool_bar"
         ></include>
-    <com.example.nyismaw.communitypolicing.SlidingTabLayout
+    <com.example.nyismaw.communitypolicing.screens.SlidingTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="2dp"
         android:background="@color/colorPrimary"/>
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager2"
@@ -27,5 +29,6 @@
         >
 
     </android.support.v4.view.ViewPager>
+    </FrameLayout>
 
 </LinearLayout>
