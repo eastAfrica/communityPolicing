@@ -2,9 +2,11 @@ package com.example.nyismaw.communitypolicing.firebaseApi;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
+import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,9 +45,14 @@ public class CreateEntities {
         accident.setSeverity("severe");
         accident.setId(id);
 
+        if(object!=null)
         new UploadFile().UploadImage((Bitmap) object, id);
-        new UploadFile().uploadAudio(Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/myaudio.3gp",id);
+        if(AudioConfig.isHasRecorded()==true){
+            new UploadFile().uploadAudio(Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + "/myaudio.3gp",id);
+            AudioConfig.setHasRecorded(true);
+
+        }
         issues.setId(id);
         myLocation mylocation = new myLocation();
         mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
