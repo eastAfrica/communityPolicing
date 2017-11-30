@@ -1,4 +1,4 @@
-package Model;
+package com.example.nyismaw.communitypolicing.model;
 
 import android.location.Location;
 
@@ -7,7 +7,7 @@ import android.location.Location;
  */
 
 public class CurrentLocation {
-    private static Location location;
+    public static Location location;
 
     public  Location getLocation() {
         return location;

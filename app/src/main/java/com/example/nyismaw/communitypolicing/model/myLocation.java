@@ -1,4 +1,4 @@
-package Model;
+package com.example.nyismaw.communitypolicing.model;
 
 /**
  * Created by nyismaw on 11/25/2017.

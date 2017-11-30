@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing;
+package com.example.nyismaw.communitypolicing.controller.location;
 
 /**
  * Created by nyismaw on 11/25/2017.
@@ -6,12 +6,10 @@ package com.example.nyismaw.communitypolicing;
 
 
 import android.location.Location;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.google.android.gms.location.LocationListener;
 
-import Model.CurrentLocation;
+import com.example.nyismaw.communitypolicing.model.CurrentLocation;
 
 /**
  * Created by nyismaw on 11/7/2017.

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nyismaw.communitypolicing.SignInActivity">
+    tools:context="com.example.nyismaw.communitypolicing.screens.SignInActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,11 +66,23 @@
             />
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/common_signin_button_text_long"
         />
+
+    <Button
+        android:id="@+id/sign_in_button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Anonymous Sign in "
+      android:layout_marginLeft="20dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
