@@ -39,6 +39,15 @@ public class AudioConfig {
     boolean isRecording = false;
     MediaPlayer mediaPlayer;
     final ReportingTab reportingTab;
+    static private boolean hasRecorded=false;
+
+    public static boolean isHasRecorded() {
+        return hasRecorded;
+    }
+
+    public static void setHasRecorded(boolean hasRecorded) {
+        AudioConfig.hasRecorded = hasRecorded;
+    }
 
     public AudioConfig(ReportingTab reportingTab1, Button buttonStop1, Button buttonStopPlayingRecording1, Button recordButton1,
                        Button playButton1) {
@@ -66,6 +75,7 @@ public class AudioConfig {
                     try {
                         mediaRecorder.prepare();
                         mediaRecorder.start();
+                        setHasRecorded(true);
                     } catch (IllegalStateException e) {
 
                         // TODO Auto-generated catch block
