@@ -48,7 +48,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-        Log.e("Tage 1"," tab main created ");
+        Log.e("Tag 1"," tab main created ");
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -63,11 +63,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         // Creating The Toolbar and setting it as the Toolbar for the activity
 
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,7 +86,6 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 

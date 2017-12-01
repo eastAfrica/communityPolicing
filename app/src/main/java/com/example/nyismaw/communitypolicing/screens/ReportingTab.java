@@ -1,10 +1,12 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,22 +31,16 @@ public class ReportingTab extends Fragment {
 
     private static final int CAMERA_REQUEST = 1888;
     static Button buttonStop;
-    static Button buttonStopPlayingRecording;
     static Button playButton;
     static Button recordButton;
-    String audioFilePath;
-    boolean isRecording = false;
+    static Button moredetails;
     private ImageView imageView;
-    private MediaRecorder recorder;
-    private String OUTPUT_FILE;
-    String AudioSavePathInDevice = null;
-    MediaRecorder mediaRecorder ;
-    Random random ;
-    String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
     public static final int RequestPermissionCode = 1;
-    MediaPlayer mediaPlayer ;
     View v;
     AudioConfig audioConfig;
+    MainActivity mainTabActivity;
+    private Dialog  dialog ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,11 +58,19 @@ public class ReportingTab extends Fragment {
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
-
+        moredetails = (Button) v.findViewById(R.id.button6);
+        moredetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View vw) {
+                dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.popuptab1);
+                dialog.setTitle("Please fill in the issue details");
+            }
+        });
 
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
-        buttonStop = (Button) v.findViewById(R.id.button4);
+        buttonStop = (Button) v.findViewById(R.id.button5);
 
         Button submit= v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +86,7 @@ public class ReportingTab extends Fragment {
             }
         });
 
-
-        buttonStop = (Button) v.findViewById(R.id.button4);
-        buttonStopPlayingRecording = (Button)v.findViewById(R.id.button5);
-        audioConfig= new AudioConfig(this,buttonStop,buttonStopPlayingRecording,recordButton,playButton);
+        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         return v;
     }

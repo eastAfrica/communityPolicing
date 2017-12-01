@@ -117,8 +117,6 @@ public class AppLocationListener implements LocationListener {
 
 
                 }
-//                Log.e(" after that *****", "**********************    " + MapFragment.markers.size()
-//                        + " , " + issues.size());
 
             }
         }
@@ -139,6 +137,7 @@ public class AppLocationListener implements LocationListener {
         myImage.setImageBitmap(myBitmap);
         final Button playButton = dialog.findViewById(R.id.popUpPlay);
         final MediaPlayer mediaPlayer = new MediaPlayer();
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,12 +150,11 @@ public class AppLocationListener implements LocationListener {
                         return;
                     }
 
-
                     playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     // create temp file that will hold byte array
                     File tempMp3 = File.createTempFile("kurchina", "mp3", mainTabActivity.getCacheDir());
                     tempMp3.deleteOnExit();
-                    Log.e("Audio", "is data null " + audio);
+
                     FileOutputStream fos = new FileOutputStream(tempMp3);
                     fos.write(audio);
                     fos.close();
@@ -165,12 +163,6 @@ public class AppLocationListener implements LocationListener {
 
                     mediaPlayer.reset();
 
-                    // In case you run into issues with threading consider new instance like:
-                    // MediaPlayer mediaPlayer = new MediaPlayer();
-
-                    // Tried passing path directly, but kept getting
-                    // "Prepare failed.: status=0x1"
-                    // so using file descriptor instead
                     FileInputStream fis = new FileInputStream(tempMp3);
                     mediaPlayer.setDataSource(fis.getFD());
 

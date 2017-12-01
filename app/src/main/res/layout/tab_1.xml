@@ -18,7 +18,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ll"
         android:layout_width="match_parent"
-        android:layout_height="150px"
+        android:layout_height="100px"
         android:orientation="horizontal">
 
         <Button
@@ -28,13 +28,15 @@
             android:background="@drawable/ic_photo_camera_black_24dp">
 
         </Button>
-        <Button
-        android:id="@+id/button2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_mic_black_24dp">
 
-    </Button>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_mic_black_24dp">
+
+        </Button>
+
         <Button
             android:id="@+id/button5"
             android:layout_width="50dp"
@@ -42,6 +44,7 @@
             android:background="@drawable/ic_mic_off_black_24dp">
 
         </Button>
+
         <Button
             android:id="@+id/button3"
             android:layout_width="50dp"
@@ -49,34 +52,48 @@
             android:background="@drawable/ic_play_arrow_black_24dp">
 
         </Button>
+
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button6"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/ic_stop_black_24dp">
+            android:layout_marginLeft="100dp"
+            android:background="@drawable/ic_more_horiz_black_24dp">
 
         </Button>
+
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lli"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/submit"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="125dp"
             android:text="Submit">
 
         </Button>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-    <ImageView android:id="@+id/imageView1"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    </ImageView>
-
     </LinearLayout>
 </LinearLayout>
