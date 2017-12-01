@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.screens.ReportingTab;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class AudioConfig {
     MediaRecorder mediaRecorder;
     Random random;
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
-    final Button buttonStop;
+   // final Button buttonStop;
     final Button buttonStopPlayingRecording;
     final Button playButton;
     final Button recordButton;
@@ -49,9 +50,9 @@ public class AudioConfig {
         AudioConfig.hasRecorded = hasRecorded;
     }
 
-    public AudioConfig(ReportingTab reportingTab1, Button buttonStop1, Button buttonStopPlayingRecording1, Button recordButton1,
+    public AudioConfig(ReportingTab reportingTab1, Button buttonStopPlayingRecording1, Button recordButton1,
                        Button playButton1) {
-        this.buttonStop = buttonStop1;
+        //this.buttonStop = buttonStop1;
         this.buttonStopPlayingRecording = buttonStopPlayingRecording1;
         this.playButton = playButton1;
         this.recordButton = recordButton1;
@@ -88,7 +89,7 @@ public class AudioConfig {
                     }
 
                     recordButton.setEnabled(false);
-                    buttonStop.setEnabled(true);
+                    //buttonStop.setEnabled(true);
 
                     Toast.makeText(reportingTab.getActivity(), "Recording started",
                             Toast.LENGTH_LONG).show();
@@ -103,7 +104,7 @@ public class AudioConfig {
             @Override
             public void onClick(View view) {
                 mediaRecorder.stop();
-                buttonStop.setEnabled(false);
+               // buttonStop.setEnabled(false);
                 playButton.setEnabled(true);
                 recordButton.setEnabled(true);
                 buttonStopPlayingRecording.setEnabled(false);
@@ -112,20 +113,30 @@ public class AudioConfig {
                         Toast.LENGTH_LONG).show();
             }
         });
-
+        mediaPlayer = new MediaPlayer();
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) throws IllegalArgumentException,
                     SecurityException, IllegalStateException {
 
-                buttonStop.setEnabled(false);
+                //buttonStop.setEnabled(false);
                 recordButton.setEnabled(false);
                 buttonStopPlayingRecording.setEnabled(true);
 
-                mediaPlayer = new MediaPlayer();
+
                 try {
+                    if (mediaPlayer.isPlaying()) {
+
+                        mediaPlayer.stop();
+                        playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        return;
+                    }
+                    mediaPlayer.reset();
+
+                    playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                     mediaPlayer.setDataSource(AudioSavePathInDevice);
                     mediaPlayer.prepare();
+                    mediaPlayer.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -136,21 +147,21 @@ public class AudioConfig {
             }
         });
 
-        buttonStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonStop.setEnabled(false);
-                recordButton.setEnabled(true);
-                buttonStopPlayingRecording.setEnabled(false);
-                playButton.setEnabled(true);
-
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                    MediaRecorderReady();
-                }
-            }
-        });
+//        buttonStop.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                buttonStop.setEnabled(false);
+//                recordButton.setEnabled(true);
+//               // buttonStopPlayingRecording.setEnabled(false);
+//                playButton.setEnabled(true);
+//
+//                if (mediaPlayer != null) {
+//                    mediaPlayer.stop();
+//                    mediaPlayer.release();
+//                    MediaRecorderReady();
+//                }
+//            }
+//        });
 
 
     }
@@ -163,7 +174,7 @@ public class AudioConfig {
 
     public void recordAudio(View view) throws IOException {
         isRecording = true;
-        buttonStop.setEnabled(true);
+        //buttonStop.setEnabled(true);
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
 
@@ -182,7 +193,7 @@ public class AudioConfig {
 
     public void stopClicked(View view) {
 
-        buttonStop.setEnabled(false);
+       // buttonStop.setEnabled(false);
         playButton.setEnabled(true);
 
         if (isRecording) {
@@ -202,7 +213,7 @@ public class AudioConfig {
     public void playAudio(View view) throws IOException {
         playButton.setEnabled(false);
         recordButton.setEnabled(false);
-        buttonStop.setEnabled(true);
+       // buttonStop.setEnabled(true);
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setDataSource(audioFilePath);
