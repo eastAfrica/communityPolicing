@@ -58,9 +58,10 @@ public class ReportingTab extends Fragment {
         moredetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vw) {
-                dialog = new Dialog(mainTabActivity);
+                dialog = new Dialog(ReportingTab.this.getContext());
                 dialog.setContentView(R.layout.popuptab1);
                 dialog.setTitle("Please fill in the issue details");
+                dialog.show();
             }
         });
 
