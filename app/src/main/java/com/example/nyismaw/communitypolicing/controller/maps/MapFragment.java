@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nyismaw.communitypolicing.R;
-import com.example.nyismaw.communitypolicing.model.CurrentLocation;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +40,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     static GoogleMap mMap;
     static List<Marker> markers = new ArrayList();
+
+    public static GoogleMap getmMap() {
+        return mMap;
+    }
+
+    public static void setmMap(GoogleMap mMap) {
+        MapFragment.mMap = mMap;
+    }
+
+    public static List<Marker> getMarkers() {
+        return markers;
+    }
+
+    public static void setMarkers(List<Marker> markers) {
+        MapFragment.markers = markers;
+    }
 
     @Override
     public void onMapReady(GoogleMap mMap) {

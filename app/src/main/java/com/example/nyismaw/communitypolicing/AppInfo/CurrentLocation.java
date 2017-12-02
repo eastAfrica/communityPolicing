@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.model;
+package com.example.nyismaw.communitypolicing.AppInfo;
 
 import android.location.Location;
 
