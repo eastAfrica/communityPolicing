@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home">
+        android:title="Home"
+    </item>
+
+    <item android:id="@+id/accidents">
+        android:title="Accidents"
+    </item>
+
+    <item android:id="@+id/potholes">
+        android:title="Potholes"
+    </item>
+
+    <item android:id="@+id/road_hazards">
+        android:title="Road Hazards"
+    </item>
+
+    <item android:id="@+id/logout">
+        android:title="Logout"
+    </item>
+</menu>

@@ -8,4 +8,6 @@
     <string name="Select1">Select Severity</string>
     <string name="Select2">Select Vehicles involved</string>
     <string name="ListOfvehicles">List Of Vehicles</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
