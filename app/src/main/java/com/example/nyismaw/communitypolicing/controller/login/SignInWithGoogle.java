@@ -26,7 +26,7 @@ import static com.example.nyismaw.communitypolicing.screens.SignInActivity.RC_SI
  * Created by nyismaw on 11/28/2017.
  */
 
-public class SignInWithGoogle extends Activity implements LoginInterface   {
+public class SignInWithGoogle extends Activity implements SignInInterface {
 
     private GoogleSignInClient mGoogleSignInClient;
     SignInActivity  signInActivity;

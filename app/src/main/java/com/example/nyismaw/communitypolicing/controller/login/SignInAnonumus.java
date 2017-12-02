@@ -20,7 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
  * Created by nyismaw on 11/28/2017.
  */
 
-public class SignInAnonumus implements LoginInterface {
+public class SignInAnonumus implements SignInInterface {
 
     private GoogleSignInClient mGoogleSignInClient;
     SignInActivity  signInActivity;

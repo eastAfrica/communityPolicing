@@ -4,9 +4,6 @@ package com.example.nyismaw.communitypolicing.screens;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,9 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.Random;
-
-import com.example.nyismaw.communitypolicing.firebaseApi.CreateEntities;
+import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
+import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 
@@ -62,7 +58,7 @@ public class ReportingTab extends Fragment {
         moredetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vw) {
-                dialog = new Dialog(getContext());
+                dialog = new Dialog(mainTabActivity);
                 dialog.setContentView(R.layout.popuptab1);
                 dialog.setTitle("Please fill in the issue details");
             }
@@ -78,9 +74,9 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
                 EditText editText = v.findViewById(R.id.plain_text_input);
                 String description= editText.getText().toString();
-                CreateEntities createEntities = new CreateEntities();
-                createEntities.createObject(bitmap,description);
-                createEntities.getObject();
+                ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
+                manageReportedIssues.createObject(bitmap,description);
+                manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
             }

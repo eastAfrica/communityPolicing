@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
-import com.example.nyismaw.communitypolicing.controller.login.LoginFactory;
-import com.example.nyismaw.communitypolicing.controller.login.LoginInterface;
+import com.example.nyismaw.communitypolicing.controller.login.SignInFactory;
+import com.example.nyismaw.communitypolicing.controller.login.SignInInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,7 +30,7 @@ public class SignInActivity extends AppCompatActivity {
     LocationRequest mLocationRequest;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
     private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
-    LoginInterface signInInterface;
+    SignInInterface signInInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class SignInActivity extends AppCompatActivity {
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInInterface = LoginFactory.getLogin(signInActivity, "signInWithGoogle");
+                signInInterface = SignInFactory.getLogin(signInActivity, "signInWithGoogle");
                 signInInterface.signin();
 
             }
@@ -49,7 +49,7 @@ public class SignInActivity extends AppCompatActivity {
         findViewById(R.id.sign_in_button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInInterface = LoginFactory.getLogin(signInActivity, "signInAnonumus");
+                signInInterface = SignInFactory.getLogin(signInActivity, "signInAnonumus");
                 signInInterface.signin();
             }
         });

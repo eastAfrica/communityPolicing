@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.filter;
+package com.example.nyismaw.communitypolicing.controller.filters;
 
 import com.example.nyismaw.communitypolicing.model.Issues;
 

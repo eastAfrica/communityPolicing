@@ -146,7 +146,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * CreateEntities a default view to be used for tabs. This is called if a custom tab view is not set via
+     * ManageReportedIssues a default view to be used for tabs. This is called if a custom tab view is not set via
      * {@link #setCustomTabView(int, int)}.
      */
     protected TextView createDefaultTabView(Context context) {

@@ -22,8 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.nyismaw.communitypolicing.R;
-import com.example.nyismaw.communitypolicing.controller.maps.AppLocationListener;
-import com.example.nyismaw.communitypolicing.model.CurrentLocation;
+import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
