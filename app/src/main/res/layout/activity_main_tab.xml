@@ -12,10 +12,16 @@
         android:layout_height="match_parent"
         tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
 
-        <include
-            android:id="@+id/tool_bar"
-            layout="@layout/tool_bar"
-            ></include>
+        <!--<include-->
+            <!--android:id="@+id/tool_bar"-->
+            <!--layout="@layout/tool_bar"-->
+            <!--&gt;</include>-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
         <com.example.nyismaw.communitypolicing.screens.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
