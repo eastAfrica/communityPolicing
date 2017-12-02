@@ -1,34 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
-
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/tool_bar"
-        ></include>
-    <com.example.nyismaw.communitypolicing.screens.SlidingTabLayout
-        android:id="@+id/tabs"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="2dp"
-        android:background="@color/colorPrimary"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager2"
         android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        >
+        tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
 
-    </android.support.v4.view.ViewPager>
-    </FrameLayout>
+        <!--<include-->
+            <!--android:id="@+id/tool_bar"-->
+            <!--layout="@layout/tool_bar"-->
+            <!--&gt;</include>-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+        <com.example.nyismaw.communitypolicing.screens.SlidingTabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:background="@color/colorPrimary"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager2"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                >
+
+            </android.support.v4.view.ViewPager>
+        </FrameLayout>
+
+    </LinearLayout>
+    <!-- The navigation drawer -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
+        app:menu="@menu/nav_menu"
+        android:layout_gravity="start"/>
+</android.support.v4.widget.DrawerLayout>

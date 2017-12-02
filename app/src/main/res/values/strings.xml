@@ -8,4 +8,13 @@
     <string name="Select1">Select Severity</string>
     <string name="Select2">Select Vehicles involved</string>
     <string name="ListOfvehicles">List Of Vehicles</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="menu_home">Map Home</string>
+    <string name="menu_accident">Accidents</string>
+    <string name="menu_potholes">Potholes</string>
+    <string name="menu_roadHazard">Road Hazards</string>
+    <string name="menu_issueAnalysis">Issues Analyses</string>
+    <string name="menu_emergencyContact">Emergency Contacts</string>
+    <string name="menu_logout">Logout</string>
 </resources>
