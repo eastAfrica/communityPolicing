@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home"
-        android:title="Home">
-    </item>
+    <item
+        android:id="@+id/home"
+        android:title="@string/menu_home"></item>
 
-    <item android:id="@+id/accidents"
-        android:title="Accidents">
-    </item>
+    <item
+        android:id="@+id/accidents"
+        android:title="@string/menu_accident"></item>
 
     <item android:id="@+id/potholes"
-        android:title="Potholes">
+        android:title="@string/menu_potholes">
     </item>
 
     <item android:id="@+id/road_hazards"
-        android:title="Road Hazards">
+        android:title="@string/menu_roadHazard">
+    </item>
+
+    <item android:id="@+id/issues_analyses"
+        android:title="@string/menu_issueAnalysis">
+    </item>
+
+    <item android:id="@+id/emergency_contacts"
+        android:title="@string/menu_emergencyContact">
     </item>
 
     <item android:id="@+id/logout"
-        android:title="Logout">
+        android:title="@string/menu_logout">
     </item>
 </menu>
