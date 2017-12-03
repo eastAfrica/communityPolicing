@@ -4,7 +4,7 @@ package com.example.nyismaw.communitypolicing.model;
  * Created by nyismaw on 11/25/2017.
  */
 
-public class myLocation {
+public class MyLocation {
 
     private Double longtude;
     private Double latitude;

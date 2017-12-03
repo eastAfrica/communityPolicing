@@ -11,6 +11,7 @@ import java.util.List;
 
 public class FetchedIssues {
     private static List<Issues> issues= new ArrayList();
+    private static List<String> issuesNotified= new ArrayList();
 
     public static List<Issues> getIssues() {
         return issues;
@@ -18,6 +19,14 @@ public class FetchedIssues {
 
     public static void setIssues(List<Issues> issues) {
         FetchedIssues.issues = issues;
+    }
+
+    public static List<String> getIssuesNotified() {
+        return issuesNotified;
+    }
+
+    public static void setIssuesNotified(List<String> issuesNotified) {
+        FetchedIssues.issuesNotified = issuesNotified;
     }
 
     public static void addIssue(Issues issue) {

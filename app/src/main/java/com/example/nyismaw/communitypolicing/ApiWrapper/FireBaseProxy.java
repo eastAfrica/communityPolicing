@@ -13,7 +13,7 @@ import com.example.nyismaw.communitypolicing.controller.location.AppLocationList
 import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.model.Issues;
-import com.example.nyismaw.communitypolicing.model.myLocation;
+import com.example.nyismaw.communitypolicing.model.MyLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -180,7 +180,7 @@ public class FireBaseProxy {
 
         }
         issues.setId(id);
-        myLocation mylocation = new myLocation();
+        MyLocation mylocation = new MyLocation();
         mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
         mylocation.setLongtude(new CurrentLocation().getLocation().getLongitude());
         issues.setLocation(mylocation);

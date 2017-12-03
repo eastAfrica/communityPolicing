@@ -7,7 +7,7 @@ package com.example.nyismaw.communitypolicing.model;
 public class Issues {
     private String id;
     private String txt;
-    private myLocation location;
+    private MyLocation location;
     private User userid;
     private String categoryOfIssues;
     private Accident accident;
@@ -33,11 +33,11 @@ public class Issues {
         this.txt = txt;
     }
 
-    public myLocation getLocation() {
+    public MyLocation getLocation() {
         return location;
     }
 
-    public void setLocation(myLocation location) {
+    public void setLocation(MyLocation location) {
         this.location = location;
     }
 
