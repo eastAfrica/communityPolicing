@@ -37,7 +37,6 @@ public class MapDialog {
             Bitmap myBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             ImageView myImage = (ImageView) dialog.findViewById(R.id.imageViewForMap);
 
-
             myImage.setLayoutParams(layoutParams);
             myImage.setImageBitmap(myBitmap);
 
