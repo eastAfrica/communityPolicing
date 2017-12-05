@@ -1,6 +1,8 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,18 +15,31 @@ import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignInFactory;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignInInterface;
 import com.example.nyismaw.communitypolicing.R;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.example.nyismaw.communitypolicing.model.User;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -41,6 +56,20 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(this.getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null){
+            Log.e("123", "Existssssssssssssssssssssssss " +account.getDisplayName());
+            assignUserToApp(account);
+            startMainActivity();
+
+        }
         setContentView(R.layout.activity_main);
         final SignInActivity signInActivity = this;
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
@@ -60,10 +89,10 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        ReprotedIssuesInterface reprotedIssuesInterface =  new FireBaseAPI();
+        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
         reprotedIssuesInterface.fireBasePoliceId();
-
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -73,25 +102,7 @@ public class SignInActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 signInInterface.authenticate(account);
-                User user = new User();
-                user.setUsername(account.getDisplayName());
-                user.setEmail(account.getEmail());
-                mAuth = FirebaseAuth.getInstance();
-                FirebaseUser userF = mAuth.getCurrentUser();
-                List<String> policeId = FetchedIssues.getPoliceId();
-                String userId= userF.getUid();
-                if (policeId != null) {
-
-                    for(String string: policeId)
-                    {
-
-                        if(userId.equals(string)){
-                            user.setApolice(true);
-                            Log.e("You are ","You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                        }
-                    }
-                }
-                CurrentUser.user = user;
+                assignUserToApp(account);
                 startMainActivity();
 
             } catch (ApiException e) {
@@ -103,5 +114,29 @@ public class SignInActivity extends AppCompatActivity {
     public void startMainActivity() {
         Intent intent = new Intent(this, MainTabActivity.class);
         startActivity(intent);
+    }
+
+    private void assignUserToApp( GoogleSignInAccount account){
+
+        User user = new User();
+        user.setUsername(account.getDisplayName());
+        user.setEmail(account.getEmail());
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userF = mAuth.getCurrentUser();
+        List<String> policeId = FetchedIssues.getPoliceId();
+        String userId = userF.getUid();
+        if (policeId != null) {
+
+            for (String string : policeId) {
+
+                if (userId.equals(string)) {
+                    user.setApolice(true);
+                    Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                }
+            }
+        }
+        CurrentUser.user = user;
+
+
     }
 }

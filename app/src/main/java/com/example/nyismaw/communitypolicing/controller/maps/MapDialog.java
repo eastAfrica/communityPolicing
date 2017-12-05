@@ -35,7 +35,7 @@ import static com.example.nyismaw.communitypolicing.R.drawable.ic_broken_image_b
 
 public class MapDialog {
 
-    public void showDialog(final MainTabActivity mainTabActivity, final byte[] bytes, final byte[] audio, Dialog dialog) {
+    public void showDialog(final MainTabActivity mainTabActivity, final byte[] bytes, final byte[] audio, final Dialog dialog) {
         DisplayMetrics metrics = mainTabActivity.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
@@ -115,6 +115,9 @@ public class MapDialog {
                     DatabaseReference myRef =  FirebaseDatabase.getInstance().getReference("issues");
                     myRef.child(issueId).child("resolved").setValue(true);
                     Log.e("Resolve","current issue "+issueId);
+                    Toast.makeText(mainTabActivity, "Issue resolved",
+                            Toast.LENGTH_SHORT).show();
+                    dialog.hide();
                 }
             });
 

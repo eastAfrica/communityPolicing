@@ -8,8 +8,11 @@ On my honor, as a Carnegie-Mellon Rwanda student, I have neither given nor recei
 
  */
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Vibrator;
@@ -22,6 +25,7 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 
 import com.example.nyismaw.communitypolicing.R;
+import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 
 /**
  * Created by nyismaw on 10/29/2017.
@@ -49,26 +53,45 @@ public class PushNotifications implements NotificationInterface{
                     new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle(Title)
                             .setContentText(content).setSound(uri);
 
+
+            NotificationManager notificationManager = (NotificationManager) context
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification notification = mBuilder.getNotification();
+            ;
+
+            Intent notificationIntent = new Intent(context, MainTabActivity.class);
+
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            PendingIntent intent = PendingIntent.getActivity(context, 0,
+                    notificationIntent, 0);
+
+
+            mBuilder.setContentIntent(intent);
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+            //notificationManager.notify(0, notification);
+
         } else if (vibrate == true) {
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(500);
 
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mBuilder =
-                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle("Activity notification")
-                            .setContentText("You have been sitting for too long! Better you exercise");
+                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle(Title)
+                            .setContentText(content);
         } else if (sound == true) {
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mBuilder =
-                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle("Activity notification")
-                            .setContentText("You have been sitting for too long! Better you exercise").setSound(uri);
+                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle(Title)
+                            .setContentText(content).setSound(uri);
 
 
         } else {
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             mBuilder =
-                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle("Activity notification")
-                            .setContentText("You have been sitting for too long! Better you exercise");
+                    new NotificationCompat.Builder(context).setSmallIcon(R.drawable.common_google_signin_btn_icon_dark).setContentTitle(Title)
+                            .setContentText(content);
 
         }
         NotificationManager mNotificationManager =
