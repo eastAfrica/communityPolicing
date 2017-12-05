@@ -104,6 +104,7 @@ public class SignInActivity extends AppCompatActivity {
                 signInInterface.authenticate(account);
                 assignUserToApp(account);
                 startMainActivity();
+                finish();
 
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
