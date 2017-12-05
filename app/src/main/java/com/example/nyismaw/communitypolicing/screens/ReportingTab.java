@@ -4,6 +4,7 @@ package com.example.nyismaw.communitypolicing.screens;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+
+import java.io.File;
 
 /**
  * Created by jarigye on 11/25/2017.
@@ -80,6 +83,14 @@ public class ReportingTab extends Fragment {
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
+                imageView.setImageBitmap(null);
+                editText.setText(null);
+                String path= Environment.getExternalStorageDirectory().getAbsolutePath()
+                        + "/myaudio.3gp";
+                File file= new File(path);
+                file.delete();
+
+
             }
         });
 

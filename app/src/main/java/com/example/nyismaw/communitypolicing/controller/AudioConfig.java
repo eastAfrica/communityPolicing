@@ -133,17 +133,21 @@ public class AudioConfig {
                     }
                     mediaPlayer.reset();
 
-                    playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
+
                     mediaPlayer.setDataSource(AudioSavePathInDevice);
                     mediaPlayer.prepare();
                     mediaPlayer.start();
+
+                    Toast.makeText(reportingTab.getActivity(), "Recording Playing",
+                            Toast.LENGTH_LONG).show();
+                    playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
                 } catch (IOException e) {
+                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded",
+                            Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
-                mediaPlayer.start();
-                Toast.makeText(reportingTab.getActivity(), "Recording Playing",
-                        Toast.LENGTH_LONG).show();
+
             }
         });
 
