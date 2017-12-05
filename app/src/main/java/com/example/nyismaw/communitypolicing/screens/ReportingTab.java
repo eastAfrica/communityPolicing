@@ -57,6 +57,7 @@ public class ReportingTab extends Fragment {
 
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
         Button photoButton = (Button) v.findViewById(R.id.button1);
+
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,6 +66,7 @@ public class ReportingTab extends Fragment {
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
+
         moredetails = (Button) v.findViewById(R.id.button6);
         moredetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +79,10 @@ public class ReportingTab extends Fragment {
             }
         });
 
-
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
         buttonStop = (Button) v.findViewById(R.id.button5);
+        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         Button submit= v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +102,8 @@ public class ReportingTab extends Fragment {
                 File file= new File(path);
                 file.delete();
 
-
             }
         });
-
-        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         return v;
     }
