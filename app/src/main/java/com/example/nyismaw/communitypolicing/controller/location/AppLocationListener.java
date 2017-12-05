@@ -18,6 +18,7 @@ import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
+import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 import com.google.android.gms.location.LocationListener;
@@ -45,35 +46,39 @@ public class AppLocationListener implements LocationListener {
 
     Dialog dialog;
 
+    public static String currentIssueId;
+
     @Override
     public void onLocationChanged(Location location) {
         new CurrentLocation().setLocation(location);
         //   Log.e(" after that *****", "**********************    "+location.getLatitude()+" , "+location.getLongitude());
-
-        com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                if (!marker.getTitle().equals("My Location")) {
-                    marker.hideInfoWindow();
-                    Log.e(" marker clicked  *****", "**********************    " + marker.getTitle() + "");
-                    dialog = new Dialog(mainTabActivity);
-                    dialog.setContentView(R.layout.popup);
-                    dialog.setTitle("Hello");
+        if (MapFragment.getmMap() != null) {
 
 
-                    TextView textViewUser = dialog.findViewById(R.id.description);
-                    Issues issues = new FilterIssues().filterIssueById(marker.getTitle());
-                    DownloadFileInterface downloadFileInterface= new FireBaseAPI(AppLocationListener.this);
-                    downloadFileInterface.downLoadImage(issues.getId());
-                    downloadFileInterface.downLoadAudio(issues.getId());
-                    textViewUser.setText(issues.getDetails());
-                    //  dialog.show(issues.getId());
-                    return true;
+            MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    if (!marker.getTitle().equals("My Location")) {
+                        marker.hideInfoWindow();
+                        Log.e(" marker clicked  *****", "**********************    " + marker.getTitle() + "");
+                        dialog = new Dialog(mainTabActivity);
+                        dialog.setContentView(R.layout.popup);
+                        dialog.setTitle(marker.getTitle());
+                        currentIssueId= marker.getTitle();
+
+                        TextView textViewUser = dialog.findViewById(R.id.description);
+                        Issues issues = new FilterIssues().filterIssueById(marker.getTitle());
+                        DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
+                        downloadFileInterface.downLoadImage(issues.getId());
+                        downloadFileInterface.downLoadAudio(issues.getId());
+                        textViewUser.setText(issues.getDetails());
+                        //  dialog.show(issues.getId());
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
-
+            });
+        }
         ReprotedIssuesInterface entities = new FireBaseAPI();
         entities.getReportedIssues();
 
@@ -88,7 +93,7 @@ public class AppLocationListener implements LocationListener {
                     LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
 
             com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().add(marker);
-            List<Issues> issues = FetchedIssues.getIssues();
+            List<Issues> issues = FetchedIssues.getUnResolvedIssues();
             if (issues != null) {
                 for (Object obj : issues) {
                     Issues issue = (Issues) obj;

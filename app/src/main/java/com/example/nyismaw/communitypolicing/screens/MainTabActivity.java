@@ -1,6 +1,7 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,6 +31,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.gestures.GestureService;
@@ -50,8 +52,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Report IT", "Check Out Your Area"};
-    int Numboftabs = 2;
+    CharSequence Titles[] = {"Report IT", "Map","Emergency contacts"};
+    int Numboftabs = 3;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
@@ -73,7 +75,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Log.e("Tag 1"," tab main created ");
+        Log.e("Tag 1", " tab main created ");
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addConnectionCallbacks(this)
@@ -89,12 +91,13 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
         Intent mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         getApplicationContext().startService(mServiceIntent);
-
-        Intent intent = new Intent(getApplicationContext(), GestureService.class);
-        getApplicationContext().startService(mServiceIntent);
+//
+//        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+//        startActivityForResult(intent, 666);
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,8 +108,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)){
-            return  true;
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -154,8 +157,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             if (mLastLocation != null) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(
                         mGoogleApiClient, mLocationRequest, new AppLocationListener(this));
-                Log.e(" First time *****", "**********************    "+mLastLocation.getLatitude()+" , "+mLastLocation.getLongitude());
-                CurrentLocation.location=(mLastLocation);
+                Log.e(" First time *****", "**********************    " + mLastLocation.getLatitude() + " , " + mLastLocation.getLongitude());
+                CurrentLocation.location = (mLastLocation);
 
             }
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -189,5 +192,20 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 666) {
+//            if (Settings.canDrawOverlays(this)) {
+//                // SYSTEM_ALERT_WINDOW permission not granted...
+//                //Toast.makeText(MyProtector.getContext(), "ACTION_MANAGE_OVERLAY_PERMISSION Permission Granted", Toast.LENGTH_SHORT).show();
+//                Intent serviceIntent = new Intent(getApplicationContext(), GestureService.class);
+//                startService(serviceIntent);
+//
+//
+//            }
 
+
+        }
+    }
 }

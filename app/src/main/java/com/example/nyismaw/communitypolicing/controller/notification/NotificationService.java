@@ -48,7 +48,7 @@ public class NotificationService extends IntentService {
             public void run() {
                 try {
                     Location currentLocation = new CurrentLocation().getLocation();
-                    List<Issues> issues = FetchedIssues.getIssues();
+                    List<Issues> issues = FetchedIssues.getUnResolvedIssues();
                     for (Issues iss : issues) {
 
                         MyLocation myLocation1 = iss.getLocation();

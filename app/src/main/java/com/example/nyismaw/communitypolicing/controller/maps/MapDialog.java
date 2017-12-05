@@ -5,14 +5,22 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.R;
+import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterIssues;
+import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -93,6 +101,27 @@ public class MapDialog {
             }
         });
         dialog.getWindow().setLayout((6 * width) / 7, (4 * height) / 5);
+
+        Log.e("Resolve","current issue11111111 "+CurrentUser.user.isApolice());
+        if(CurrentUser.user.isApolice()){
+            Button button = new Button(mainTabActivity);
+            button.setText(R.string.Resolve);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
+            dialog.addContentView(button,params);
+            final String issueId= AppLocationListener.currentIssueId;
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new FilterIssues().filterIssueById(issueId).setResolved(true);
+                    DatabaseReference myRef =  FirebaseDatabase.getInstance().getReference("issues");
+                    myRef.child(issueId).child("resolved").setValue(true);
+                    Log.e("Resolve","current issue "+issueId);
+                }
+            });
+
+
+        }
+
         dialog.show();
     }
 }
