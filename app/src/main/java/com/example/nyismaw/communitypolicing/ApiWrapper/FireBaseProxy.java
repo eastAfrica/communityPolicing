@@ -13,7 +13,7 @@ import com.example.nyismaw.communitypolicing.controller.location.AppLocationList
 import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.model.Issues;
-import com.example.nyismaw.communitypolicing.model.myLocation;
+import com.example.nyismaw.communitypolicing.model.MyLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -53,11 +53,47 @@ public class FireBaseProxy {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
     }
+
     public FireBaseProxy(AppLocationListener appLocationListener) {
         this.appLocationListener = appLocationListener;
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://communitypolicing-f24cf.appspot.com");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
+    }
+
+    public void fireBasePoliceId() {
+        //  Log.e("tag","get object is called");
+        final List<Object> objects = new ArrayList<>();
+        DatabaseReference myRef2 = database.getReference("police");
+        myRef2.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                String policeId = (String) dataSnapshot.getValue();
+                FetchedIssues.getPoliceId().add(policeId);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+            // ...
+        });
     }
 
     public void downLoadImage(final String imageName) {
@@ -180,7 +216,7 @@ public class FireBaseProxy {
 
         }
         issues.setId(id);
-        myLocation mylocation = new myLocation();
+        MyLocation mylocation = new MyLocation();
         mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
         mylocation.setLongtude(new CurrentLocation().getLocation().getLongitude());
         issues.setLocation(mylocation);

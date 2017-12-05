@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.login;
+package com.example.nyismaw.communitypolicing.controller.signIn;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

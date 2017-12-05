@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
+import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
-import com.example.nyismaw.communitypolicing.controller.login.SignInFactory;
-import com.example.nyismaw.communitypolicing.controller.login.SignInInterface;
+import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignInFactory;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignInInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.example.nyismaw.communitypolicing.model.User;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -53,6 +59,10 @@ public class SignInActivity extends AppCompatActivity {
                 signInInterface.signin();
             }
         });
+
+        ReprotedIssuesInterface reprotedIssuesInterface =  new FireBaseAPI();
+        reprotedIssuesInterface.fireBasePoliceId();
+
     }
 
     @Override
@@ -66,8 +76,24 @@ public class SignInActivity extends AppCompatActivity {
                 User user = new User();
                 user.setUsername(account.getDisplayName());
                 user.setEmail(account.getEmail());
+                mAuth = FirebaseAuth.getInstance();
+                FirebaseUser userF = mAuth.getCurrentUser();
+                List<String> policeId = FetchedIssues.getPoliceId();
+                String userId= userF.getUid();
+                if (policeId != null) {
+
+                    for(String string: policeId)
+                    {
+
+                        if(userId.equals(string)){
+                            user.setApolice(true);
+                            Log.e("You are ","You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                        }
+                    }
+                }
                 CurrentUser.user = user;
                 startMainActivity();
+
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
             }

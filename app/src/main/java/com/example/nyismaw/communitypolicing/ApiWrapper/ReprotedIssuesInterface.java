@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReprotedIssuesInterface  {
     public void createObject(Object object, String description);
     public List<Object> getReportedIssues();
+    public void fireBasePoliceId();
 }
