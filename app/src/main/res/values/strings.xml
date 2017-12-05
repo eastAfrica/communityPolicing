@@ -17,4 +17,5 @@
     <string name="menu_issueAnalysis">Issues Analyses</string>
     <string name="menu_emergencyContact">Emergency Contacts</string>
     <string name="menu_logout">Logout</string>
+    <string name="Resolve">Resolve Issue</string>
 </resources>

@@ -7,12 +7,14 @@ package com.example.nyismaw.communitypolicing.model;
 public class Issues {
     private String id;
     private String txt;
-    private myLocation location;
+    private MyLocation location;
     private User userid;
     private String categoryOfIssues;
     private Accident accident;
     private String details;
     private String imageId;
+    private boolean isResolved;
+
     public Issues(){
 
 
@@ -33,11 +35,11 @@ public class Issues {
         this.txt = txt;
     }
 
-    public myLocation getLocation() {
+    public MyLocation getLocation() {
         return location;
     }
 
-    public void setLocation(myLocation location) {
+    public void setLocation(MyLocation location) {
         this.location = location;
     }
 
@@ -71,5 +73,21 @@ public class Issues {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
+    public boolean isResolved() {
+        return isResolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        isResolved = resolved;
     }
 }

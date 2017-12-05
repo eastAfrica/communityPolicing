@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.login;
+package com.example.nyismaw.communitypolicing.controller.signIn;
 
 /**
  * Created by nyismaw on 11/28/2017.

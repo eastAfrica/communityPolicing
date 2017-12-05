@@ -8,6 +8,12 @@ public class User {
 
     private String username;
     private String email;
+    private boolean isApolice;
+
+
+    public User(){
+        this.isApolice=false;
+    }
 
     public String getUsername() {
         return username;
@@ -23,5 +29,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public  boolean isApolice() {
+        return isApolice;
+    }
+
+    public  void setApolice(boolean apolice) {
+        this.isApolice = apolice;
     }
 }

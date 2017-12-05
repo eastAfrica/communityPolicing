@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -28,9 +30,13 @@
         <activity android:name=".screens.MainTabActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity android:name=".controller.login.SignInWithGoogle"
+        <activity android:name=".controller.signIn.SignInWithGoogle"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
+        <service android:name=".controller.notification.NotificationService"
+                 android:exported="false"/>
+        <service android:name=".controller.gestures.GestureService"
+            android:exported="false"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCCgK6CeEK64G7aK7gTISXd-P6ncsQS0qw">

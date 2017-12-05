@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- The main content view -->
-    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
 
         <!--<include-->
-            <!--android:id="@+id/tool_bar"-->
-            <!--layout="@layout/tool_bar"-->
-            <!--&gt;</include>-->
+        <!--android:id="@+id/tool_bar"-->
+        <!--layout="@layout/tool_bar"-->
+        <!--&gt;</include>-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -27,20 +27,20 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="2dp"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary"
+            android:elevation="2dp" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.view.ViewPager
+            <com.example.nyismaw.communitypolicing.screens.CustomViewPager
                 android:id="@+id/pager2"
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
-            </android.support.v4.view.ViewPager>
+            </com.example.nyismaw.communitypolicing.screens.CustomViewPager>
         </FrameLayout>
 
     </LinearLayout>
@@ -49,7 +49,7 @@
         android:id="@+id/navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:background="@color/cast_libraries_material_featurehighlight_outer_highlight_default_color"
-        app:menu="@menu/nav_menu"
-        android:layout_gravity="start"/>
+        app:menu="@menu/nav_menu" />
 </android.support.v4.widget.DrawerLayout>

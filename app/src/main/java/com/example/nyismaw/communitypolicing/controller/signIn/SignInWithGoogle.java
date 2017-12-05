@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.login;
+package com.example.nyismaw.communitypolicing.controller.signIn;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.R;
+import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterIssues;
 import com.example.nyismaw.communitypolicing.screens.SignInActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -20,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.List;
+
 import static com.example.nyismaw.communitypolicing.screens.SignInActivity.RC_SIGN_IN;
 
 /**
@@ -29,17 +33,18 @@ import static com.example.nyismaw.communitypolicing.screens.SignInActivity.RC_SI
 public class SignInWithGoogle extends Activity implements SignInInterface {
 
     private GoogleSignInClient mGoogleSignInClient;
-    SignInActivity  signInActivity;
+    SignInActivity signInActivity;
     private String TAG = "Main Activity";
     FirebaseAuth mAuth;
     GoogleSignInOptions gso;
-    public SignInWithGoogle(SignInActivity  signInActivity) {
+
+    public SignInWithGoogle(SignInActivity signInActivity) {
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(signInActivity.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        this.signInActivity=signInActivity;
+        this.signInActivity = signInActivity;
         mGoogleSignInClient = GoogleSignIn.getClient(signInActivity, gso);
         mAuth = FirebaseAuth.getInstance();
 
@@ -65,6 +70,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                     }
                 });
     }
+
     public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -75,6 +81,19 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            List<String> policeId = FetchedIssues.getPoliceId();
+                            String userId= user.getUid();
+                            if (policeId != null) {
+
+                                 for(String string: policeId)
+                                 {
+
+                                     if(userId.equals(string)){
+
+                                   //      Log.e("You are ","You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                     }
+                                 }
+                            }
 
                             Toast.makeText(signInActivity, "Signed in as." + user.getDisplayName(),
                                     Toast.LENGTH_SHORT).show();

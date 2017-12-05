@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.login;
+package com.example.nyismaw.communitypolicing.controller.signIn;
 
 import com.example.nyismaw.communitypolicing.screens.SignInActivity;
 

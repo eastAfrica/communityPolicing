@@ -1,9 +1,12 @@
 package com.example.nyismaw.communitypolicing.controller.maps;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,10 +67,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         MapFragment.mMap = mMap;
         Log.e(" after that *****", "********************** Map ready    ");
         Location location = CurrentLocation.location;
-        LatLng latlong = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
-        mMap.setMapType(5);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
+        if(location!=null){
+            LatLng latlong = new LatLng(location.getLatitude(), location.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+            mMap.setMapType(5);
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15f));
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+
+
     }
 
     @Override
