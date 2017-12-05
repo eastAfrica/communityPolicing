@@ -9,15 +9,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jarigye on 11/25/2017.
@@ -31,6 +37,7 @@ public class ReportingTab extends Fragment {
     static Button recordButton;
     static Button moredetails;
     private ImageView imageView;
+
     public static final int RequestPermissionCode = 1;
     View v;
     AudioConfig audioConfig;
@@ -60,10 +67,12 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
                 dialog = new Dialog(ReportingTab.this.getContext());
                 dialog.setContentView(R.layout.popuptab1);
-                dialog.setTitle("Please fill in the issue details");
+                MoreDetailsDialog x=  new MoreDetailsDialog(ReportingTab.this,dialog);
+                x.dialog.setTitle("Please fill in the issue details");
                 dialog.show();
             }
         });
+
 
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
@@ -95,4 +104,5 @@ public class ReportingTab extends Fragment {
             bitmap=photo;
         }
     }
+
 }
