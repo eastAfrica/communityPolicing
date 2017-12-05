@@ -41,10 +41,9 @@ public class EmergencyContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.emergencycontacts, container, false);
         call911 = v.findViewById(R.id.call911);
-
+       final  Intent callIntent = new Intent(Intent.ACTION_DIAL);
         call911.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:999"));
 
                 if (checkPermission()) {
@@ -60,8 +59,7 @@ public class EmergencyContactFragment extends Fragment {
 
         calltraf.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:113"));
+               callIntent.setData(Uri.parse("tel:113"));
 
                 if (checkPermission()) {
                     startActivity(callIntent);
@@ -76,7 +74,6 @@ public class EmergencyContactFragment extends Fragment {
 
         callfire.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:111"));
 
                 if (checkPermission()) {
