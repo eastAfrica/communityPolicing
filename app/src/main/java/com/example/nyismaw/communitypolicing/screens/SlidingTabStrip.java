@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing; /**
+package com.example.nyismaw.communitypolicing.screens; /**
  * Created by jarigye on 11/25/2017.
  */
 import android.R;
@@ -10,8 +10,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.example.nyismaw.communitypolicing.SlidingTabLayout;
 
 class SlidingTabStrip extends LinearLayout {
 
