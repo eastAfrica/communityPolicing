@@ -33,6 +33,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.gestures.GestureService;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
@@ -65,6 +66,11 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(CurrentUser.user==null){
+
+            Intent intent = new Intent(MainTabActivity.this,SignInActivity.class);
+            startActivity(intent);
+        }
         setContentView(R.layout.activity_main_tab);
         Toolbar t = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(t);
