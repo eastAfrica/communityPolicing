@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
         <activity android:name=".screens.SignInActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,10 +29,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.MainTabActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+           >
+
         </activity>
         <activity android:name=".controller.signIn.SignInWithGoogle"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            >
         </activity>
         <service android:name=".controller.notification.NotificationService"
                  android:exported="false"/>

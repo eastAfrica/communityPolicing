@@ -74,11 +74,15 @@ public class FireBaseProxy {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
                 Log.e("At least alternate", "police alternting");
-                if (CurrentUser.user.getId().equals(policeId)) {
-                    Log.e("You are a ", "**************** Police ***********************");
-                    CurrentUser.user.setApolice(true);
-                    int x = 1;
+                if(CurrentUser.user!=null){
+
+                    if (CurrentUser.user.getId().equals(policeId)) {
+                        Log.e("You are a ", "**************** Police ***********************");
+                        CurrentUser.user.setApolice(true);
+                        int x = 1;
+                    }
                 }
+
                 //   CurrentUser.user.setApolice(true);
 
             }
@@ -204,11 +208,12 @@ public class FireBaseProxy {
 
     public void createObject(Object object, String description) {
 
+       List<String> list = null;
         String id = myRef.child("Issues").push().getKey();
         Issues issues = new Issues();
         issues.setDetails(description);
         Accident accident = new Accident();
-        accident.setVehicles("vehicle1, vehicle2");
+        accident.setVehicles(list);
         accident.setSeverity("severe");
         accident.setId(id);
 

@@ -1,12 +1,14 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
@@ -91,7 +93,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
 
@@ -120,7 +121,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void assignUserToApp(GoogleSignInAccount account) {
 
-        Log.e(""+SignInActivity.class,"Creating user");
+        Log.e("" + SignInActivity.class, "Creating user");
 
         User user = new User();
         user.setUsername(account.getDisplayName());
@@ -137,7 +138,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 if (userId.equals(string)) {
                     user.setApolice(true);
-                 //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                    //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                 }
             }
         }

@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.model;
 
+import java.util.List;
+
 /**
  * Created by nyismaw on 11/24/2017.
  */
@@ -8,7 +10,7 @@ public class Accident {
 
     private String id;
     private String severity;
-    private String vehicles;
+    private List<String> vehicles;
 
     public String getId() {
         return id;
@@ -26,11 +28,12 @@ public class Accident {
         this.severity = severity;
     }
 
-    public String getVehicles() {
+    public List<String> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(String vehicles) {
+    public void setVehicles(List<String> vehicles) {
         this.vehicles = vehicles;
     }
-}
+
+    }
