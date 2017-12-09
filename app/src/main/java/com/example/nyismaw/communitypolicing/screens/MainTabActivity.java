@@ -32,6 +32,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Switch;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.R;
@@ -102,8 +103,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 //        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 //        startActivityForResult(intent, 666);
 
-
     }
+
 
 
     @Override
