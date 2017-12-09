@@ -116,8 +116,6 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
 
         });
 
-
-
     }
 
     @Override
