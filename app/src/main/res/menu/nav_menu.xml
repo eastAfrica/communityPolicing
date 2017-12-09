@@ -2,37 +2,44 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
-        android:icon="?attr/actionModeCloseDrawable"
-        android:title="@string/menu_home"
-        >
-
-    </item>
-
-    <item
         android:id="@+id/accidents"
         android:icon="?android:attr/alertDialogIcon"
-        android:title="@string/menu_accident"></item>
+        android:title="@string/menu_accident"
+        app:actionLayout="@layout/switch_item"/>
 
     <item
         android:id="@+id/potholes"
         android:icon="@drawable/places_ic_clear"
-        android:title="@string/menu_potholes"></item>
+        android:title="@string/menu_potholes"
+        app:actionLayout="@layout/switch_item"/>
 
     <item
-        android:id="@+id/road_hazards"
+        android:id="@+id/blocked_roads"
         android:icon="@android:drawable/presence_busy"
-        android:title="@string/menu_roadHazard"></item>
+        android:title="@string/menu_blockedroads"
+        app:actionLayout="@layout/switch_item"/>
+
+    <item
+        android:id="@+id/fallen_trees"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="@string/menu_fallen_trees"
+        app:actionLayout="@layout/switch_item"/>
+
+    <item
+        android:id="@+id/others"
+        android:icon="@android:drawable/btn_star_big_off"
+        android:title="@string/menu_others"
+        app:actionLayout="@layout/switch_item"/>
 
     <item
         android:id="@+id/issues_analyses"
         android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/menu_issueAnalysis"></item>
+        android:title="@string/menu_issueAnalysis"/>
 
     <item
         android:id="@+id/emergency_contacts"
         android:icon="@android:drawable/sym_action_call"
-        android:title="@string/menu_emergencyContact"></item>
+        android:title="@string/menu_emergencyContact"/>
 
     <item
         android:id="@+id/logout"
