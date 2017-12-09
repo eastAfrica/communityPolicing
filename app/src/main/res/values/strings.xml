@@ -13,9 +13,12 @@
     <string name="menu_home">Map Home</string>
     <string name="menu_accident">Accidents</string>
     <string name="menu_potholes">Potholes</string>
-    <string name="menu_roadHazard">Road Hazards</string>
+    <string name="menu_blockedroads">Blocked Roads</string>
     <string name="menu_issueAnalysis">Issues Analyses</string>
+    <string name="menu_fallen_trees">Fallen Trees</string>
+    <string name="menu_others">Others</string>
     <string name="menu_emergencyContact">Emergency Contacts</string>
     <string name="menu_logout">Logout</string>
     <string name="Resolve">Resolve Issue</string>
+    <string name="go">Drive to</string>
 </resources>

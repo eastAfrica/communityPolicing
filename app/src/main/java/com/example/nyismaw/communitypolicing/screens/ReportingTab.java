@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class ReportingTab extends Fragment {
 
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
         Button photoButton = (Button) v.findViewById(R.id.button1);
+
         photoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,6 +67,7 @@ public class ReportingTab extends Fragment {
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
+
         moredetails = (Button) v.findViewById(R.id.button6);
         moredetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +80,10 @@ public class ReportingTab extends Fragment {
             }
         });
 
-
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
         buttonStop = (Button) v.findViewById(R.id.button5);
+        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         Button submit= v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -89,22 +92,29 @@ public class ReportingTab extends Fragment {
                 EditText editText = v.findViewById(R.id.plain_text_input);
                 String description= editText.getText().toString();
                 ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
+                Log.e("Reporting failure",bitmap+", "+description+","+AudioConfig.isHasRecorded());
+                if(bitmap==null && description.isEmpty()){
+
+                    if( !AudioConfig.isHasRecorded()){
+                        Toast.makeText(getContext(), "Please, at least provide one information",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 manageReportedIssues.createObject(bitmap,description);
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
                 imageView.setImageBitmap(null);
                 editText.setText(null);
+                AudioConfig.setHasRecorded(false);
                 String path= Environment.getExternalStorageDirectory().getAbsolutePath()
                         + "/myaudio.3gp";
                 File file= new File(path);
                 file.delete();
 
-
             }
         });
-
-        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         return v;
     }

@@ -10,12 +10,15 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.location.LocationAnalysis;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.MyLocation;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,24 +60,17 @@ public class NotificationService extends IntentService {
                         issueLocation.setLongitude(myLocation1.getLongtude());
                         double distance = LocationAnalysis.getDistance(currentLocation, issueLocation);
                         if (distance < issueNotificationDistance) {
-                            boolean issueHasBeenReported = false;
-
-                            for (String id : FetchedIssues.getIssuesNotified()) {
-
-                                if (id.equals(iss.getId()))
-                                    issueHasBeenReported = true;
-                            }
-
-                            if (!issueHasBeenReported) {
+                            if (!iss.isNotificationIsSent() & !(CurrentUser.user.getId().equals(iss.getUserid().getId()))) {
                                 NotificationInterface notificationInterface = new PushNotifications(getApplicationContext());
                                 notificationInterface.sendNotification("Issue has been reported in your area", iss.getDetails());
-                                FetchedIssues.getIssuesNotified().add(iss.getId());
-
+                                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
+                                if (myRef != null)
+                                    myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
                             }
 
                         }
-                        Log.e("Service", "Distance from issues " +
-                                LocationAnalysis.getDistance(currentLocation, issueLocation));
+//                        Log.e("Service", "Distance from issues " +
+//                                LocationAnalysis.getDistance(currentLocation, issueLocation));
 
                     }
 

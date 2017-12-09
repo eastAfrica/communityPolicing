@@ -111,9 +111,9 @@ public class MapDialog {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new FilterIssues().filterIssueById(issueId).setResolved(true);
+                    FetchedIssues.getIssueById(issueId).setResolved(true);
                     DatabaseReference myRef =  FirebaseDatabase.getInstance().getReference("issues");
-                    myRef.child(issueId).child("resolved").setValue(true);
+                    myRef.child(issueId).removeValue();
                     Log.e("Resolve","current issue "+issueId);
                     Toast.makeText(mainTabActivity, "Issue resolved",
                             Toast.LENGTH_SHORT).show();
