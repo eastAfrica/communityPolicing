@@ -57,6 +57,7 @@ public class ReportingTab extends Fragment {
         v = inflater.inflate(R.layout.tab_1, container, false);
 
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
+        imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_image_black_24dp));
         Button photoButton = (Button) v.findViewById(R.id.button1);
 
         photoButton.setOnClickListener(new View.OnClickListener() {
