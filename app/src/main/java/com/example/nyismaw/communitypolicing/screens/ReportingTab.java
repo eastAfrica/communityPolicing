@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,12 +90,22 @@ public class ReportingTab extends Fragment {
                 EditText editText = v.findViewById(R.id.plain_text_input);
                 String description= editText.getText().toString();
                 ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
+                Log.e("Reporting failure",bitmap+", "+description+","+AudioConfig.isHasRecorded());
+                if(bitmap==null && description.isEmpty()){
+
+                    if( !AudioConfig.isHasRecorded()){
+                        Toast.makeText(getContext(), "Please, at least provide one information",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 manageReportedIssues.createObject(bitmap,description);
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
                 imageView.setImageBitmap(null);
                 editText.setText(null);
+                AudioConfig.setHasRecorded(false);
                 String path= Environment.getExternalStorageDirectory().getAbsolutePath()
                         + "/myaudio.3gp";
                 File file= new File(path);

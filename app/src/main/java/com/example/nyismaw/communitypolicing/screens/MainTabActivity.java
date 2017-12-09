@@ -66,11 +66,12 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(CurrentUser.user==null){
-
-            Intent intent = new Intent(MainTabActivity.this,SignInActivity.class);
-            startActivity(intent);
-        }
+//        if(CurrentUser.user==null){
+//
+//            Intent intent = new Intent(MainTabActivity.this,SignInActivity.class);
+//            startActivity(intent);
+//
+//        }
         setContentView(R.layout.activity_main_tab);
         Toolbar t = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(t);
@@ -91,8 +92,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         }
         mGoogleApiClient.connect();
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setInterval(2000);
+        mLocationRequest.setFastestInterval(2000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         Intent mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
