@@ -208,7 +208,7 @@ public class FireBaseProxy {
         Issues issues = new Issues();
         issues.setDetails(description);
         Accident accident = new Accident();
-        accident.setVehicles("vehicle1, vehicle2");
+//        accident.setVehicles("vehicle1, vehicle2");
         accident.setSeverity("severe");
         accident.setId(id);
 

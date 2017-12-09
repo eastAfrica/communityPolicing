@@ -5,7 +5,8 @@
         android:id="@+id/accidents"
         android:icon="?android:attr/alertDialogIcon"
         android:title="@string/menu_accident"
-        app:actionLayout="@layout/switch_item"/>
+        app:actionLayout="@layout/switch_item"
+       />
 
     <item
         android:id="@+id/potholes"
