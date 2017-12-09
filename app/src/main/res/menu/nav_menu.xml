@@ -4,7 +4,10 @@
     <item
         android:id="@+id/home"
         android:icon="?attr/actionModeCloseDrawable"
-        android:title="@string/menu_home"></item>
+        android:title="@string/menu_home"
+        >
+
+    </item>
 
     <item
         android:id="@+id/accidents"
