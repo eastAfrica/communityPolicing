@@ -11,23 +11,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignInInterface;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 
 import java.io.File;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -46,7 +46,7 @@ public class ReportingTab extends Fragment {
     public static final int RequestPermissionCode = 1;
     View v;
     AudioConfig audioConfig;
-    MainActivity mainTabActivity;
+    MainTabActivity mainTabActivity;
     private Dialog  dialog ;
 
     @Override
@@ -74,8 +74,8 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
                 dialog = new Dialog(ReportingTab.this.getContext());
                 dialog.setContentView(R.layout.popuptab1);
-                MoreDetailsDialog x=  new MoreDetailsDialog(ReportingTab.this,dialog);
-                x.dialog.setTitle("Please fill in the issue details");
+                MoreDetailsDialog moreDetailsDialog=  new MoreDetailsDialog(ReportingTab.this,dialog);
+                moreDetailsDialog.dialog.setTitle("Please fill in the issue details");
                 dialog.show();
             }
         });
@@ -83,6 +83,27 @@ public class ReportingTab extends Fragment {
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
         buttonStop = (Button) v.findViewById(R.id.button5);
+
+
+        Button signoutButton = (Button) v.findViewById(R.id.button9);
+        signoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("Sign out started ","sign out strated");
+
+                SignoutInterface signoutInterface= new SignoutUser(ReportingTab.this);
+                signoutInterface.signout();
+                Intent intent = new Intent(ReportingTab.this.getContext(), SignInActivity.class);
+                startActivity(intent);
+//                final Task<Void> voidTask = LocationServices.getFusedLocationProviderClient(ReportingTab.this.mainTabActivity)
+//                        .removeLocationUpdates(new AppLocationListener());
+                ReportingTab.this.getActivity().finish();
+
+
+            }
+        });
+
+
         audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
 
         Button submit= v.findViewById(R.id.submit);
@@ -101,7 +122,8 @@ public class ReportingTab extends Fragment {
                         return;
                     }
                 }
-                manageReportedIssues.createObject(bitmap,description);
+                manageReportedIssues.reportIssue(bitmap,description,MoreDetailsDialog.categoryType,
+                        MoreDetailsDialog.severityOfIssue,MoreDetailsDialog.vt);
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
@@ -112,6 +134,10 @@ public class ReportingTab extends Fragment {
                         + "/myaudio.3gp";
                 File file= new File(path);
                 file.delete();
+                MoreDetailsDialog.categoryType=null;
+                MoreDetailsDialog.severityOfIssue=null;
+                MoreDetailsDialog.vt=null;
+
 
             }
         });

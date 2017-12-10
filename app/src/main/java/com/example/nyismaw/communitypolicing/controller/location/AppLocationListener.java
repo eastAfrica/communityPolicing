@@ -14,7 +14,6 @@ import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterIssues;
 import com.example.nyismaw.communitypolicing.controller.filters.FilterPipeInterface;
 import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
@@ -26,7 +25,9 @@ import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
+import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.model.Issues;
+import com.example.nyismaw.communitypolicing.model.User;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.maps.*;
@@ -50,10 +51,18 @@ public class AppLocationListener implements LocationListener {
 
 
     }
+    public AppLocationListener() {
+        this.mainTabActivity = mainTabActivity;
+
+
+    }
 
     Dialog dialog;
 
     public static String currentIssueId;
+    public void removeLocationUpdates(){
+
+    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -74,15 +83,16 @@ public class AppLocationListener implements LocationListener {
                         dialog.setContentView(R.layout.popup);
                         dialog.setTitle(marker.getTitle());
                         currentIssueId = marker.getTitle();
-
-                        TextView textViewUser = dialog.findViewById(R.id.description);
+                       ;
+                       // TextView textViewUser = dialog.findViewById(R.id.description);
                         Issues issues = FetchedIssues.getIssueById(marker.getTitle());
+                        setItemsToDialog(dialog,issues);
                         if (issues == null)
                             return false;
                         DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
                         downloadFileInterface.downLoadImage(issues.getId());
                         downloadFileInterface.downLoadAudio(issues.getId());
-                        textViewUser.setText(issues.getDetails());
+                   //     textViewUser.setText(issues.getDetails());
                         //  dialog.show(issues.getId());
                         return true;
                     }
@@ -155,5 +165,40 @@ public class AppLocationListener implements LocationListener {
 
     public void setMainTabActivity(MainTabActivity mainTabActivity) {
         this.mainTabActivity = mainTabActivity;
+    }
+
+    private void setItemsToDialog(Dialog dialog,Issues issues){
+
+        TextView description = dialog.findViewById(R.id.description);
+        description.setText(issues.getDetails());
+
+        TextView category = dialog.findViewById(R.id.category);
+        category.setText(issues.getCategoryOfIssues());
+
+        Accident accident = issues.getAccident();
+        if(accident!=null){
+            TextView severity = dialog.findViewById(R.id.severity);
+            severity.setText(accident.getSeverity());
+
+            TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
+            vechiles.setText(accident.getVehicles().toString());
+
+
+        }
+        else {
+            TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
+
+
+        }
+
+        User user= issues.getUserid();
+        if(user!=null){
+            TextView reportedBy = dialog.findViewById(R.id.reportedBy);
+            reportedBy.setText(user.getUsername());
+
+        }
+
+
+
     }
 }

@@ -14,7 +14,7 @@ public class CurrentUserPreferences {
     private static boolean vibrateNotification;
     private static boolean notifyMeofIssuesReproted;
     private static boolean notifyMeofIssuesResolved;
-    private static double notificationDistance;
+    private static double notificationDistance=200;
 
     public static boolean isShowACCIDENTS() {
         return showACCIDENTS;
