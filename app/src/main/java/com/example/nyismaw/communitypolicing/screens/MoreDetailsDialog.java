@@ -36,7 +36,7 @@ public class MoreDetailsDialog {
     ReportingTab reportingTab;
 
     final Dialog dialog;
-    MySpinner spinner_type;
+    Spinner spinner_type;
     static ArrayList<String> category;
     static ArrayList<String> severity;
     static ArrayList<String> vt;
@@ -44,6 +44,7 @@ public class MoreDetailsDialog {
     public MoreDetailsDialog(ReportingTab reportingTab, final Dialog dialog) {
         this.reportingTab = reportingTab;
         this.dialog = dialog;
+        this.dialog.setTitle("Please fill in the issue details");
         MoreDetailsDialog.category = new ArrayList<String>();
         category.add(Category.ACCIDENTS.toString());
         category.add(Category.POTHOLES.toString());
@@ -78,6 +79,8 @@ public class MoreDetailsDialog {
 
         final Spinner spinner_category = (Spinner) dialog.findViewById(R.id.spinner_category);
         final Spinner spinner_severity = (Spinner) dialog.findViewById(R.id.spinner_severity);
+         spinner_type = (Spinner) dialog.findViewById(R.id.spinner_vt);
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(reportingTab.getContext(),
                 R.layout.support_simple_spinner_dropdown_item, category);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -102,6 +105,15 @@ public class MoreDetailsDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoryType = (String) spinner_category.getSelectedItem();
+
+                String text = spinner_category.getSelectedItem().toString();
+
+                if (text.equals("Accidents")) {
+                    spinner_type.setEnabled(true);
+                } else {
+                    spinner_type.setEnabled(false);
+                }
+
             }
 
             @Override
@@ -120,8 +132,8 @@ public class MoreDetailsDialog {
 
             }
         });
-        spinner_type = (MySpinner) dialog.findViewById(R.id.spinner_vt);
-        //
+
+
 
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(reportingTab.getContext(),
                 R.layout.support_simple_spinner_dropdown_item, vt);

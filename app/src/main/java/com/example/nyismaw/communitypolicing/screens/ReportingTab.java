@@ -2,6 +2,7 @@ package com.example.nyismaw.communitypolicing.screens;
 
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,22 +26,8 @@ import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
-import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
-import com.example.nyismaw.communitypolicing.controller.signIn.SignInInterface;
-import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
-import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Task;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.nyismaw.communitypolicing.R.drawable.ic_broken_image_black_24dp;
 
 
 /**
@@ -84,15 +71,15 @@ public class ReportingTab extends Fragment {
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_image_black_24dp));
         if (savedInstanceState != null) {
 
-                byte[] byteArray = savedInstanceState.getByteArray("BitmapImage");
-                if(byteArray!=null) {
-                    Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                    imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 200,
-                            200, false));
-                }
-            if(editText.getText().length() != 0 ) {
-                    editText.setText(savedInstanceState.getInt("editText"));
-                }
+            byte[] byteArray = savedInstanceState.getByteArray("BitmapImage");
+            if (byteArray != null) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 200,
+                        200, false));
+            }
+            if (editText.getText().length() != 0) {
+                editText.setText(savedInstanceState.getInt("editText"));
+            }
         }
 
         Button photoButton = (Button) v.findViewById(R.id.button1);
@@ -112,10 +99,11 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
                 dialog = new Dialog(ReportingTab.this.getContext());
                 dialog.setContentView(R.layout.popuptab1);
+                dialog.setTitle("Please fill in the issue details");
 
-                MoreDetailsDialog moreDetailsDialog=  new MoreDetailsDialog(ReportingTab.this,dialog);
+
+                MoreDetailsDialog moreDetailsDialog = new MoreDetailsDialog(ReportingTab.this, dialog);
                 moreDetailsDialog.dialog.setTitle("Please fill in the issue details");
-
                 dialog.show();
             }
         });
@@ -124,28 +112,7 @@ public class ReportingTab extends Fragment {
         playButton = (Button) v.findViewById(R.id.button3);
         buttonStop = (Button) v.findViewById(R.id.button5);
 
-
-
-        Button signoutButton = (Button) v.findViewById(R.id.button9);
-        signoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("Sign out started ","sign out strated");
-
-                SignoutInterface signoutInterface= new SignoutUser(ReportingTab.this);
-                signoutInterface.signout();
-                Intent intent = new Intent(ReportingTab.this.getContext(), SignInActivity.class);
-                startActivity(intent);
-//                final Task<Void> voidTask = LocationServices.getFusedLocationProviderClient(ReportingTab.this.mainTabActivity)
-//                        .removeLocationUpdates(new AppLocationListener());
-                ReportingTab.this.getActivity().finish();
-
-
-            }
-        });
-
-
-        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
+        audioConfig = new AudioConfig(this, buttonStop, recordButton, playButton);
 
 
         Button submit = v.findViewById(R.id.submit);
@@ -165,8 +132,8 @@ public class ReportingTab extends Fragment {
                     }
                 }
 
-                manageReportedIssues.reportIssue(bitmap,description,MoreDetailsDialog.categoryType,
-                        MoreDetailsDialog.severityOfIssue,MoreDetailsDialog.vt);
+                manageReportedIssues.reportIssue(bitmap, description, MoreDetailsDialog.categoryType,
+                        MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vt);
 
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
@@ -178,14 +145,13 @@ public class ReportingTab extends Fragment {
                         + "/myaudio.3gp";
                 File file = new File(path);
                 file.delete();
-                MoreDetailsDialog.categoryType=null;
-                MoreDetailsDialog.severityOfIssue=null;
-                MoreDetailsDialog.vt=null;
+                MoreDetailsDialog.categoryType = null;
+                MoreDetailsDialog.severityOfIssue = null;
+                MoreDetailsDialog.vt = null;
 
 
             }
         });
-
 
         return v;
     }
