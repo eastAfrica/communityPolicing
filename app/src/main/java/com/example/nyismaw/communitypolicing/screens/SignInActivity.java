@@ -1,12 +1,14 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
@@ -93,7 +95,6 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
 
@@ -120,6 +121,7 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
 //    private void assignUserToApp(GoogleSignInAccount account) {
 //
@@ -152,6 +154,7 @@ public class SignInActivity extends AppCompatActivity {
     public static GoogleSignInClient getmGoogleSignInClient() {
         return mGoogleSignInClient;
     }
+
 
     public static void setmGoogleSignInClient(GoogleSignInClient mGoogleSignInClient) {
         SignInActivity.mGoogleSignInClient = mGoogleSignInClient;

@@ -147,6 +147,7 @@ public class MoreDetailsDialog {
 
         });
 
+
     }
 
     private void vehicleListset() {
@@ -175,6 +176,7 @@ public class MoreDetailsDialog {
             gridLayout.addView(description3);
             gridLayout.addView(button);
         }
+
 
     }
 

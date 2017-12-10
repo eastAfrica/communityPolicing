@@ -35,4 +35,5 @@ public class Accident {
     public void setVehicles(List<String> vehicles) {
         this.vehicles = vehicles;
     }
-}
+
+    }
