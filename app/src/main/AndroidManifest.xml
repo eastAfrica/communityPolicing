@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.MainTabActivity"
-           >
+            >
 
         </activity>
         <activity android:name=".controller.signIn.SignInWithGoogle"

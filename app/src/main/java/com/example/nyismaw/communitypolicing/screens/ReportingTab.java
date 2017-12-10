@@ -4,6 +4,7 @@ package com.example.nyismaw.communitypolicing.screens;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
@@ -24,10 +26,14 @@ import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.nyismaw.communitypolicing.R.drawable.ic_broken_image_black_24dp;
 
 
 /**
@@ -36,18 +42,26 @@ import java.util.List;
 
 public class ReportingTab extends Fragment {
 
+    public static final int RequestPermissionCode = 1;
     private static final int CAMERA_REQUEST = 1888;
     static Button buttonStop;
     static Button playButton;
     static Button recordButton;
     static Button moredetails;
-    private ImageView imageView;
-
-    public static final int RequestPermissionCode = 1;
     View v;
     AudioConfig audioConfig;
     MainActivity mainTabActivity;
-    private Dialog  dialog ;
+    EditText editText;
+    private ImageView imageView;
+    private Dialog dialog;
+    private Bitmap bitmap;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // retain this fragment
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +70,22 @@ public class ReportingTab extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.tab_1, container, false);
 
+        editText = v.findViewById(R.id.plain_text_input);
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_image_black_24dp));
+        if (savedInstanceState != null) {
+
+                byte[] byteArray = savedInstanceState.getByteArray("BitmapImage");
+                if(byteArray!=null) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                    imageView.setImageBitmap(Bitmap.createScaledBitmap(bmp, 200,
+                            200, false));
+                }
+            if(editText.getText().length() != 0 ) {
+                    editText.setText(savedInstanceState.getInt("editText"));
+                }
+        }
+
         Button photoButton = (Button) v.findViewById(R.id.button1);
 
         photoButton.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +103,7 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
                 dialog = new Dialog(ReportingTab.this.getContext());
                 dialog.setContentView(R.layout.popuptab1);
-                MoreDetailsDialog x=  new MoreDetailsDialog(ReportingTab.this,dialog);
+                MoreDetailsDialog x = new MoreDetailsDialog(ReportingTab.this, dialog);
                 x.dialog.setTitle("Please fill in the issue details");
                 dialog.show();
             }
@@ -84,48 +112,64 @@ public class ReportingTab extends Fragment {
         recordButton = (Button) v.findViewById(R.id.button2);
         playButton = (Button) v.findViewById(R.id.button3);
         buttonStop = (Button) v.findViewById(R.id.button5);
-        audioConfig= new AudioConfig(this,buttonStop,recordButton,playButton);
+        audioConfig = new AudioConfig(this, buttonStop, recordButton, playButton);
 
-        Button submit= v.findViewById(R.id.submit);
+        Button submit = v.findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View vw) {
-                EditText editText = v.findViewById(R.id.plain_text_input);
-                String description= editText.getText().toString();
-                ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
-                Log.e("Reporting failure",bitmap+", "+description+","+AudioConfig.isHasRecorded());
-                if(bitmap==null && description.isEmpty()){
 
-                    if( !AudioConfig.isHasRecorded()){
-                        Toast.makeText(getContext(), "Please, at least provide one information",
+                String description = editText.getText().toString();
+                ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
+                Log.e("Reporting failure", bitmap + ", " + description + "," + AudioConfig.isHasRecorded());
+                if (bitmap == null && description.isEmpty()) {
+
+                    if (!AudioConfig.isHasRecorded()) {
+                        Toast.makeText(getContext(), "Please, at least provide one set of information",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                manageReportedIssues.createObject(bitmap,description);
+                manageReportedIssues.createObject(bitmap, description);
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",
                         Toast.LENGTH_SHORT).show();
                 imageView.setImageBitmap(null);
                 editText.setText(null);
                 AudioConfig.setHasRecorded(false);
-                String path= Environment.getExternalStorageDirectory().getAbsolutePath()
+                String path = Environment.getExternalStorageDirectory().getAbsolutePath()
                         + "/myaudio.3gp";
-                File file= new File(path);
+                File file = new File(path);
                 file.delete();
 
             }
         });
 
+
         return v;
     }
-    private Bitmap bitmap;
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == getActivity().RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
-            bitmap=photo;
+            bitmap = photo;
+
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (bitmap != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            outState.putByteArray("BitmapImage", byteArray);
+            outState.putString("editText", editText.getText().toString());
         }
     }
+
 
 }
