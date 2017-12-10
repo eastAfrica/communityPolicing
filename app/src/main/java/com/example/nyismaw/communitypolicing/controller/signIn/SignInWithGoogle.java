@@ -6,9 +6,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterIssues;
+import com.example.nyismaw.communitypolicing.model.User;
 import com.example.nyismaw.communitypolicing.screens.SignInActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -58,19 +59,9 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
         signInActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    @Override
-    public void signout() {
-        mAuth.signOut();
-        mGoogleSignInClient.signOut().addOnCompleteListener(signInActivity,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
 
-                    }
-                });
-    }
 
-    public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    public void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -78,22 +69,30 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            User user = new User();
+                            user.setUsername(acct.getDisplayName());
+                            user.setEmail(acct.getEmail());
+
+
+                            FirebaseUser userF = mAuth.getCurrentUser();
                             List<String> policeId = FetchedIssues.getPoliceId();
-                            String userId= user.getUid();
+                            String userId = userF.getUid();
+                            user.setId(userId);
                             if (policeId != null) {
 
-                                 for(String string: policeId)
-                                 {
-                                     if(userId.equals(string)){
 
-                                   //      Log.e("You are ","You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                                     }
-                                 }
+                                for (String string : policeId) {
+
+                                    if (userId.equals(string)) {
+                                        user.setApolice(true);
+                                        //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                                    }
+                                }
+
                             }
-
-                            Toast.makeText(signInActivity, "Signed in as." + user.getDisplayName(),
+                            CurrentUser.user = user;
+                            signInActivity.startMainActivity();
+                            Toast.makeText(signInActivity, "Signed in as." + user.getUsername(),
                                     Toast.LENGTH_SHORT).show();
 
 

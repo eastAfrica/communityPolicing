@@ -17,6 +17,7 @@ import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignInFactory;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignInInterface;
 import com.example.nyismaw.communitypolicing.R;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignInWithGoogle;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInApi;
@@ -48,7 +49,7 @@ public class SignInActivity extends AppCompatActivity {
     public static final int RC_SIGN_IN = 9001;
     private static final int CAMERA_REQUEST = 1888;
     private String TAG = "Main Activity";
-    private GoogleSignInClient mGoogleSignInClient;
+    private static GoogleSignInClient mGoogleSignInClient;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
     private static final int MY_PERMISSION_ACCESS_COARSE_LOCATION = 11;
@@ -70,8 +71,9 @@ public class SignInActivity extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
             Log.e("123", "Existssssssssssssssssssssssss " + account.getDisplayName());
-            assignUserToApp(account);
-            startMainActivity();
+            SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
+            signInInterface.authenticate(account);
+          //  startMainActivity();
 
         }
         setContentView(R.layout.activity_main);
@@ -104,8 +106,9 @@ public class SignInActivity extends AppCompatActivity {
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 signInInterface.authenticate(account);
-                assignUserToApp(account);
-                startMainActivity();
+                SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
+                signInInterface.authenticate(account);
+              //  startMainActivity();
 
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
@@ -119,31 +122,41 @@ public class SignInActivity extends AppCompatActivity {
         finish();
     }
 
-    private void assignUserToApp(GoogleSignInAccount account) {
 
-        Log.e("" + SignInActivity.class, "Creating user");
+//    private void assignUserToApp(GoogleSignInAccount account) {
+//
+//        Log.e(""+SignInActivity.class,"Creating user");
+//
+//        User user = new User();
+//        user.setUsername(account.getDisplayName());
+//        user.setEmail(account.getEmail());
+//
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser userF = mAuth.getCurrentUser();
+//        List<String> policeId = FetchedIssues.getPoliceId();
+//        String userId = userF.getUid();
+//        user.setId(userId);
+//        if (policeId != null) {
+//
+//            for (String string : policeId) {
+//
+//                if (userId.equals(string)) {
+//                    user.setApolice(true);
+//                 //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+//                }
+//            }
+//        }
+//        CurrentUser.user = user;
+//
+//
+//    }
 
-        User user = new User();
-        user.setUsername(account.getDisplayName());
-        user.setEmail(account.getEmail());
-
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser userF = mAuth.getCurrentUser();
-        List<String> policeId = FetchedIssues.getPoliceId();
-        String userId = userF.getUid();
-        user.setId(userId);
-        if (policeId != null) {
-
-            for (String string : policeId) {
-
-                if (userId.equals(string)) {
-                    user.setApolice(true);
-                    //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-                }
-            }
-        }
-        CurrentUser.user = user;
+    public static GoogleSignInClient getmGoogleSignInClient() {
+        return mGoogleSignInClient;
+    }
 
 
+    public static void setmGoogleSignInClient(GoogleSignInClient mGoogleSignInClient) {
+        SignInActivity.mGoogleSignInClient = mGoogleSignInClient;
     }
 }

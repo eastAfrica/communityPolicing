@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -29,11 +31,13 @@ public class BlockedRoadsFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (categoryOfIssues.equals(Category.BLOCKED_ROADS)) {
+                    if (!categoryOfIssues.equals(Category.BLOCKED_ROADS)) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
+
+            Log.e("Location filter","Blocked road filter is  "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

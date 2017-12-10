@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -29,11 +31,13 @@ public class PotHoleFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (categoryOfIssues.equals(Category.POTHOLES)) {
+                    if (!categoryOfIssues.equals(Category.POTHOLES)) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
+
+            Log.e("pot hole filter"," plot hole filter "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
