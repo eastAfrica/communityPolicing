@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -30,11 +32,13 @@ public class AccidentFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (categoryOfIssues.equals(Category.ACCIDENTS)) {
+                    if (!categoryOfIssues.equals(Category.ACCIDENTS)) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
+
+            Log.e("Location filter","Accident filter "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

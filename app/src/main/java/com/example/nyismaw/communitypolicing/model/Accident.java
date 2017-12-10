@@ -12,7 +12,6 @@ public class Accident {
     private String severity;
     private List<String> vehicles;
 
-
     public String getId() {
         return id;
     }
@@ -36,4 +35,5 @@ public class Accident {
     public void setVehicles(List<String> vehicles) {
         this.vehicles = vehicles;
     }
-}
+
+    }
