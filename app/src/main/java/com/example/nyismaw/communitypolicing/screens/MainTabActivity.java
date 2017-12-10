@@ -95,6 +95,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering accidents only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
             }
         });
 
@@ -103,6 +105,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering pot holes only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
             }
         });
 
@@ -111,6 +115,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering blocked roads only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
             }
         });
 
@@ -119,6 +125,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering fallen trees only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
             }
         });
 
@@ -127,6 +135,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering others only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
             }
         });
 
