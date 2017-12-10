@@ -10,8 +10,6 @@ import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
-import com.example.nyismaw.communitypolicing.controller.notification.NotificationInterface;
-import com.example.nyismaw.communitypolicing.controller.notification.PushNotifications;
 import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -67,19 +65,11 @@ public class FireBaseProxy {
         //  Log.e("tag","get object is called");
         final List<Object> objects = new ArrayList<>();
         DatabaseReference myRef2 = database.getReference("police");
-
         myRef2.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
-                Log.e("At least alternate", "police alternting");
-                if (CurrentUser.user.getId().equals(policeId)) {
-                    Log.e("You are a ", "**************** Police ***********************");
-                    CurrentUser.user.setApolice(true);
-                    int x = 1;
-                }
-                //   CurrentUser.user.setApolice(true);
 
             }
 
@@ -208,7 +198,7 @@ public class FireBaseProxy {
         Issues issues = new Issues();
         issues.setDetails(description);
         Accident accident = new Accident();
-//        accident.setVehicles("vehicle1, vehicle2");
+        accident.setVehicles("vehicle1, vehicle2");
         accident.setSeverity("severe");
         accident.setId(id);
 
@@ -234,9 +224,6 @@ public class FireBaseProxy {
         issues.setUserid(CurrentUser.user);
         myRef.child(id).setValue(issues);
 
-        DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("issuesRepository");
-        myRef2.child(id).setValue(issues);
-
     }
 
     public List<Object> getReportedIssues() {
@@ -258,18 +245,6 @@ public class FireBaseProxy {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Issues issues = dataSnapshot.getValue(Issues.class);
-
-                FetchedIssues.removeIssue(issues);
-
-                FetchedIssues.addIssue(issues);
-                if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
-
-                    NotificationInterface notificationInterface = new PushNotifications(appLocationListener.getMainTabActivity());
-                    notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-
-                }
-
 
             }
 
@@ -280,53 +255,6 @@ public class FireBaseProxy {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //  Log.e("CHile is removed", "////////////////////////////////////// child removed");
-                Issues issues = dataSnapshot.getValue(Issues.class);
-                Log.e("CHile is removed", "////////////////////////////////////// child removed " + issues.getId());
-
-                FetchedIssues.removeIssue(issues);
-
-            }
-            // ...
-        });
-
-        myRef.child("resolved").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                Issues issues = dataSnapshot.getValue(Issues.class);
-                FetchedIssues.addIssue(issues);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.e("CHile is chageddd", "////////////////////////////////////// child updated");
-                Issues issues = dataSnapshot.getValue(Issues.class);
-                FetchedIssues.addIssue(issues);
-                if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
-
-                    NotificationInterface notificationInterface = new PushNotifications(appLocationListener.getMainTabActivity());
-                    notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-
-                }
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.e("CHile is removed", "////////////////////////////////////// child removed");
-                Issues issues = dataSnapshot.getValue(Issues.class);
-                FetchedIssues.addIssue(issues);
 
             }
             // ...

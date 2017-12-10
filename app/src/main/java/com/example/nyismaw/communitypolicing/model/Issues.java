@@ -14,8 +14,11 @@ public class Issues {
     private String details;
     private String imageId;
     private boolean isResolved;
-    private boolean notificationIsSent;
 
+    public Issues(){
+
+
+    }
     public String getId() {
         return id;
     }
@@ -86,13 +89,5 @@ public class Issues {
 
     public void setResolved(boolean resolved) {
         isResolved = resolved;
-    }
-
-    public boolean isNotificationIsSent() {
-        return notificationIsSent;
-    }
-
-    public void setNotificationIsSent(boolean notificationIsSent) {
-        this.notificationIsSent = notificationIsSent;
     }
 }
