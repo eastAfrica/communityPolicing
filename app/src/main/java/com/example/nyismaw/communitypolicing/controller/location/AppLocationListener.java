@@ -10,15 +10,8 @@ import android.location.Location;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.filters.FilterIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterPipeInterface;
-import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
 import com.example.nyismaw.communitypolicing.controller.maps.*;
 import com.example.nyismaw.communitypolicing.ApiWrapper.DownloadFileInterface;
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
@@ -43,7 +36,7 @@ import java.util.List;
 public class AppLocationListener implements LocationListener {
 
 
-    private MainTabActivity mainTabActivity;
+    MainTabActivity mainTabActivity;
 
     public AppLocationListener(MainTabActivity mainTabActivity) {
         this.mainTabActivity = mainTabActivity;
@@ -57,8 +50,6 @@ public class AppLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
-        reprotedIssuesInterface.getReportedIssues();
         new CurrentLocation().setLocation(location);
         //   Log.e(" after that *****", "**********************    "+location.getLatitude()+" , "+location.getLongitude());
         if (MapFragment.getmMap() != null) {
@@ -73,12 +64,10 @@ public class AppLocationListener implements LocationListener {
                         dialog = new Dialog(mainTabActivity);
                         dialog.setContentView(R.layout.popup);
                         dialog.setTitle(marker.getTitle());
-                        currentIssueId = marker.getTitle();
+                        currentIssueId= marker.getTitle();
 
                         TextView textViewUser = dialog.findViewById(R.id.description);
-                        Issues issues = FetchedIssues.getIssueById(marker.getTitle());
-                        if (issues == null)
-                            return false;
+                        Issues issues = new FilterIssues().filterIssueById(marker.getTitle());
                         DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
                         downloadFileInterface.downLoadImage(issues.getId());
                         downloadFileInterface.downLoadAudio(issues.getId());
@@ -93,32 +82,18 @@ public class AppLocationListener implements LocationListener {
         ReprotedIssuesInterface entities = new FireBaseAPI();
         entities.getReportedIssues();
 
-        for (int i = 0; i < MapFragment.getMarkers().size(); i++) {
-            MapFragment.getMarkers().get(i).remove();
-            MapFragment.getMarkers().remove(i);
+        for (int i = 0; i < com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().size(); i++) {
+            com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().get(i).remove();
+            com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().remove(i);
         }
         //  Log.e(" size that *****", " after removing size is ------------    " + +MapFragment.markers.size());
 
-        if (MapFragment.getmMap() != null) {
-            Marker marker = MapFragment.getmMap().addMarker(new MarkerOptions().position(new
+        if (com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getmMap() != null) {
+            Marker marker = com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getmMap().addMarker(new MarkerOptions().position(new
                     LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
 
-            MapFragment.getMarkers().add(marker);
-
-
-
-            FilterPipeInterface filterPipeInterface =
-                    new LocationFilter(
-                            new AccidentFilter(
-                                    new BlockedRoadsFilter(
-                                            new FallenTressFilter(
-                                                    new OtherIssuesFilter(
-                                                            new PotHoleFilter()
-                                                    ))
-                                    )));
-
-
-            List<Issues> issues = filterPipeInterface.filter(FetchedIssues.getIssues());
+            com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().add(marker);
+            List<Issues> issues = FetchedIssues.getUnResolvedIssues();
             if (issues != null) {
                 for (Object obj : issues) {
                     Issues issue = (Issues) obj;
@@ -128,11 +103,11 @@ public class AppLocationListener implements LocationListener {
                         LatLng location1 = new LatLng(issue.getLocation()
                                 .getLatitude(), issue.getLocation().getLongtude());
 
-                        Marker marker2 = MapFragment.getmMap().addMarker(new MarkerOptions().position(location1));
+                        Marker marker2 = com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getmMap().addMarker(new MarkerOptions().position(location1));
                         //marker2.setSnippet();
                         marker2.setTitle(issue.getId());
                         // marker2.hideInfoWindow();
-                        MapFragment.getMarkers().add(marker2);
+                        com.example.nyismaw.communitypolicing.controller.maps.MapFragment.getMarkers().add(marker2);
 
                     }
 
@@ -149,11 +124,4 @@ public class AppLocationListener implements LocationListener {
         new MapDialog().showDialog(mainTabActivity, bytes, audio, dialog);
     }
 
-    public MainTabActivity getMainTabActivity() {
-        return mainTabActivity;
-    }
-
-    public void setMainTabActivity(MainTabActivity mainTabActivity) {
-        this.mainTabActivity = mainTabActivity;
-    }
 }

@@ -41,11 +41,10 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
         Spinner spinner_category = (Spinner) dialog.findViewById(R.id.spinner_category);
         //use enumerations
         ArrayList<String> category = new ArrayList<String>();
-        category.add(0, "None");
-        category.add(1, Category.ACCIDENTS.toString());
-        category.add(2, Category.POTHOLES.toString());
-        category.add(3, Category.BLOCKED_ROADS.toString());
-        category.add(4, Category.FALLEN_TREES.toString());
+        category.add(0, Category.ACCIDENTS.toString());
+        category.add(1, Category.POTHOLES.toString());
+        category.add(2, Category.BLOCKED_ROADS.toString());
+        category.add(3, Category.FALLEN_TREES.toString());
 
 
          // Creating adapter for spinner
@@ -63,11 +62,10 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
         Spinner spinner_severity = (Spinner) dialog.findViewById(R.id.spinner_severity);
         //
         ArrayList<String> severity = new ArrayList<String>();
-        severity.add(0, "None");
-        severity.add(1, Severity.CRITICAL.toString());
-        severity.add(2, Severity.HIGH.toString());
-        severity.add(3, Severity.MEDIUM.toString());
-        severity.add(4, Severity.LOW.toString());
+        severity.add(0, Severity.CRITICAL.toString());
+        severity.add(1, Severity.HIGH.toString());
+        severity.add(2, Severity.MEDIUM.toString());
+        severity.add(3, Severity.LOW.toString());
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(reportingTab.getContext(), R.layout.support_simple_spinner_dropdown_item, severity);
         // Drop down layout style - list view with radio button
@@ -82,12 +80,11 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
         spinner_type = (Spinner) dialog.findViewById(R.id.spinner_vt);
         //
         ArrayList<String> vt = new ArrayList<String>();
-        vt.add(0, "None");
-        vt.add(1, VehicleType.SEDAN.toString());
-        vt.add(2, VehicleType.BICYCLE.toString());
-        vt.add(3, VehicleType.FAMILYVAN.toString());
-        vt.add(4, VehicleType.PICKUP.toString());
-        vt.add(5, VehicleType.FOUR_WHEEL_TRUCK.toString());
+        vt.add(0, VehicleType.SEDAN.toString());
+        vt.add(1, VehicleType.BICYCLE.toString());
+        vt.add(2, VehicleType.FAMILYVAN.toString());
+        vt.add(3, VehicleType.PICKUP.toString());
+        vt.add(4, VehicleType.FOUR_WHEEL_TRUCK.toString());
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(reportingTab.getContext(), R.layout.support_simple_spinner_dropdown_item, vt);
         // Drop down layout style - list view with radio button
@@ -102,7 +99,6 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
                 String type = spinner_type.getSelectedItem().toString();
                 TextView description3 = (TextView) dialog.findViewById(R.id.description3);
                 description3.setTextColor(Color.RED);
@@ -115,6 +111,8 @@ public class MoreDetailsDialog implements AdapterView.OnItemSelectedListener {
             }
 
         });
+
+
 
     }
 

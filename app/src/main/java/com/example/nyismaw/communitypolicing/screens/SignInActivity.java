@@ -56,8 +56,6 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
-        reprotedIssuesInterface.fireBasePoliceId();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(this.getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -66,8 +64,8 @@ public class SignInActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-            Log.e("123", "Existssssssssssssssssssssssss " + account.getDisplayName());
+        if(account!=null){
+            Log.e("123", "Existssssssssssssssssssssssss " +account.getDisplayName());
             assignUserToApp(account);
             startMainActivity();
 
@@ -91,7 +89,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-
+        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
+        reprotedIssuesInterface.fireBasePoliceId();
     }
 
 
@@ -118,26 +117,22 @@ public class SignInActivity extends AppCompatActivity {
         finish();
     }
 
-    private void assignUserToApp(GoogleSignInAccount account) {
-
-        Log.e(""+SignInActivity.class,"Creating user");
+    private void assignUserToApp( GoogleSignInAccount account){
 
         User user = new User();
         user.setUsername(account.getDisplayName());
         user.setEmail(account.getEmail());
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser userF = mAuth.getCurrentUser();
         List<String> policeId = FetchedIssues.getPoliceId();
         String userId = userF.getUid();
-        user.setId(userId);
         if (policeId != null) {
 
             for (String string : policeId) {
 
                 if (userId.equals(string)) {
                     user.setApolice(true);
-                 //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+                    Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                 }
             }
         }
