@@ -201,7 +201,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -212,7 +212,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         pager = (ViewPager) findViewById(R.id.pager2);
         pager.setAdapter(adapter);
 
-        // Assining the Sliding Tab Layout View
+        // Assigning the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 

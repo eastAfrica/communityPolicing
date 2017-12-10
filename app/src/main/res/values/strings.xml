@@ -21,7 +21,7 @@
     <string name="menu_logout">Logout</string>
     <string name="Resolve">Resolve Issue</string>
     <string name="go">Drive to</string>
-    <string name="descriptionOfIssue">Discription</string>
+    <string name="descriptionOfIssue">Description</string>
     <string name="severityOfIssue">Severity</string>
     <string name="categoryOfIssues">Category</string>
     <string name="numbefOFVechicleInvolved">Vehicles involved</string>

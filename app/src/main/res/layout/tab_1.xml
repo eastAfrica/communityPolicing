@@ -54,14 +54,6 @@
         </Button>
 
         <Button
-            android:id="@+id/button9"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="signout">
-
-        </Button>
-
-        <Button
             android:id="@+id/button6"
             android:layout_width="50dp"
             android:layout_height="50dp"

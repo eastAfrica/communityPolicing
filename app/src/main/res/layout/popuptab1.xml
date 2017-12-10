@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:popupTheme="@style/Dialog">
+    android:popupTheme="@style/CustomDialog">
 
     <include
-        android:id="@+id/tool_bar"
-        layout="@layout/tool_bar"></include>
+        android:id="@+id/tool_bar_dialog"
+        layout="@layout/tool_bar_dialog">
+
+    </include>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -78,17 +80,18 @@
         <!--<ScrollView-->
         <!--android:layout_width="200dp"-->
         <!--android:layout_height="200dp">-->
-        <GridLayout
-            android:id="@+id/description3"
-             android:columnCount="2"
-            android:columnWidth="70dp"
-            android:gravity="center"
-            android:layout_height="wrap_content"
-
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:scrollbars="vertical"
-            android:stretchMode="columnWidth" />
         <!--</ScrollView>-->
     </ScrollView>
+
+    <GridLayout
+        android:id="@+id/description3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:columnWidth="70dp"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth" />
 </LinearLayout>

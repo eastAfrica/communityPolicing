@@ -2,46 +2,190 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/tool_bar"
-        ></include>
+    android:orientation="horizontal"
+    android:popupTheme="@style/CustomDialog">
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+
+
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="horizontal">
-
-    <ImageView
-        android:id="@+id/imageViewForMap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ImageView>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <include
+            android:id="@+id/tool_bar_dialog"
+            layout="@layout/tool_bar_dialog"></include>
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewPopup"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="Play Audio ">
 
-        </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/popUpPlay"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_play_arrow_black_24dp">
 
-        </Button>
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/disc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/descriptionOfIssue" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingLeft="10dp" />
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/categoryOfIssues" />
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/severityOfIssue" />
+
+                    <TextView
+                        android:id="@+id/severity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="10dp" />
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/vinv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/numbefOFVechicleInvolved" />
+
+                    <TextView
+                        android:id="@+id/vehiclInvovled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/repBY"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/Reportedby" />
+
+                    <TextView
+                        android:id="@+id/reportedBy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewPopup"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:text="@string/playAudio">
+
+                    </TextView>
+
+                    <Button
+                        android:id="@+id/popUpPlay"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ic_play_arrow_black_24dp">
+
+                    </Button>
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_marginLeft="15dp"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        > <include
+        android:id="@+id/tool_bar_dialog"
+        layout="@layout/tool_bar_dialog"></include>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:id="@+id/imageViewForMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ></ImageView>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
