@@ -179,6 +179,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         }
         return true;
     }
+    LocationManager mLocationManager;
 
 //    public boolean onNavigationItemSelectedListener(MenuItem item) {
 //        if (mToggle.onOptionsItemSelected(item)) {
@@ -219,7 +220,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
         Log.e(" ON perm1*****", "**************************");
 
-        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String mProviderName = mLocationManager.getBestProvider(criteria, true);
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -262,6 +263,12 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+    public void removeLocatinoUpdates(){
+        //mLocationManager.removeUpdates(new AppLocationListener());
+
+       // LocationServices.FusedLocationApi.removeLocationUpdates(new AppLocationListener(this));
 
     }
 

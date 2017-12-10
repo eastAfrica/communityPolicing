@@ -12,6 +12,10 @@
         android:orientation="vertical"
         tools:context="com.example.nyismaw.communitypolicing.screens.MainTabActivity">
 
+        <!--<include-->
+        <!--android:id="@+id/tool_bar"-->
+        <!--layout="@layout/tool_bar"-->
+        <!--&gt;</include>-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

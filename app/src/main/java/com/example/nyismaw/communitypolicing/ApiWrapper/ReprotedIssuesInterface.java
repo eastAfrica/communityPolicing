@@ -7,7 +7,8 @@ import java.util.List;
  */
 
 public interface ReprotedIssuesInterface  {
-    public void createObject(Object object, String description);
+    public void reportIssue(Object object, String description,String categoryName,
+                            String Severity,List<String> vehichleInvolved);
     public List<Object> getReportedIssues();
     public void fireBasePoliceId();
 }

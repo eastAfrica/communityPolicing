@@ -30,7 +30,7 @@ public class FallenTressFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (categoryOfIssues.equals(Category.FALLEN_TREES)) {
+                    if (!categoryOfIssues.equals(Category.FALLEN_TREES)) {
                         filteredIssues.add(currentIssues);
                     }
                 }

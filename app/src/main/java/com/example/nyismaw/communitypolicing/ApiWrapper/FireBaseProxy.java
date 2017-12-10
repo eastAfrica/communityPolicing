@@ -67,6 +67,7 @@ public class FireBaseProxy {
         //  Log.e("tag","get object is called");
         final List<Object> objects = new ArrayList<>();
         DatabaseReference myRef2 = database.getReference("police");
+        Log.e("At least alternate", "police alternting " +myRef2.getDatabase());
 
         myRef2.addChildEventListener(new ChildEventListener() {
             @Override
@@ -74,11 +75,15 @@ public class FireBaseProxy {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
                 Log.e("At least alternate", "police alternting");
-                if (CurrentUser.user.getId().equals(policeId)) {
-                    Log.e("You are a ", "**************** Police ***********************");
-                    CurrentUser.user.setApolice(true);
-                    int x = 1;
+                if(CurrentUser.user!=null){
+
+                    if (CurrentUser.user.getId().equals(policeId)) {
+                        Log.e("You are a ", "**************** Police ***********************");
+                        CurrentUser.user.setApolice(true);
+                        int x = 1;
+                    }
                 }
+
                 //   CurrentUser.user.setApolice(true);
 
             }
@@ -202,14 +207,20 @@ public class FireBaseProxy {
 
     }
 
-    public void createObject(Object object, String description) {
+    public void reportIssue(Object object, String description,String categoryName,
+                            String severity,List<String> vehichleInvolved) {
 
+       List<String> list = null;
         String id = myRef.child("Issues").push().getKey();
         Issues issues = new Issues();
         issues.setDetails(description);
+        issues.setCategoryOfIssues(categoryName);
+
         Accident accident = new Accident();
-//        accident.setVehicles("vehicle1, vehicle2");
-        accident.setSeverity("severe");
+
+        accident.setVehicles(vehichleInvolved);
+        accident.setSeverity(severity);
+
         accident.setId(id);
 
         if (object != null) {
@@ -232,6 +243,7 @@ public class FireBaseProxy {
         issues.setLocation(mylocation);
         issues.setTxt(description);
         issues.setUserid(CurrentUser.user);
+        issues.setAccident(accident);
         myRef.child(id).setValue(issues);
 
         DatabaseReference myRef2 = FirebaseDatabase.getInstance().getReference("issuesRepository");
