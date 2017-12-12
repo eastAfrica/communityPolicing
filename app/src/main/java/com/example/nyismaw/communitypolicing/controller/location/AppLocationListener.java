@@ -51,6 +51,7 @@ public class AppLocationListener implements LocationListener {
 
 
     }
+
     public AppLocationListener() {
         this.mainTabActivity = mainTabActivity;
 
@@ -60,7 +61,8 @@ public class AppLocationListener implements LocationListener {
     Dialog dialog;
 
     public static String currentIssueId;
-    public void removeLocationUpdates(){
+
+    public void removeLocationUpdates() {
 
     }
 
@@ -83,16 +85,16 @@ public class AppLocationListener implements LocationListener {
                         dialog.setContentView(R.layout.popup);
                         dialog.setTitle(marker.getTitle());
                         currentIssueId = marker.getTitle();
-                       ;
-                       // TextView textViewUser = dialog.findViewById(R.id.description);
+                        ;
+                        // TextView textViewUser = dialog.findViewById(R.id.description);
                         Issues issues = FetchedIssues.getIssueById(marker.getTitle());
-                        setItemsToDialog(dialog,issues);
+                        setItemsToDialog(dialog, issues);
                         if (issues == null)
                             return false;
                         DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
                         downloadFileInterface.downLoadImage(issues.getId());
                         downloadFileInterface.downLoadAudio(issues.getId());
-                   //     textViewUser.setText(issues.getDetails());
+                        //     textViewUser.setText(issues.getDetails());
                         //  dialog.show(issues.getId());
                         return true;
                     }
@@ -114,7 +116,6 @@ public class AppLocationListener implements LocationListener {
                     LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
 
             MapFragment.getMarkers().add(marker);
-
 
 
             FilterPipeInterface filterPipeInterface =
@@ -167,37 +168,40 @@ public class AppLocationListener implements LocationListener {
         this.mainTabActivity = mainTabActivity;
     }
 
-    private void setItemsToDialog(Dialog dialog,Issues issues){
+    private void setItemsToDialog(Dialog dialog, Issues issues) {
 
         TextView description = dialog.findViewById(R.id.description);
         description.setText(issues.getDetails());
 
         TextView category = dialog.findViewById(R.id.category);
-        category.setText(issues.getCategoryOfIssues());
-
+        if (category != null) {
+            category.setText(issues.getCategoryOfIssues());
+        }
         Accident accident = issues.getAccident();
-        if(accident!=null){
+        if (accident != null) {
             TextView severity = dialog.findViewById(R.id.severity);
-            severity.setText(accident.getSeverity());
+            if (severity != null) {
+                severity.setText(accident.getSeverity());
+            }
 
             TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
-            vechiles.setText(accident.getVehicles().toString());
+            if (vechiles != null) {
+                vechiles.setText(accident.getVehicles().toString());
+            }
+
+        } else {
+            TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
 
 
         }
-        else {
-            TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
 
-
-        }
-
-        User user= issues.getUserid();
-        if(user!=null){
+        User user = issues.getUserid();
+        if (user != null) {
             TextView reportedBy = dialog.findViewById(R.id.reportedBy);
-            reportedBy.setText(user.getUsername());
-
+            if (reportedBy != null) {
+                reportedBy.setText(user.getUsername());
+            }
         }
-
 
 
     }

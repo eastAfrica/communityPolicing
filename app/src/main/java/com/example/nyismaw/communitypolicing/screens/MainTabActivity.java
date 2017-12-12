@@ -15,8 +15,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 
 import android.support.v4.widget.DrawerLayout;
@@ -32,22 +34,29 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.support.v7.widget.SwitchCompat;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.gestures.GestureService;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
+import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.GoogleMap;
 
 import static android.support.v7.app.AppCompatActivity.*;
 
 public class MainTabActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
     ViewPager pager;
@@ -61,6 +70,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     private static final int MY_PERMISSION_ACCESS_FINE_LOCATION = 12;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private SwitchCompat accidents_switch;
+    GoogleMap mMap;
 
 
     @Override
@@ -75,6 +86,60 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         setContentView(R.layout.activity_main_tab);
         Toolbar t = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(t);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Switch accidentsSwitch= navigationView.getMenu().findItem(R.id.accidents).getActionView().findViewById(R.id.switch_item);
+        accidentsSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("msg", "filtering accidents only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        Switch potholesSwitch= navigationView.getMenu().findItem(R.id.potholes).getActionView().findViewById(R.id.switch_item);
+        potholesSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("msg", "filtering pot holes only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        Switch blockRoadSwitch= navigationView.getMenu().findItem(R.id.blocked_roads).getActionView().findViewById(R.id.switch_item);
+        blockRoadSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("msg", "filtering blocked roads only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        Switch fallenTreesSwitch= navigationView.getMenu().findItem(R.id.fallen_trees).getActionView().findViewById(R.id.switch_item);
+        fallenTreesSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("msg", "filtering fallen trees only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
+        Switch othersSwitch= navigationView.getMenu().findItem(R.id.others).getActionView().findViewById(R.id.switch_item);
+        othersSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("msg", "filtering others only" );
+                pager.setCurrentItem(1);
+                mDrawerLayout.closeDrawers();
+            }
+        });
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(MainTabActivity.this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -102,14 +167,18 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 //        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 //        startActivityForResult(intent, 666);
 
-
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main2, menu);
+        getMenuInflater().inflate(R.menu.nav_menu, menu);
+
         return true;
     }
 
@@ -118,14 +187,21 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
     LocationManager mLocationManager;
+
+//    public boolean onNavigationItemSelectedListener(MenuItem item) {
+//        if (mToggle.onOptionsItemSelected(item)) {
+//            return true;
+//        }
+//        return true;
+//    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -136,7 +212,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         pager = (ViewPager) findViewById(R.id.pager2);
         pager.setAdapter(adapter);
 
-        // Assining the Sliding Tab Layout View
+        // Assigning the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 

@@ -56,7 +56,6 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
     public void signin() {
         Log.e("TAG", "sign in started");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-
         signInActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -81,6 +80,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                             user.setId(userId);
                             if (policeId != null) {
 
+
                                 for (String string : policeId) {
 
                                     if (userId.equals(string)) {
@@ -88,6 +88,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                                         //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                     }
                                 }
+
                             }
                             CurrentUser.user = user;
                             signInActivity.startMainActivity();

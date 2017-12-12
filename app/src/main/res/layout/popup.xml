@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:popupTheme="@style/CustomDialog">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -15,8 +16,8 @@
             android:orientation="vertical">
 
             <include
-                android:id="@+id/tool_bar"
-                layout="@layout/tool_bar"></include>
+                android:id="@+id/tool_bar_dialog"
+                layout="@layout/tool_bar_dialog"></include>
 
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
