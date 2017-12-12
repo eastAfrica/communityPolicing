@@ -12,5 +12,5 @@ import java.util.List;
 
 
     public List<Issues> filter(List<Issues> issues);
-    public void setNextPipe(FilterPipeInterface filterPipeInterface);
+    public void setNextPipe(FilterAbstractClass filterPipeInterface);
  }

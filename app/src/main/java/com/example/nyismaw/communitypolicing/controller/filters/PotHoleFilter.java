@@ -13,11 +13,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class PotHoleFilter implements FilterPipeInterface {
+public class PotHoleFilter extends FilterAbstractClass {
 
-    private FilterPipeInterface nextFilter;
+    private FilterAbstractClass nextFilter;
 
-    public PotHoleFilter(FilterPipeInterface nextFilter) {
+    public PotHoleFilter(FilterAbstractClass nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -49,7 +49,7 @@ public class PotHoleFilter implements FilterPipeInterface {
     }
 
     @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
+    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
         this.nextFilter = filterPipeInterface;
     }
 }

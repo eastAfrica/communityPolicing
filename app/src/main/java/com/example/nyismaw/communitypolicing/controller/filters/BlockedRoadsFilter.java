@@ -13,14 +13,14 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class BlockedRoadsFilter implements FilterPipeInterface {
+public class BlockedRoadsFilter extends FilterAbstractClass {
 
-    private FilterPipeInterface nextFilter;
+    private FilterAbstractClass nextFilter;
     public BlockedRoadsFilter() {
 
     }
 
-    public BlockedRoadsFilter(FilterPipeInterface nextFilter) {
+    public BlockedRoadsFilter(FilterAbstractClass nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -49,7 +49,7 @@ public class BlockedRoadsFilter implements FilterPipeInterface {
     }
 
     @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
+    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
         this.nextFilter= filterPipeInterface;
     }
 }

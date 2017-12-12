@@ -6,6 +6,7 @@ import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +14,28 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class AccidentFilter implements FilterPipeInterface {
+public class AccidentFilter extends FilterAbstractClass  {
 
-    private FilterPipeInterface nextFilter;
 
-    public AccidentFilter(FilterPipeInterface nextFilter) {
+
+    private FilterAbstractClass nextFilter;
+
+    public AccidentFilter(FilterAbstractClass nextFilter) {
         this.nextFilter = nextFilter;
+        try {
+            pos.connect(nextFilter.pis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public AccidentFilter() {
 
     }
 
+    @Override
+    public void run() {
+        super.run();
+    }
 
     @Override
     public List<Issues> filter(List<Issues> issues) {
@@ -33,6 +45,9 @@ public class AccidentFilter implements FilterPipeInterface {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
                     if (!categoryOfIssues.equals(Category.ACCIDENTS)) {
+
+
+
                         filteredIssues.add(currentIssues);
                     }
                 }
@@ -50,7 +65,7 @@ public class AccidentFilter implements FilterPipeInterface {
     }
 
     @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
+    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
         this.nextFilter = filterPipeInterface;
     }
 }
