@@ -185,7 +185,7 @@ public class AppLocationListener implements LocationListener {
             }
 
             TextView vechiles = dialog.findViewById(R.id.vehiclInvovled);
-            if (vechiles != null) {
+            if (vechiles != null & accident.getVehicles() != null) {
                 vechiles.setText(accident.getVehicles().toString());
             }
 

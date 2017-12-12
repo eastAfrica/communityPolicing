@@ -31,13 +31,13 @@ public class PotHoleFilter extends FilterAbstractClass {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.POTHOLES)) {
+                    if (!categoryOfIssues.equals(Category.POTHOLES.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
-            Log.e("pot hole filter"," plot hole filter "+filteredIssues.size());
+         //   Log.e("pot hole filter"," plot hole filter "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

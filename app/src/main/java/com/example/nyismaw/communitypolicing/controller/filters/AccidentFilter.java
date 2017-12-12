@@ -22,11 +22,11 @@ public class AccidentFilter extends FilterAbstractClass  {
 
     public AccidentFilter(FilterAbstractClass nextFilter) {
         this.nextFilter = nextFilter;
-        try {
-            pos.connect(nextFilter.pis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            pos.connect(nextFilter.pis);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
     public AccidentFilter() {
 
@@ -43,17 +43,18 @@ public class AccidentFilter extends FilterAbstractClass  {
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
+
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.ACCIDENTS)) {
+              //      Log.e("Location filter",categoryOfIssues+", "+Category.ACCIDENTS+" filter "+filteredIssues.size()+" and showing accidents "+CurrentUserPreferences.isShowACCIDENTS() );
 
-
+                    if (!categoryOfIssues.equals(Category.ACCIDENTS.toString())) {
+                        Log.e("Location filter",categoryOfIssues+", "+Category.ACCIDENTS+" filter "+filteredIssues.size()+" and showing accidents "+CurrentUserPreferences.isShowACCIDENTS() );
 
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
-            Log.e("Location filter","Accident filter "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

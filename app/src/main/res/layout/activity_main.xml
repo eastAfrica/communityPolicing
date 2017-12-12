@@ -37,7 +37,7 @@
             android:layout_marginTop="76dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:text="Community policing app lets make our cities save" />
+            android:text="@string/community_policing_app_lets_make_our_cities_save" />
 
 
             <!--<Button-->
@@ -83,7 +83,7 @@
         android:id="@+id/sign_in_button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anonymous Sign in "
+        android:text="@string/anonymous_sign_in"
       android:layout_marginLeft="20dp" />
     </LinearLayout>
 

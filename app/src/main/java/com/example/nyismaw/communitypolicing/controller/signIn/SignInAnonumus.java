@@ -67,7 +67,7 @@ public class SignInAnonumus implements SignInInterface {
 
 
     @Override
-    public void authenticate(Object obj) {
+    public void authenticate(Object obj,boolean startactivity) {
 
     }
 }

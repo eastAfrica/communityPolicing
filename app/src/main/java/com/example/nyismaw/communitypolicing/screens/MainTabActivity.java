@@ -9,6 +9,7 @@ import android.gesture.Gesture;
 import android.graphics.PixelFormat;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ import com.example.nyismaw.communitypolicing.controller.location.AppLocationList
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -62,7 +65,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Report IT", "Map","Emergency contacts"};
+    CharSequence Titles[] = {"Report IT", "Map", "Emergency contacts"};
     int Numboftabs = 3;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
@@ -77,72 +80,15 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if(CurrentUser.user==null){
-//
-//            Intent intent = new Intent(MainTabActivity.this,SignInActivity.class);
-//            startActivity(intent);
-//
-//        }
         setContentView(R.layout.activity_main_tab);
-        Toolbar t = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(t);
-
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Switch accidentsSwitch= navigationView.getMenu().findItem(R.id.accidents).getActionView().findViewById(R.id.switch_item);
-        accidentsSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("msg", "filtering accidents only" );
-                pager.setCurrentItem(1);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        Switch potholesSwitch= navigationView.getMenu().findItem(R.id.potholes).getActionView().findViewById(R.id.switch_item);
-        potholesSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("msg", "filtering pot holes only" );
-                pager.setCurrentItem(1);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        Switch blockRoadSwitch= navigationView.getMenu().findItem(R.id.blocked_roads).getActionView().findViewById(R.id.switch_item);
-        blockRoadSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("msg", "filtering blocked roads only" );
-                pager.setCurrentItem(1);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        Switch fallenTreesSwitch= navigationView.getMenu().findItem(R.id.fallen_trees).getActionView().findViewById(R.id.switch_item);
-        fallenTreesSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("msg", "filtering fallen trees only" );
-                pager.setCurrentItem(1);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
-        Switch othersSwitch= navigationView.getMenu().findItem(R.id.others).getActionView().findViewById(R.id.switch_item);
-        othersSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("msg", "filtering others only" );
-                pager.setCurrentItem(1);
-                mDrawerLayout.closeDrawers();
-            }
-        });
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(MainTabActivity.this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
+        pager = (ViewPager) findViewById(R.id.pager2);
+        new NavigationMenus(navigationView, mDrawerLayout, pager);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -157,28 +103,32 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         }
         mGoogleApiClient.connect();
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(2000);
-        mLocationRequest.setFastestInterval(2000);
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
         Intent mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         getApplicationContext().startService(mServiceIntent);
-//
-//        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-//        startActivityForResult(intent, 666);
-
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.logout) {
+            Log.e("Sign out started ", "sign out strated");
+
+            SignoutInterface signoutInterface = new SignoutUser(this);
+            signoutInterface.signout();
+            Intent intent = new Intent(this, SignInActivity.class);
+            startActivity(intent);
+            this.finish();
+            Log.e("Logout", "Logout button clicked");
+        }
         return false;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.nav_menu, menu);
-
         return true;
     }
 
@@ -189,82 +139,58 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         }
         return true;
     }
-    LocationManager mLocationManager;
 
-//    public boolean onNavigationItemSelectedListener(MenuItem item) {
-//        if (mToggle.onOptionsItemSelected(item)) {
-//            return true;
-//        }
-//        return true;
-//    }
+    LocationManager mLocationManager;
+    AppLocationListener appLocationListener;
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter = new ViewPagerAdapter(getSupportFragmentManager(), Titles, Numboftabs);
-
-        // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager2);
-        pager.setAdapter(adapter);
-
-        // Assigning the Sliding Tab Layout View
+        try {
+            pager.setAdapter(adapter);
+        } catch (Exception ex) {
+        }
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting Custom Color for the Scroll bar indicator of the Tab View
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 return getResources().getColor(R.color.tabsScrollColor);
             }
         });
-
-        // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
-
-
-        Log.e(" ON perm1*****", "**************************");
-
-         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        appLocationListener = new AppLocationListener(this);
         Criteria criteria = new Criteria();
         String mProviderName = mLocationManager.getBestProvider(criteria, true);
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Log.e(" ON perm1*****", "**************************");
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
+
             if (mLastLocation != null) {
                 LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, new AppLocationListener(this));
-                Log.e(" First time *****", "**********************    " + mLastLocation.getLatitude() + " , " + mLastLocation.getLongitude());
+                        mGoogleApiClient, mLocationRequest, appLocationListener);
                 CurrentLocation.location = (mLastLocation);
-
             }
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
                 LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, new AppLocationListener(this));
+                        mGoogleApiClient, mLocationRequest, appLocationListener);
             }
             if (mProviderName == null || mProviderName.equals("")) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
             }
         } else {
-            Log.e(" ON perm2*****", "**************************");
-
-
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSION_ACCESS_FINE_LOCATION);
         }
-
     }
 
     @Override
@@ -275,10 +201,10 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    public void removeLocatinoUpdates(){
-        //mLocationManager.removeUpdates(new AppLocationListener());
 
-       // LocationServices.FusedLocationApi.removeLocationUpdates(new AppLocationListener(this));
+    public void removeLocatinoUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,appLocationListener);
+
 
     }
 
@@ -286,16 +212,20 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 666) {
-//            if (Settings.canDrawOverlays(this)) {
-//                // SYSTEM_ALERT_WINDOW permission not granted...
-//                //Toast.makeText(MyProtector.getContext(), "ACTION_MANAGE_OVERLAY_PERMISSION Permission Granted", Toast.LENGTH_SHORT).show();
-//                Intent serviceIntent = new Intent(getApplicationContext(), GestureService.class);
-//                startService(serviceIntent);
-//
-//
-//            }
-
-
+            if (Settings.canDrawOverlays(this)) {
+                // SYSTEM_ALERT_WINDOW permission not granted...
+                //Toast.makeText(MyProtector.getContext(), "ACTION_MANAGE_OVERLAY_PERMISSION Permission Granted", Toast.LENGTH_SHORT).show();
+                Intent serviceIntent = new Intent(getApplicationContext(), GestureService.class);
+                startService(serviceIntent);
+            }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        removeLocatinoUpdates();
+        mGoogleApiClient = null;
+        Log.e("Remlocationupdates", "Remove location updess when fragment dies");
+        super.onStop();
     }
 }

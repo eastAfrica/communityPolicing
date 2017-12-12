@@ -14,16 +14,16 @@ import java.util.List;
 
 public class FetchedIssues {
     private static List<Issues> issues = Collections.synchronizedList(new ArrayList<Issues>());
-   // private static List<String> issuesNotified = Collections.synchronizedList(new ArrayList<String>());
+    // private static List<String> issuesNotified = Collections.synchronizedList(new ArrayList<String>());
     private static List<String> policeId = Collections.synchronizedList(new ArrayList<String>());
 
     public static List<Issues> getIssues() {
         return issues;
     }
 
-    public static List<Issues> getUnResolvedIssues() {
+    public static List<Issues> getUnResolvedIssues(List<Issues> issues) {
         List<Issues> i = new ArrayList();
-        for (Issues iss : FetchedIssues.issues) {
+        for (Issues iss :issues) {
             if (iss.isResolved() == false)
                 i.add(iss);
 
@@ -35,13 +35,6 @@ public class FetchedIssues {
         FetchedIssues.issues = issues;
     }
 
-//    public static List<String> getIssuesNotified() {
-//        return issuesNotified;
-//    }
-//
-//    public static void setIssuesNotified(List<String> issuesNotified) {
-//        FetchedIssues.issuesNotified = issuesNotified;
-//    }
 
     public static List<String> getPoliceId() {
         return policeId;
@@ -55,20 +48,13 @@ public class FetchedIssues {
     public static void addIssue(Issues issue) {
         synchronized (issues) {
             if (issues != null) {
-
                 for (Issues iss : issues) {
-
                     if (iss.getId().equals(issue.getId()))
-
                         return;
                 }
                 issues.add(issue);
-
             }
-
         }
-
-
     }
 
     public static void removeIssue(Issues issue) {
@@ -79,9 +65,9 @@ public class FetchedIssues {
             for (Issues iss : issues) {
 
                 if (iss.getId().equals(issue.getId())) {
-                    Log.e("123", "Issue is removed +++++++++++++++++++++++----------- before " + issues.size());
+                    //      Log.e("123", "Issue is removed +++++++++++++++++++++++----------- before " + issues.size());
                     issueToBeRemoved = (iss);
-                    Log.e("123", "Issue is removed +++++++++++++++++++++++----------- after " + issues.size());
+                    //    Log.e("123", "Issue is removed +++++++++++++++++++++++----------- after " + issues.size());
                 }
 
                 ;
@@ -94,6 +80,7 @@ public class FetchedIssues {
 
 
     }
+
     public static Issues getIssueById(String id) {
 
         List<Issues> issues = FetchedIssues.getIssues();

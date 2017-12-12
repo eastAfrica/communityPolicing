@@ -31,13 +31,13 @@ public class BlockedRoadsFilter extends FilterAbstractClass {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.BLOCKED_ROADS)) {
+                    if (!categoryOfIssues.equals(Category.BLOCKED_ROADS.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
-            Log.e("Location filter","Blocked road filter is  "+filteredIssues.size());
+//            Log.e("Location filter","Blocked road filter is  "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

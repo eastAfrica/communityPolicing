@@ -67,7 +67,7 @@ public class FireBaseProxy {
         //  Log.e("tag","get object is called");
         final List<Object> objects = new ArrayList<>();
         DatabaseReference myRef2 = database.getReference("police");
-        Log.e("At least alternate", "police alternting " +myRef2.getDatabase());
+        Log.e("At least alternate", "police alternting " + myRef2.getDatabase());
 
         myRef2.addChildEventListener(new ChildEventListener() {
             @Override
@@ -75,17 +75,15 @@ public class FireBaseProxy {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
                 Log.e("At least alternate", "police alternting");
-                if(CurrentUser.user!=null){
-
-                    if (CurrentUser.user.getId().equals(policeId)) {
-                        Log.e("You are a ", "**************** Police ***********************");
-                        CurrentUser.user.setApolice(true);
-                        int x = 1;
+                if (CurrentUser.user != null) {
+                    if (CurrentUser.user.getId() != null) {
+                        if (CurrentUser.user.getId().equals(policeId)) {
+                            Log.e("You are a ", "**************** Police ***********************");
+                            CurrentUser.user.setApolice(true);
+                            int x = 1;
+                        }
                     }
                 }
-
-                //   CurrentUser.user.setApolice(true);
-
             }
 
             @Override
@@ -207,10 +205,10 @@ public class FireBaseProxy {
 
     }
 
-    public void reportIssue(Object object, String description,String categoryName,
-                            String severity,List<String> vehichleInvolved) {
+    public void reportIssue(Object object, String description, String categoryName,
+                            String severity, List<String> vehichleInvolved) {
 
-       List<String> list = null;
+        List<String> list = null;
         String id = myRef.child("Issues").push().getKey();
         Issues issues = new Issues();
         issues.setDetails(description);

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class OtherIssuesFilter implements FilterPipeInterface {
+public class OtherIssuesFilter extends FilterAbstractClass {
 
     private FilterPipeInterface nextFilter;
 
@@ -31,13 +31,13 @@ public class OtherIssuesFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.OTHER)) {
+                    if (!categoryOfIssues.equals(Category.OTHER.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
-            Log.e("Location filter","other filter  "+filteredIssues.size());
+         //   Log.e("Location filter","other filter  "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
@@ -49,7 +49,7 @@ public class OtherIssuesFilter implements FilterPipeInterface {
     }
 
     @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
+    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
         this.nextFilter = filterPipeInterface;
     }
 }

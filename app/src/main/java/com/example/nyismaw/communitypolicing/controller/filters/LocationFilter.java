@@ -16,11 +16,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class LocationFilter implements FilterPipeInterface {
+public class LocationFilter extends FilterAbstractClass {
 
-    private FilterPipeInterface nextFilter;
+    private FilterAbstractClass nextFilter;
 
-    public LocationFilter(FilterPipeInterface nextFilter) {
+    public LocationFilter(FilterAbstractClass nextFilter) {
         this.nextFilter = nextFilter;
     }
     public LocationFilter() {
@@ -29,7 +29,7 @@ public class LocationFilter implements FilterPipeInterface {
 
     @Override
     public List<Issues> filter(List<Issues> issues) {
-        Log.e("Location filter"," Location Analysis started ********************");
+      //  Log.e("Location filter"," Location Analysis started ********************");
         double distanceThreshold = CurrentUserPreferences.getNotificationDistance();
         List<Issues> issues1 = FetchedIssues.getIssues();
         List<Issues> filteredIssues = new ArrayList();
@@ -45,7 +45,7 @@ public class LocationFilter implements FilterPipeInterface {
             }
 
         }
-        Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
+    //    Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
 
         if (nextFilter == null)
             return filteredIssues;
@@ -53,7 +53,7 @@ public class LocationFilter implements FilterPipeInterface {
     }
 
     @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
+    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
         this.nextFilter = filterPipeInterface;
     }
 }

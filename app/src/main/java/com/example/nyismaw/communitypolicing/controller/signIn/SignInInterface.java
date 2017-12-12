@@ -6,6 +6,6 @@ package com.example.nyismaw.communitypolicing.controller.signIn;
 
 public interface SignInInterface {
     public void signin();
-    public void authenticate(Object object);
 
+    public void authenticate(Object object, boolean startActivity);
 }

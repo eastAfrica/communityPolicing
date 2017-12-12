@@ -11,7 +11,14 @@ import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
+import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
+import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
+import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterPipeInterface;
+import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
+import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
+import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
 import com.example.nyismaw.communitypolicing.controller.location.LocationAnalysis;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.MyLocation;
@@ -50,25 +57,33 @@ public class NotificationService extends IntentService {
         mBackGroundTimer.schedule(new TimerTask() {
             public void run() {
                 try {
-                    Location currentLocation = new CurrentLocation().getLocation();
-                    List<Issues> issues = FetchedIssues.getUnResolvedIssues();
+                    FilterPipeInterface filterPipeInterface =
+                            new LocationFilter(
+                                    new AccidentFilter(
+                                            new BlockedRoadsFilter(
+                                                    new FallenTressFilter(
+                                                            new OtherIssuesFilter(
+                                                                    new PotHoleFilter()
+                                                            ))
+                                            )));
+
+                    List<Issues> issues = filterPipeInterface.filter(FetchedIssues.getIssues());
+
                     for (Issues iss : issues) {
 
                         MyLocation myLocation1 = iss.getLocation();
                         Location issueLocation = new Location("Location");
                         issueLocation.setLatitude(myLocation1.getLatitude());
                         issueLocation.setLongitude(myLocation1.getLongtude());
-                        double distance = LocationAnalysis.getDistance(currentLocation, issueLocation);
-                        if (distance < issueNotificationDistance) {
-                            if (!iss.isNotificationIsSent() & !(CurrentUser.user.getId().equals(iss.getUserid().getId()))) {
-                                NotificationInterface notificationInterface = new PushNotifications(getApplicationContext());
-                                notificationInterface.sendNotification("Issue has been reported in your area", iss.getDetails());
-                                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
-                                if (myRef != null)
-                                    myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
-                            }
-
+                        if (!iss.isNotificationIsSent() & !(CurrentUser.user.getId().equals(iss.getUserid().getId()))) {
+                            NotificationInterface notificationInterface = new PushNotifications(getApplicationContext());
+                            notificationInterface.sendNotification("Issue has been reported in your area", iss.getDetails());
+                            DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
+                            if (myRef != null)
+                                myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
                         }
+
+
 //                        Log.e("Service", "Distance from issues " +
 //                                LocationAnalysis.getDistance(currentLocation, issueLocation));
 

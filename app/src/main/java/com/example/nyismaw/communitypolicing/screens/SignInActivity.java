@@ -70,10 +70,11 @@ public class SignInActivity extends AppCompatActivity {
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            Log.e("123", "Existssssssssssssssssssssssss " + account.getDisplayName());
+            Log.e("123", "Exists " + account.getDisplayName());
             SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
-            signInInterface.authenticate(account);
-          //  startMainActivity();
+
+            signInInterface.authenticate(account,false);
+            startMainActivity();
 
         }
         setContentView(R.layout.activity_main);
@@ -105,9 +106,9 @@ public class SignInActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                signInInterface.authenticate(account);
+           //     signInInterface.authenticate(account);
                 SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
-                signInInterface.authenticate(account);
+                signInInterface.authenticate(account,true);
               //  startMainActivity();
 
             } catch (ApiException e) {
@@ -119,6 +120,7 @@ public class SignInActivity extends AppCompatActivity {
     public void startMainActivity() {
         Intent intent = new Intent(this, MainTabActivity.class);
         startActivity(intent);
+
         finish();
     }
 

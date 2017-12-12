@@ -133,7 +133,7 @@ public class ReportingTab extends Fragment {
                 }
 
                 manageReportedIssues.reportIssue(bitmap, description, MoreDetailsDialog.categoryType,
-                        MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vt);
+                        MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vehiclesInvolved);
 
                 manageReportedIssues.getReportedIssues();
                 Toast.makeText(getContext(), "Issue reported",

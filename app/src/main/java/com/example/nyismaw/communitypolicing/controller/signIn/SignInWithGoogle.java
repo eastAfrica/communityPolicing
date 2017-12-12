@@ -60,8 +60,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
     }
 
 
-
-    public void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+    public void firebaseAuthWithGoogle(final GoogleSignInAccount acct, final boolean startActivity) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -91,7 +90,8 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
 
                             }
                             CurrentUser.user = user;
-                            signInActivity.startMainActivity();
+                            if (startActivity == true)
+                                signInActivity.startMainActivity();
                             Toast.makeText(signInActivity, "Signed in as." + user.getUsername(),
                                     Toast.LENGTH_SHORT).show();
 
@@ -107,7 +107,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
     }
 
     @Override
-    public void authenticate(Object object) {
-        firebaseAuthWithGoogle((GoogleSignInAccount) object);
+    public void authenticate(Object object,boolean startActivity) {
+        firebaseAuthWithGoogle((GoogleSignInAccount) object,startActivity);
     }
 }

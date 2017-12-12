@@ -33,7 +33,7 @@
         app:actionLayout="@layout/switch_item"/>
 
     <item
-        android:id="@+id/issues_analyses"
+        android:id="@+id/more_settings"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="@string/menu_issueAnalysis"/>
 
