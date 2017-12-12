@@ -47,6 +47,8 @@ import com.example.nyismaw.communitypolicing.controller.location.AppLocationList
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
+import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -95,6 +97,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering accidents only" );
+                CurrentUserPreferences.setShowACCIDENTS(true);
                 pager.setCurrentItem(1);
                 mDrawerLayout.closeDrawers();
             }
@@ -105,6 +108,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering pot holes only" );
+                CurrentUserPreferences.setShowPOTHOLES(true);
                 pager.setCurrentItem(1);
                 mDrawerLayout.closeDrawers();
             }
@@ -115,6 +119,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering blocked roads only" );
+                CurrentUserPreferences.setShowBlockedRoads(true);
                 pager.setCurrentItem(1);
                 mDrawerLayout.closeDrawers();
             }
@@ -125,6 +130,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering fallen trees only" );
+                CurrentUserPreferences.setShowFALLEN_TREES(true);
                 pager.setCurrentItem(1);
                 mDrawerLayout.closeDrawers();
             }
@@ -135,6 +141,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             @Override
             public void onClick(View view) {
                 Log.e("msg", "filtering others only" );
+                CurrentUserPreferences.setShowOTHER(true);
                 pager.setCurrentItem(1);
                 mDrawerLayout.closeDrawers();
             }

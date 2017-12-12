@@ -130,17 +130,13 @@ public class ReportingTab extends Fragment {
         signoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Sign out started ","sign out strated");
+                Log.e("Sign out started ","sign out started");
 
                 SignoutInterface signoutInterface= new SignoutUser(ReportingTab.this);
                 signoutInterface.signout();
                 Intent intent = new Intent(ReportingTab.this.getContext(), SignInActivity.class);
                 startActivity(intent);
-//                final Task<Void> voidTask = LocationServices.getFusedLocationProviderClient(ReportingTab.this.mainTabActivity)
-//                        .removeLocationUpdates(new AppLocationListener());
                 ReportingTab.this.getActivity().finish();
-
-
             }
         });
 
@@ -211,6 +207,4 @@ public class ReportingTab extends Fragment {
             outState.putString("editText", editText.getText().toString());
         }
     }
-
-
 }
