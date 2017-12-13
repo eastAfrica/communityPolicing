@@ -106,7 +106,7 @@ public class MapDialog {
             button.setText(R.string.Resolve);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
             dialog.addContentView(button,params);
-            final String issueId= AppLocationListener.currentIssueId;
+            final String issueId= MapUpdate.getCurrentIssueId();
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
