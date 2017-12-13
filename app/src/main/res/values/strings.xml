@@ -37,4 +37,5 @@
     <string name="tel999">tel:999</string>
     <string name="tell13">tel:113</string>
     <string name="tel111">tel:111</string>
+    <string name="ErrotRecordingStarted">Recording was not started</string>
 </resources>

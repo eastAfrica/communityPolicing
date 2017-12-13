@@ -28,7 +28,7 @@ public class AudioConfig {
 
     private MediaRecorder recorder;
     private String OUTPUT_FILE;
-    String AudioSavePathInDevice = null;
+    static String AudioSavePathInDevice = null;
     MediaRecorder mediaRecorder;
     Random random;
     String RandomAudioFileName = "ABCDEFGHIJKLMNOP";
@@ -38,7 +38,7 @@ public class AudioConfig {
     final Button recordButton;
     String audioFilePath;
     boolean isRecording = false;
-    MediaPlayer mediaPlayer;
+    public   static   MediaPlayer mediaPlayer = new MediaPlayer();
     final ReportingTab reportingTab;
     static private boolean hasRecorded=false;
 
@@ -58,14 +58,15 @@ public class AudioConfig {
         this.recordButton = recordButton1;
         this.reportingTab = reportingTab1;
 
-        AudioSavePathInDevice =
-                // Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +
-                //      CreateRandomAudioFileName(5) + "AudioRecording.3gp";
-                Environment.getExternalStorageDirectory().getAbsolutePath()
+        AudioSavePathInDevice =  Environment.getExternalStorageDirectory().getAbsolutePath()
                         + "audio/myaudio.3gp";
         recordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(!checkPermission()){
+                    requestPermission();
+                }
 
                 if (checkPermission()) {
 
@@ -103,6 +104,14 @@ public class AudioConfig {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mediaRecorder==null){
+
+                    Toast.makeText(reportingTab.getActivity(), R.string.ErrotRecordingStarted,
+                            Toast.LENGTH_LONG).show();
+                    return;
+
+                }
+
                 mediaRecorder.stop();
                // buttonStop.setEnabled(false);
                 playButton.setEnabled(true);
@@ -113,27 +122,26 @@ public class AudioConfig {
                         Toast.LENGTH_LONG).show();
             }
         });
-        mediaPlayer = new MediaPlayer();
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) throws IllegalArgumentException,
                     SecurityException, IllegalStateException {
 
                 //buttonStop.setEnabled(false);
-                recordButton.setEnabled(false);
+              //  recordButton.setEnabled(false);
                 buttonStopPlayingRecording.setEnabled(true);
 
 
                 try {
                     if (mediaPlayer.isPlaying()) {
 
-                        mediaPlayer.stop();
+                       mediaPlayer.stop();
                         playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                         return;
                     }
+
                     mediaPlayer.reset();
-
-
                     mediaPlayer.setDataSource(AudioSavePathInDevice);
                     mediaPlayer.prepare();
                     mediaPlayer.start();
@@ -141,8 +149,14 @@ public class AudioConfig {
                     Toast.makeText(reportingTab.getActivity(), "Recording Playing",
                             Toast.LENGTH_LONG).show();
                     playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        }
+                    });
                 } catch (IOException e) {
-                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded",
+                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded "+AudioSavePathInDevice,
                             Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -176,66 +190,8 @@ public class AudioConfig {
                 PackageManager.FEATURE_MICROPHONE);
     }
 
-    public void recordAudio(View view) throws IOException {
-        isRecording = true;
-        //buttonStop.setEnabled(true);
-        playButton.setEnabled(false);
-        recordButton.setEnabled(false);
 
-        try {
-            mediaRecorder = new MediaRecorder();
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setOutputFile(audioFilePath);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.prepare();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mediaRecorder.start();
-    }
 
-    public void stopClicked(View view) {
-
-       // buttonStop.setEnabled(false);
-        playButton.setEnabled(true);
-
-        if (isRecording) {
-            recordButton.setEnabled(false);
-            mediaRecorder.stop();
-            mediaRecorder.release();
-            mediaRecorder = null;
-            isRecording = false;
-        } else {
-            mediaPlayer.release();
-            mediaPlayer = null;
-            recordButton.setEnabled(true);
-        }
-
-    }
-
-    public void playAudio(View view) throws IOException {
-        playButton.setEnabled(false);
-        recordButton.setEnabled(false);
-       // buttonStop.setEnabled(true);
-
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setDataSource(audioFilePath);
-        mediaPlayer.prepare();
-        mediaPlayer.start();
-    }
-
-    public String CreateRandomAudioFileName(int string) {
-        StringBuilder stringBuilder = new StringBuilder(string);
-        int i = 0;
-        while (i < string) {
-            stringBuilder.append(RandomAudioFileName.
-                    charAt(random.nextInt(RandomAudioFileName.length())));
-
-            i++;
-        }
-        return stringBuilder.toString();
-    }
 
     public void MediaRecorderReady() {
         mediaRecorder = new MediaRecorder();
@@ -257,6 +213,7 @@ public class AudioConfig {
     private void requestPermission() {
         ActivityCompat.requestPermissions(reportingTab.getActivity(), new
                 String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO}, reportingTab.RequestPermissionCode);
+
     }
 
 }

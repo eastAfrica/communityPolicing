@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.example.nyismaw.communitypolicing.model.Enums.Category;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -70,6 +72,8 @@ public class ReportingTab extends Fragment {
 
         editText = v.findViewById(R.id.plain_text_input);
         this.imageView = (ImageView) v.findViewById(R.id.imageView1);
+     //   audio = v.findViewById(R.id.button3);
+
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_image_black_24dp));
         if (savedInstanceState != null) {
 
@@ -82,6 +86,14 @@ public class ReportingTab extends Fragment {
             if (editText.getText().length() != 0) {
                 editText.setText(savedInstanceState.getInt("editText"));
             }
+
+
+
+
+
+
+            // super.onRestoreInstanceState(savedInstanceState);
+
         }
 
         Button photoButton = (Button) v.findViewById(R.id.button1);
@@ -179,6 +191,9 @@ public class ReportingTab extends Fragment {
             byte[] byteArray = stream.toByteArray();
             outState.putByteArray("BitmapImage", byteArray);
             outState.putString("editText", editText.getText().toString());
+           // outState.putInt("position", AudioConfig.mediaPlayer.getPlaybackParams());
+        //    AudioConfig.mediaPlayer.pause();
+
         }
     }
 
