@@ -14,7 +14,7 @@ import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterPipeInterface;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterChainInterface;
 import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
@@ -71,87 +71,88 @@ public class AppLocationListener implements LocationListener {
         ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
         reprotedIssuesInterface.getReportedIssues();
         new CurrentLocation().setLocation(location);
-        //   Log.e(" after that *****", "**********************    "+location.getLatitude()+" , "+location.getLongitude());
-        if (MapFragment.getmMap() != null) {
-
-
-            MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    if (!marker.getTitle().equals("My Location")) {
-                        marker.hideInfoWindow();
-                        Log.e(" marker clicked  *****", "**********************    " + marker.getTitle() + "");
-                        dialog = new Dialog(mainTabActivity);
-                        dialog.setContentView(R.layout.popup);
-                        dialog.setTitle(marker.getTitle());
-                        currentIssueId = marker.getTitle();
-                        ;
-                        // TextView textViewUser = dialog.findViewById(R.id.description);
-                        Issues issues = FetchedIssues.getIssueById(marker.getTitle());
-                        setItemsToDialog(dialog, issues);
-                        if (issues == null)
-                            return false;
-                        DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
-                        downloadFileInterface.downLoadImage(issues.getId());
-                        downloadFileInterface.downLoadAudio(issues.getId());
-                        //     textViewUser.setText(issues.getDetails());
-                        //  dialog.show(issues.getId());
-                        return true;
-                    }
-                    return false;
-                }
-            });
-        }
-        ReprotedIssuesInterface entities = new FireBaseAPI();
-        entities.getReportedIssues();
-
-        for (int i = 0; i < MapFragment.getMarkers().size(); i++) {
-            MapFragment.getMarkers().get(i).remove();
-            MapFragment.getMarkers().remove(i);
-        }
-        //  Log.e(" size that *****", " after removing size is ------------    " + +MapFragment.markers.size());
-
-        if (MapFragment.getmMap() != null) {
-            Marker marker = MapFragment.getmMap().addMarker(new MarkerOptions().position(new
-                    LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
-
-            MapFragment.getMarkers().add(marker);
-
-
-            FilterPipeInterface filterPipeInterface =
-                    new LocationFilter(
-                            new AccidentFilter(
-                                    new BlockedRoadsFilter(
-                                            new FallenTressFilter(
-                                                    new OtherIssuesFilter(
-                                                            new PotHoleFilter()
-                                                    ))
-                                    )));
-
-
-            List<Issues> issues = filterPipeInterface.filter(FetchedIssues.getIssues());
-            if (issues != null) {
-                for (Object obj : issues) {
-                    Issues issue = (Issues) obj;
-
-                    if (issue.getLocation().getLatitude() != null || issue.getLocation().getLongtude() != null) {
-
-                        LatLng location1 = new LatLng(issue.getLocation()
-                                .getLatitude(), issue.getLocation().getLongtude());
-
-                        Marker marker2 = MapFragment.getmMap().addMarker(new MarkerOptions().position(location1));
-                        //marker2.setSnippet();
-                        marker2.setTitle(issue.getId());
-                        // marker2.hideInfoWindow();
-                        MapFragment.getMarkers().add(marker2);
-
-                    }
-
-
-                }
-
-            }
-        }
+        new MapUpdate(mainTabActivity,location).updateMapBasedOnLocation();
+//        //   Log.e(" after that *****", "**********************    "+location.getLatitude()+" , "+location.getLongitude());
+//        if (MapFragment.getmMap() != null) {
+//
+//
+//            MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    if (!marker.getTitle().equals("My Location")) {
+//                        marker.hideInfoWindow();
+//                        Log.e(" marker clicked  *****", "**********************    " + marker.getTitle() + "");
+//                        dialog = new Dialog(mainTabActivity);
+//                        dialog.setContentView(R.layout.popup);
+//                        dialog.setTitle(marker.getTitle());
+//                        currentIssueId = marker.getTitle();
+//                        ;
+//                        // TextView textViewUser = dialog.findViewById(R.id.description);
+//                        Issues issues = FetchedIssues.getIssueById(marker.getTitle());
+//                        setItemsToDialog(dialog, issues);
+//                        if (issues == null)
+//                            return false;
+////                        DownloadFileInterface downloadFileInterface = new FireBaseAPI(AppLocationListener.this);
+////                        downloadFileInterface.downLoadImage(issues.getId());
+////                        downloadFileInterface.downLoadAudio(issues.getId());
+//                        //     textViewUser.setText(issues.getDetails());
+//                        //  dialog.show(issues.getId());
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//            });
+//        }
+//        ReprotedIssuesInterface entities = new FireBaseAPI();
+//        entities.getReportedIssues();
+//
+//        for (int i = 0; i < MapFragment.getMarkers().size(); i++) {
+//            MapFragment.getMarkers().get(i).remove();
+//            MapFragment.getMarkers().remove(i);
+//        }
+//        //  Log.e(" size that *****", " after removing size is ------------    " + +MapFragment.markers.size());
+//
+//        if (MapFragment.getmMap() != null) {
+//            Marker marker = MapFragment.getmMap().addMarker(new MarkerOptions().position(new
+//                    LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
+//
+//            MapFragment.getMarkers().add(marker);
+//
+//
+//            FilterChainInterface filterChainInterface =
+//                    new LocationFilter(
+//                            new AccidentFilter(
+//                                    new BlockedRoadsFilter(
+//                                            new FallenTressFilter(
+//                                                    new OtherIssuesFilter(
+//                                                            new PotHoleFilter()
+//                                                    ))
+//                                    )));
+//
+//
+//            List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
+//            if (issues != null) {
+//                for (Object obj : issues) {
+//                    Issues issue = (Issues) obj;
+//
+//                    if (issue.getLocation().getLatitude() != null || issue.getLocation().getLongtude() != null) {
+//
+//                        LatLng location1 = new LatLng(issue.getLocation()
+//                                .getLatitude(), issue.getLocation().getLongtude());
+//
+//                        Marker marker2 = MapFragment.getmMap().addMarker(new MarkerOptions().position(location1));
+//                        //marker2.setSnippet();
+//                        marker2.setTitle(issue.getId());
+//                        // marker2.hideInfoWindow();
+//                        MapFragment.getMarkers().add(marker2);
+//
+//                    }
+//
+//
+//                }
+//
+//            }
+//        }
 
 
     }

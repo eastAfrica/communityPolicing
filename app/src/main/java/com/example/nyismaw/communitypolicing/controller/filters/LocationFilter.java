@@ -16,11 +16,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class LocationFilter extends FilterAbstractClass {
+public class LocationFilter implements FilterChainInterface {
 
-    private FilterAbstractClass nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public LocationFilter(FilterAbstractClass nextFilter) {
+    public LocationFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
     public LocationFilter() {
@@ -45,15 +45,11 @@ public class LocationFilter extends FilterAbstractClass {
             }
 
         }
-    //    Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
+        Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
 
         if (nextFilter == null)
             return filteredIssues;
         return nextFilter.filter(filteredIssues);
     }
 
-    @Override
-    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
-        this.nextFilter = filterPipeInterface;
-    }
 }

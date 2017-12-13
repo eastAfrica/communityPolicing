@@ -71,7 +71,7 @@ public class MoreDetailsDialog {
 
     }
 
-    static String categoryType;
+    static String categoryType=null;
     static List<String> vehiclesInvolved = new ArrayList();
     static String severityOfIssue;
 

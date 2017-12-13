@@ -1,7 +1,5 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
-import android.util.Log;
-
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -13,11 +11,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class OtherIssuesFilter extends FilterAbstractClass {
+public class OtherIssuesFilter implements FilterChainInterface {
 
-    private FilterPipeInterface nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public OtherIssuesFilter(FilterPipeInterface nextFilter) {
+    public OtherIssuesFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -48,8 +46,5 @@ public class OtherIssuesFilter extends FilterAbstractClass {
         }
     }
 
-    @Override
-    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
-        this.nextFilter = filterPipeInterface;
-    }
+
 }

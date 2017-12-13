@@ -61,7 +61,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
 
 
     public void firebaseAuthWithGoogle(final GoogleSignInAccount acct, final boolean startActivity) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.e(TAG, " firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(signInActivity, new OnCompleteListener<AuthResult>() {
@@ -71,31 +71,27 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                             User user = new User();
                             user.setUsername(acct.getDisplayName());
                             user.setEmail(acct.getEmail());
-
-
                             FirebaseUser userF = mAuth.getCurrentUser();
                             List<String> policeId = FetchedIssues.getPoliceId();
                             String userId = userF.getUid();
                             user.setId(userId);
                             if (policeId != null) {
-
-
                                 for (String string : policeId) {
-
                                     if (userId.equals(string)) {
                                         user.setApolice(true);
-                                        //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
                                     }
                                 }
 
                             }
+                            Log.e("You are ", "Assign users -----------------------------");
                             CurrentUser.user = user;
                             if (startActivity == true)
                                 signInActivity.startMainActivity();
+                            else {
+                                signInActivity.finish();
+                            }
                             Toast.makeText(signInActivity, "Signed in as." + user.getUsername(),
                                     Toast.LENGTH_SHORT).show();
-
-
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(signInActivity, "Authentication failed.",
@@ -107,7 +103,9 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
     }
 
     @Override
-    public void authenticate(Object object,boolean startActivity) {
-        firebaseAuthWithGoogle((GoogleSignInAccount) object,startActivity);
+    public void authenticate(Object object, boolean startActivity) {
+        Log.e("Authentication started ", "Authenticate Users -----------------");
+        this.firebaseAuthWithGoogle((GoogleSignInAccount) object, startActivity);
+        Log.e("Authentication ended ", "Ended  Users -----------------");
     }
 }

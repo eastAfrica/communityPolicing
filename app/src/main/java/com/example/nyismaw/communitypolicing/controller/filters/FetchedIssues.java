@@ -2,6 +2,7 @@ package com.example.nyismaw.communitypolicing.controller.filters;
 
 import android.util.Log;
 
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.model.Issues;
 
 import java.util.ArrayList;
@@ -23,9 +24,33 @@ public class FetchedIssues {
 
     public static List<Issues> getUnResolvedIssues(List<Issues> issues) {
         List<Issues> i = new ArrayList();
-        for (Issues iss :issues) {
+        for (Issues iss : issues) {
             if (iss.isResolved() == false)
                 i.add(iss);
+
+        }
+        return i;
+    }
+
+    public static List<Issues> getUnNotifiedIssues(List<Issues> issues) {
+        List<Issues> i = new ArrayList();
+        for (Issues iss : issues) {
+            if (iss.isNotificationIsSent() == false)
+                i.add(iss);
+
+        }
+        return i;
+    }
+
+    public static List<Issues> getIssuesbyUserId(List<Issues> issues) {
+        List<Issues> i = new ArrayList();
+        for (Issues iss : issues) {
+            if (CurrentUser.user != null) {
+                if (iss.getUserid().getId().equals(CurrentUser.user.getId()))
+                    i.add(iss);
+
+            }
+
 
         }
         return i;
@@ -58,27 +83,15 @@ public class FetchedIssues {
     }
 
     public static void removeIssue(Issues issue) {
-
         synchronized (issues) {
-
             Issues issueToBeRemoved = null;
             for (Issues iss : issues) {
-
                 if (iss.getId().equals(issue.getId())) {
-                    //      Log.e("123", "Issue is removed +++++++++++++++++++++++----------- before " + issues.size());
                     issueToBeRemoved = (iss);
-                    //    Log.e("123", "Issue is removed +++++++++++++++++++++++----------- after " + issues.size());
                 }
-
-                ;
             }
-
             issues.remove(issueToBeRemoved);
-
-
         }
-
-
     }
 
     public static Issues getIssueById(String id) {

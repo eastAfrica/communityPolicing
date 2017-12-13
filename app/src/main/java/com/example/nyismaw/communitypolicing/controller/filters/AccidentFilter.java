@@ -14,59 +14,41 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class AccidentFilter extends FilterAbstractClass  {
+public class AccidentFilter implements FilterChainInterface {
+    private FilterChainInterface nextFilter;
 
-
-
-    private FilterAbstractClass nextFilter;
-
-    public AccidentFilter(FilterAbstractClass nextFilter) {
+    public AccidentFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
-//        try {
-//            pos.connect(nextFilter.pis);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
+
     public AccidentFilter() {
-
-    }
-
-    @Override
-    public void run() {
-        super.run();
     }
 
     @Override
     public List<Issues> filter(List<Issues> issues) {
         if (!CurrentUserPreferences.isShowACCIDENTS()) {
+            Log.e("Location filter", "noooot wanna see accieents Filtering with location ");
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
+            //    Log.e("Location filter", categoryOfIssues + ", " + Category.ACCIDENTS + " filter " + filteredIssues.size() + " and showing accidents " + CurrentUserPreferences.isShowACCIDENTS());
 
                 if (categoryOfIssues != null) {
-              //      Log.e("Location filter",categoryOfIssues+", "+Category.ACCIDENTS+" filter "+filteredIssues.size()+" and showing accidents "+CurrentUserPreferences.isShowACCIDENTS() );
-
                     if (!categoryOfIssues.equals(Category.ACCIDENTS.toString())) {
-                        Log.e("Location filter",categoryOfIssues+", "+Category.ACCIDENTS+" filter "+filteredIssues.size()+" and showing accidents "+CurrentUserPreferences.isShowACCIDENTS() );
-
+                        Log.e("Location filter", categoryOfIssues + ", " + Category.ACCIDENTS + " filter " + filteredIssues.size() + " and showing accidents " + CurrentUserPreferences.isShowACCIDENTS());
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
-
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
         } else {
+            Log.e("Location filter", "wanna see accieents Filtering with location "+issues.size());
             if (nextFilter == null)
                 return issues;
             return nextFilter.filter(issues);
         }
     }
 
-    @Override
-    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
-        this.nextFilter = filterPipeInterface;
-    }
 }

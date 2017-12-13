@@ -27,6 +27,7 @@
     <string name="numbefOFVechicleInvolved">Vehicles involved</string>
     <string name="Reportedby">Reported by</string>
     <string name="playAudio">Play Audio</string>
-    <string name="community_policing_app_lets_make_our_cities_save">Community policing app lets make our cities save</string>
     <string name="anonymous_sign_in">Anonymous Sign in</string>
+    <string name="community_policing_app_lets_make_our_cities_save">Community policing app lets make our cities save</string>
+    <string name="sounds">Sounds</string>
 </resources>

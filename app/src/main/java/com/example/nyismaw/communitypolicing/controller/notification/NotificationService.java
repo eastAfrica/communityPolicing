@@ -1,29 +1,25 @@
 package com.example.nyismaw.communitypolicing.controller.notification;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
+import com.example.nyismaw.communitypolicing.controller.filters.FIlterbyUserId;
 import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterPipeInterface;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterChainInterface;
+import com.example.nyismaw.communitypolicing.controller.filters.FilterThread;
 import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
-import com.example.nyismaw.communitypolicing.controller.location.LocationAnalysis;
+import com.example.nyismaw.communitypolicing.controller.filters.UnresolvedIssuesFilter;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.MyLocation;
-import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -50,6 +46,7 @@ public class NotificationService extends IntentService {
     public static double issueNotificationDistance = 100;
     List<String> notifiedIssues = new ArrayList();
 
+    private FilterThread filterThread;
 
     @Override
     protected void onHandleIntent(@Nullable final Intent intent) {
@@ -57,17 +54,19 @@ public class NotificationService extends IntentService {
         mBackGroundTimer.schedule(new TimerTask() {
             public void run() {
                 try {
-                    FilterPipeInterface filterPipeInterface =
-                            new LocationFilter(
-                                    new AccidentFilter(
-                                            new BlockedRoadsFilter(
-                                                    new FallenTressFilter(
-                                                            new OtherIssuesFilter(
-                                                                    new PotHoleFilter()
-                                                            ))
-                                            )));
+                    FilterChainInterface filterChainInterface =
+                            new FIlterbyUserId(
+                                    new UnresolvedIssuesFilter(new LocationFilter(
+                                            new AccidentFilter(
+                                                    new BlockedRoadsFilter(
+                                                            new FallenTressFilter(
+                                                                    new OtherIssuesFilter(
+                                                                            new PotHoleFilter()
+                                                                    ))
+                                                    ))), true), true);
 
-                    List<Issues> issues = filterPipeInterface.filter(FetchedIssues.getIssues());
+                    List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
+
 
                     for (Issues iss : issues) {
 
@@ -83,9 +82,6 @@ public class NotificationService extends IntentService {
                                 myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
                         }
 
-
-//                        Log.e("Service", "Distance from issues " +
-//                                LocationAnalysis.getDistance(currentLocation, issueLocation));
 
                     }
 

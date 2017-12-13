@@ -26,6 +26,8 @@ import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+import com.example.nyismaw.communitypolicing.model.Enums.Category;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
@@ -131,7 +133,9 @@ public class ReportingTab extends Fragment {
                         return;
                     }
                 }
-
+                if(MoreDetailsDialog.categoryType==null){
+                    MoreDetailsDialog.categoryType= Category.ACCIDENTS.toString();
+                }
                 manageReportedIssues.reportIssue(bitmap, description, MoreDetailsDialog.categoryType,
                         MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vehiclesInvolved);
 

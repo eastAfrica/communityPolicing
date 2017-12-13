@@ -1,12 +1,14 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.gesture.Gesture;
 import android.graphics.PixelFormat;
+import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -38,6 +40,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.support.v7.widget.SwitchCompat;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
@@ -47,6 +50,7 @@ import com.example.nyismaw.communitypolicing.controller.gestures.GestureService;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
+import com.example.nyismaw.communitypolicing.controller.maps.MapService;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
@@ -108,6 +112,9 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         Intent mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         getApplicationContext().startService(mServiceIntent);
+
+//        Intent mServiceIntent2 = new Intent(getApplicationContext(), MapService.class);
+//        getApplicationContext().startService(mServiceIntent2);
     }
 
     @Override
@@ -122,6 +129,12 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             startActivity(intent);
             this.finish();
             Log.e("Logout", "Logout button clicked");
+        }
+        if (item.getItemId() == R.id.more_settings) {
+            Log.e("More settings ", " ");
+            //     Dialog dialog = new Dialog(this);
+
+            //   dialog.setContentView(R.id.moredetailslayout);
         }
         return false;
     }
@@ -203,9 +216,8 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     public void removeLocatinoUpdates() {
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient,appLocationListener);
-
-
+        if (mGoogleApiClient != null)
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, appLocationListener);
     }
 
     @Override

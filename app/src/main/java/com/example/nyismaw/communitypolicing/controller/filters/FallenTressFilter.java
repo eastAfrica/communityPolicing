@@ -11,16 +11,16 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class FallenTressFilter extends FilterAbstractClass {
+public class FallenTressFilter implements FilterChainInterface {
 
-    private FilterAbstractClass nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public  FallenTressFilter (){
+    public FallenTressFilter() {
 
     }
 
 
-    public FallenTressFilter(FilterAbstractClass nextFilter) {
+    public FallenTressFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -46,8 +46,5 @@ public class FallenTressFilter extends FilterAbstractClass {
         }
     }
 
-    @Override
-    public void setNextPipe(FilterAbstractClass filterPipeInterface) {
-        this.nextFilter= filterPipeInterface;
-    }
+
 }

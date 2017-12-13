@@ -44,7 +44,7 @@
             android:layout_marginTop="16dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:text="Community policing app lets make our cities save" />
+            android:text="@string/community_policing_app_lets_make_our_cities_save" />
 
     </RelativeLayout>
 
