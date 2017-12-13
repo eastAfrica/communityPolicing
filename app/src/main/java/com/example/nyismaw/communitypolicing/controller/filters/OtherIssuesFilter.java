@@ -1,7 +1,5 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
-import android.util.Log;
-
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -13,11 +11,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class OtherIssuesFilter implements FilterPipeInterface {
+public class OtherIssuesFilter implements FilterChainInterface {
 
-    private FilterPipeInterface nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public OtherIssuesFilter(FilterPipeInterface nextFilter) {
+    public OtherIssuesFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -31,13 +29,13 @@ public class OtherIssuesFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.OTHER)) {
+                    if (!categoryOfIssues.equals(Category.OTHER.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
-            Log.e("Location filter","other filter  "+filteredIssues.size());
+         //   Log.e("Location filter","other filter  "+filteredIssues.size());
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
@@ -48,8 +46,5 @@ public class OtherIssuesFilter implements FilterPipeInterface {
         }
     }
 
-    @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
-        this.nextFilter = filterPipeInterface;
-    }
+
 }

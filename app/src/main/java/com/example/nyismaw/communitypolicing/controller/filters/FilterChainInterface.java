@@ -8,9 +8,8 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
- public interface FilterPipeInterface {
-
+ public interface FilterChainInterface {
 
     public List<Issues> filter(List<Issues> issues);
-    public void setNextPipe(FilterPipeInterface filterPipeInterface);
+
  }

@@ -14,7 +14,7 @@ public class CurrentUserPreferences {
     private static boolean vibrateNotification;
     private static boolean notifyMeofIssuesReproted;
     private static boolean notifyMeofIssuesResolved;
-    private static double notificationDistance=200;
+    private static double notificationDistance = 200;
 
     public static boolean isShowACCIDENTS() {
         return showACCIDENTS;
@@ -94,5 +94,21 @@ public class CurrentUserPreferences {
 
     public static void setShowBlockedRoads(boolean showBlockedRoads) {
         CurrentUserPreferences.showBlockedRoads = showBlockedRoads;
+    }
+
+    public static void resetPreferences() {
+
+        showACCIDENTS = false;
+        showPOTHOLES = false;
+        showFALLEN_TREES = false;
+        showBlockedRoads = false;
+        showOTHER = false;
+        soundNotification = false;
+        vibrateNotification = false;
+        notifyMeofIssuesReproted = false;
+        notifyMeofIssuesResolved = false;
+        double notificationDistance = 200;
+
+
     }
 }

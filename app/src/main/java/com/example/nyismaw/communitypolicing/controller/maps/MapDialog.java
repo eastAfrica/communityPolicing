@@ -122,8 +122,14 @@ public class MapDialog {
 
 
         }
+        try{
+            dialog.show();
+        }
+        catch (Exception e){
 
-        dialog.show();
+
+
+        }
     }
 }
 

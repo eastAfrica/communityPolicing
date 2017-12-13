@@ -11,15 +11,16 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class FallenTressFilter implements FilterPipeInterface {
+public class FallenTressFilter implements FilterChainInterface {
 
-    private FilterPipeInterface nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public  FallenTressFilter (){
+    public FallenTressFilter() {
 
     }
 
-    public FallenTressFilter(FilterPipeInterface nextFilter) {
+
+    public FallenTressFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -30,7 +31,7 @@ public class FallenTressFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.FALLEN_TREES)) {
+                    if (!categoryOfIssues.equals(Category.FALLEN_TREES.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
@@ -45,8 +46,5 @@ public class FallenTressFilter implements FilterPipeInterface {
         }
     }
 
-    @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
-        this.nextFilter= filterPipeInterface;
-    }
+
 }

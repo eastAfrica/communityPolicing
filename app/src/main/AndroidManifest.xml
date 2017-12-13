@@ -37,11 +37,13 @@
         </activity>
         <service android:name=".controller.notification.NotificationService"
                  android:exported="false"/>
+        <service android:name=".controller.maps.MapService"
+            android:exported="false"/>
         <service android:name=".controller.gestures.GestureService"
             android:exported="false"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCCgK6CeEK64G7aK7gTISXd-P6ncsQS0qw">
+            android:value="AIzaSyDJdIL_IA_O7IOuiBJ37EjyU4ANxpnxWAY ">
         </meta-data>
     </application>
 

@@ -13,11 +13,11 @@ import java.util.List;
  * Created by nyismaw on 12/9/2017.
  */
 
-public class PotHoleFilter implements FilterPipeInterface {
+public class PotHoleFilter implements FilterChainInterface {
 
-    private FilterPipeInterface nextFilter;
+    private FilterChainInterface nextFilter;
 
-    public PotHoleFilter(FilterPipeInterface nextFilter) {
+    public PotHoleFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
     }
 
@@ -31,25 +31,28 @@ public class PotHoleFilter implements FilterPipeInterface {
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
                 if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.POTHOLES)) {
+                    if (!categoryOfIssues.equals(Category.POTHOLES.toString())) {
                         filteredIssues.add(currentIssues);
                     }
                 }
             }
 
             Log.e("pot hole filter"," plot hole filter "+filteredIssues.size());
-            if (nextFilter == null)
+            if (nextFilter == null){
+                Log.e("pot hole filter ","when off  returning "+issues.size());
                 return filteredIssues;
+            }
+
             return nextFilter.filter(filteredIssues);
         } else {
-            if (nextFilter == null)
+            if (nextFilter == null){
+                Log.e("pot hole filter ","when on  returning "+issues.size());
                 return issues;
+            }
+
             return nextFilter.filter(issues);
         }
     }
 
-    @Override
-    public void setNextPipe(FilterPipeInterface filterPipeInterface) {
-        this.nextFilter = filterPipeInterface;
-    }
+
 }

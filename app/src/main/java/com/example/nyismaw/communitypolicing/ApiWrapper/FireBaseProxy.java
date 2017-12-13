@@ -9,7 +9,8 @@ import android.util.Log;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
+import com.example.nyismaw.communitypolicing.controller.maps.MapService;
+import com.example.nyismaw.communitypolicing.controller.maps.MapUpdate;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationInterface;
 import com.example.nyismaw.communitypolicing.controller.notification.PushNotifications;
 import com.example.nyismaw.communitypolicing.model.Accident;
@@ -35,6 +36,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nyismaw on 12/2/2017.
@@ -45,19 +47,19 @@ public class FireBaseProxy {
     static boolean audioDone = false;
 
     private StorageReference mStorageRef;
-    private AppLocationListener appLocationListener;
+    private MapUpdate mapService;
     FirebaseDatabase database;
     DatabaseReference myRef;
 
     public FireBaseProxy() {
-        this.appLocationListener = appLocationListener;
+        this.mapService = mapService;
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://communitypolicing-f24cf.appspot.com");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
     }
 
-    public FireBaseProxy(AppLocationListener appLocationListener) {
-        this.appLocationListener = appLocationListener;
+    public FireBaseProxy(MapUpdate mapService) {
+        this.mapService = mapService;
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://communitypolicing-f24cf.appspot.com");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
@@ -67,7 +69,7 @@ public class FireBaseProxy {
         //  Log.e("tag","get object is called");
         final List<Object> objects = new ArrayList<>();
         DatabaseReference myRef2 = database.getReference("police");
-        Log.e("At least alternate", "police alternting " +myRef2.getDatabase());
+        Log.e("At least alternate", "police alternting " + myRef2.getDatabase());
 
         myRef2.addChildEventListener(new ChildEventListener() {
             @Override
@@ -75,17 +77,15 @@ public class FireBaseProxy {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
                 Log.e("At least alternate", "police alternting");
-                if(CurrentUser.user!=null){
-
-                    if (CurrentUser.user.getId().equals(policeId)) {
-                        Log.e("You are a ", "**************** Police ***********************");
-                        CurrentUser.user.setApolice(true);
-                        int x = 1;
+                if (CurrentUser.user != null) {
+                    if (CurrentUser.user.getId() != null) {
+                        if (CurrentUser.user.getId().equals(policeId)) {
+                            Log.e("You are a ", "**************** Police ***********************");
+                            CurrentUser.user.setApolice(true);
+                            int x = 1;
+                        }
                     }
                 }
-
-                //   CurrentUser.user.setApolice(true);
-
             }
 
             @Override
@@ -178,7 +178,7 @@ public class FireBaseProxy {
         }
 
         if ((imageDone && audioDone) == true) {
-            appLocationListener.show(image, audio, audioName);
+            mapService.show(image, audio, audioName);
         }
         Log.e("check boolean", " image " + imageDone + " , audio " + audioDone + " ");
 
@@ -207,10 +207,10 @@ public class FireBaseProxy {
 
     }
 
-    public void reportIssue(Object object, String description,String categoryName,
-                            String severity,List<String> vehichleInvolved) {
+    public void reportIssue(Object object, String description, String categoryName,
+                            String severity, List<String> vehichleInvolved) {
 
-       List<String> list = null;
+        List<String> list = null;
         String id = myRef.child("Issues").push().getKey();
         Issues issues = new Issues();
         issues.setDetails(description);
@@ -277,7 +277,7 @@ public class FireBaseProxy {
                 FetchedIssues.addIssue(issues);
                 if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
 
-                    NotificationInterface notificationInterface = new PushNotifications(appLocationListener.getMainTabActivity());
+                    NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
                     notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
 
                 }
@@ -294,8 +294,6 @@ public class FireBaseProxy {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 //  Log.e("CHile is removed", "////////////////////////////////////// child removed");
                 Issues issues = dataSnapshot.getValue(Issues.class);
-                Log.e("CHile is removed", "////////////////////////////////////// child removed " + issues.getId());
-
                 FetchedIssues.removeIssue(issues);
 
             }
@@ -322,7 +320,7 @@ public class FireBaseProxy {
                 FetchedIssues.addIssue(issues);
                 if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
 
-                    NotificationInterface notificationInterface = new PushNotifications(appLocationListener.getMainTabActivity());
+                    NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
                     notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
 
                 }

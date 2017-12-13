@@ -70,10 +70,12 @@ public class SignInActivity extends AppCompatActivity {
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         if (account != null) {
-            Log.e("123", "Existssssssssssssssssssssssss " + account.getDisplayName());
-            SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
-            signInInterface.authenticate(account);
-          //  startMainActivity();
+
+            SignInInterface signInInterface = new SignInWithGoogle(SignInActivity.this);
+
+            signInInterface.authenticate(account, false);
+            Log.e("User account ", "Exists " + account.getDisplayName());
+            startMainActivity();
 
         }
         setContentView(R.layout.activity_main);
@@ -105,10 +107,11 @@ public class SignInActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                signInInterface.authenticate(account);
-                SignInInterface signInInterface= new SignInWithGoogle(SignInActivity.this);
-                signInInterface.authenticate(account);
-              //  startMainActivity();
+                //     signInInterface.authenticate(account);
+                SignInInterface signInInterface = new SignInWithGoogle(SignInActivity.this);
+                Log.e("Sign in with","Step 2,step 2");
+                signInInterface.authenticate(account, true);
+                //  startMainActivity();
 
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);

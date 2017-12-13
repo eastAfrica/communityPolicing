@@ -1,7 +1,5 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
-import android.util.Log;
-
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -10,35 +8,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by nyismaw on 12/9/2017.
+ * Created by nyismaw on 12/13/2017.
  */
 
-public class BlockedRoadsFilter implements FilterChainInterface {
+public class UnresolvedIssuesFilter implements FilterChainInterface {
 
     private FilterChainInterface nextFilter;
+    private boolean filterOn;
 
-    public BlockedRoadsFilter() {
 
+    public UnresolvedIssuesFilter() {
     }
 
-    public BlockedRoadsFilter(FilterChainInterface nextFilter) {
+    public UnresolvedIssuesFilter(FilterChainInterface nextFilter) {
         this.nextFilter = nextFilter;
+    }
+
+    public UnresolvedIssuesFilter(boolean filterOn) {
+        this.filterOn = filterOn;
+    }
+
+    public UnresolvedIssuesFilter(FilterChainInterface nextFilter, boolean filterOn) {
+        this.nextFilter = nextFilter;
+        this.filterOn = filterOn;
     }
 
     @Override
     public List<Issues> filter(List<Issues> issues) {
-        if (!CurrentUserPreferences.isShowBlockedRoads()) {
-            List<Issues> filteredIssues = new ArrayList();
-            for (Issues currentIssues : issues) {
-                String categoryOfIssues = currentIssues.getCategoryOfIssues();
-                if (categoryOfIssues != null) {
-                    if (!categoryOfIssues.equals(Category.BLOCKED_ROADS.toString())) {
-                        filteredIssues.add(currentIssues);
-                    }
-                }
-            }
 
-//            Log.e("Location filter","Blocked road filter is  "+filteredIssues.size());
+        if (this.filterOn) {
+            List<Issues> filteredIssues = new ArrayList();
+
+            for (Issues iss : issues) {
+                if (iss.isNotificationIsSent() == false)
+                    filteredIssues.add(iss);
+            }
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
@@ -47,8 +51,6 @@ public class BlockedRoadsFilter implements FilterChainInterface {
                 return issues;
             return nextFilter.filter(issues);
         }
+
     }
-
-
 }
-
