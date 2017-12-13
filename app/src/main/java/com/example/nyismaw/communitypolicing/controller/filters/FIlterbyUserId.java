@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.model.Issues;
 
@@ -36,16 +38,23 @@ public class FIlterbyUserId implements FilterChainInterface {
     @Override
     public List<Issues> filter(List<Issues> issues) {
 
+
         if (this.filterOn) {
             List<Issues> filteredIssues = new ArrayList();
 
             for (Issues iss : issues) {
                 if (CurrentUser.user != null) {
+                    if(iss.getUserid().getId()==null){
+                        filteredIssues.add(iss);
+                        continue;
+                    }
+
                     if (!iss.getUserid().getId().equals(CurrentUser.user.getId()))
                         filteredIssues.add(iss);
 
                 }
             }
+
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
@@ -54,6 +55,7 @@ public class NotificationService extends IntentService {
         mBackGroundTimer.schedule(new TimerTask() {
             public void run() {
                 try {
+
                     FilterChainInterface filterChainInterface =
                             new FIlterbyUserId(
                                     new UnresolvedIssuesFilter(new LocationFilter(
@@ -64,28 +66,21 @@ public class NotificationService extends IntentService {
                                                                             new PotHoleFilter()
                                                                     ))
                                                     ))), true), true);
-
                     List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
 
-
                     for (Issues iss : issues) {
-
                         MyLocation myLocation1 = iss.getLocation();
                         Location issueLocation = new Location("Location");
                         issueLocation.setLatitude(myLocation1.getLatitude());
                         issueLocation.setLongitude(myLocation1.getLongtude());
-                        if (!iss.isNotificationIsSent() & !(CurrentUser.user.getId().equals(iss.getUserid().getId()))) {
+                        if (!iss.isNotificationIsSent()) {
                             NotificationInterface notificationInterface = new PushNotifications(getApplicationContext());
                             notificationInterface.sendNotification("Issue has been reported in your area", iss.getDetails());
                             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
                             if (myRef != null)
                                 myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
                         }
-
-
                     }
-
-
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

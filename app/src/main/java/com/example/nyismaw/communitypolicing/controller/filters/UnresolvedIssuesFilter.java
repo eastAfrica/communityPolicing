@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -43,6 +45,7 @@ public class UnresolvedIssuesFilter implements FilterChainInterface {
                 if (iss.isNotificationIsSent() == false)
                     filteredIssues.add(iss);
             }
+
             if (nextFilter == null)
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);

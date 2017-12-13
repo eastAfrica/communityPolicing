@@ -19,7 +19,7 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <com.example.nyismaw.communitypolicing.screens.SlidingTabLayout
+        <com.example.nyismaw.communitypolicing.screens.Components.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,13 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.nyismaw.communitypolicing.screens.CustomViewPager
+            <com.example.nyismaw.communitypolicing.screens.Components.CustomViewPager
                 android:id="@+id/pager2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-            </com.example.nyismaw.communitypolicing.screens.CustomViewPager>
+            </com.example.nyismaw.communitypolicing.screens.Components.CustomViewPager>
         </FrameLayout>
 
     </LinearLayout>
