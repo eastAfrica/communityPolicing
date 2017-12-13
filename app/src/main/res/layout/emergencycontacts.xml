@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <TextView
         android:id="@+id/textView0"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
 
-        android:textColor="@color/colorAccent"
-        android:text="Emergency Toll-Free Numbers"/>
+        android:text="@string/emergency_toll_free_numbers"
+        android:textColor="@color/colorAccent" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="POLICE DAIL 999"
+            android:text="@string/police_dail_999"
             android:textColor="@color/colorAccent" />
 
         <Button
@@ -42,7 +43,7 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Traffic Accidents "
+            android:text="@string/traffic_accidents"
             android:textColor="@color/colorAccent" />
 
         <Button
@@ -64,7 +65,7 @@
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="Fire Department"
+            android:text="@string/fire_department"
             android:textColor="@color/colorAccent" />
 
         <Button
