@@ -17,6 +17,7 @@ import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
+import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -100,20 +101,23 @@ public class MapDialog {
         });
         dialog.getWindow().setLayout((6 * width) / 7, (4 * height) / 5);
 
-        Log.e("Resolve","current issue11111111 "+CurrentUser.user.isApolice());
-        if(CurrentUser.user.isApolice()){
+        if (CurrentUser.user != null)
+            Log.e("Resolve", "current issue11111111 " + CurrentUser.user.isApolice());
+        if (CurrentUser.user.isApolice()) {
             Button button = new Button(mainTabActivity);
             button.setText(R.string.Resolve);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -2);
-            dialog.addContentView(button,params);
-            final String issueId= AppLocationListener.currentIssueId;
+            dialog.addContentView(button, params);
+            final String issueId = MapUpdate.getCurrentIssueId();
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FetchedIssues.getIssueById(issueId).setResolved(true);
-                    DatabaseReference myRef =  FirebaseDatabase.getInstance().getReference("issues");
+                    Issues issueById = FetchedIssues.getIssueById(issueId);
+                    if (issueById != null)
+                        issueById.setResolved(true);
+                    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
                     myRef.child(issueId).removeValue();
-                    Log.e("Resolve","current issue "+issueId);
+                    Log.e("Resolve", "current issue " + issueId);
                     Toast.makeText(mainTabActivity, "Issue resolved",
                             Toast.LENGTH_SHORT).show();
                     dialog.hide();
@@ -122,11 +126,9 @@ public class MapDialog {
 
 
         }
-        try{
+        try {
             dialog.show();
-        }
-        catch (Exception e){
-
+        } catch (Exception e) {
 
 
         }

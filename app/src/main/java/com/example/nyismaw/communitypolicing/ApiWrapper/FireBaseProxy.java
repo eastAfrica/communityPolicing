@@ -275,10 +275,17 @@ public class FireBaseProxy {
                 FetchedIssues.removeIssue(issues);
 
                 FetchedIssues.addIssue(issues);
-                if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
+                if (!issues.isNotificationIsSent()) {
 
-                    NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
-                    notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+                    if (CurrentUser.user.getId() == null) {
+                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
+                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+
+                    }
+
 
                 }
 

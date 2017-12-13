@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.screens;
+package com.example.nyismaw.communitypolicing.screens.Components;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.ViewPager;

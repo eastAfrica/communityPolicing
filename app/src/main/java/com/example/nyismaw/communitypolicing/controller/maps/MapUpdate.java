@@ -17,7 +17,6 @@ import com.example.nyismaw.communitypolicing.controller.filters.FilterChainInter
 import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
-import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
 import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.User;
@@ -58,10 +57,7 @@ public class MapUpdate {
     public void updateMapBasedOnLocation() {
 
 
-        //   Log.e(" after that *****", "**********************    "+location.getLatitude()+" , "+location.getLongitude());
         if (MapFragment.getmMap() != null) {
-
-
             MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
@@ -72,8 +68,6 @@ public class MapUpdate {
                         dialog.setContentView(R.layout.popup);
                         dialog.setTitle(marker.getTitle());
                         currentIssueId = marker.getTitle();
-                        ;
-                        // TextView textViewUser = dialog.findViewById(R.id.description);
                         Issues issues = FetchedIssues.getIssueById(marker.getTitle());
                         setItemsToDialog(dialog, issues);
                         if (issues == null)
@@ -89,7 +83,6 @@ public class MapUpdate {
         }
         ReprotedIssuesInterface entities = new FireBaseAPI();
         entities.getReportedIssues();
-
         for (int i = 0; i < MapFragment.getMarkers().size(); i++) {
             MapFragment.getMarkers().get(i).remove();
             MapFragment.getMarkers().remove(i);
@@ -120,7 +113,6 @@ public class MapUpdate {
 
             List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
 
-            Log.e("Size after editing", " size of issues is /////////////////  "+FetchedIssues.getIssues()+" , " + issues.size());
             if (issues != null) {
                 for (Object obj : issues) {
                     Issues issue = (Issues) obj;
@@ -195,6 +187,15 @@ public class MapUpdate {
         }
 
 
+    }
+
+
+    public static String getCurrentIssueId() {
+        return currentIssueId;
+    }
+
+    public static void setCurrentIssueId(String currentIssueId) {
+        MapUpdate.currentIssueId = currentIssueId;
     }
 }
 

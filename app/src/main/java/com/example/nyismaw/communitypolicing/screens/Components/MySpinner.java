@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.screens;
+package com.example.nyismaw.communitypolicing.screens.Components;
 
 import android.content.Context;
 import android.util.AttributeSet;

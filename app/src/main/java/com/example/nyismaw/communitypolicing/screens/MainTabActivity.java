@@ -1,19 +1,12 @@
 package com.example.nyismaw.communitypolicing.screens;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.gesture.Gesture;
-import android.graphics.PixelFormat;
-import android.graphics.Typeface;
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -21,46 +14,31 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.support.v7.widget.SwitchCompat;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.ToggleButton;
 
-import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
-import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.gestures.GestureService;
 import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
-import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
-import com.example.nyismaw.communitypolicing.controller.maps.MapService;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignoutInterface;
 import com.example.nyismaw.communitypolicing.controller.signIn.SignoutUser;
+import com.example.nyismaw.communitypolicing.screens.Components.NavigationMenus;
+import com.example.nyismaw.communitypolicing.screens.Components.SlidingTabLayout;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
-
-import static android.support.v7.app.AppCompatActivity.*;
 
 public class MainTabActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
@@ -80,6 +58,27 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     private SwitchCompat accidents_switch;
     GoogleMap mMap;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("Tag 1", " tab main created ");
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+        mGoogleApiClient.connect();
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        Log.e("Resumed","Fragmen resumeddddd");
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +124,10 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 
             SignoutInterface signoutInterface = new SignoutUser(this);
             signoutInterface.signout();
+            removeLocatinoUpdates();
+            mGoogleApiClient = null;
+            Log.e("Remlocationupdates", "Remove location updess when fragment dies");
+
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             this.finish();
@@ -234,10 +237,11 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     }
 
     @Override
-    protected void onStop() {
-        removeLocatinoUpdates();
-        mGoogleApiClient = null;
-        Log.e("Remlocationupdates", "Remove location updess when fragment dies");
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
+//       removeLocatinoUpdates();
+//        mGoogleApiClient = null;
+//        Log.e("Remlocationupdates", "Remove location updess when fragment dies");
+
     }
 }

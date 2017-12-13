@@ -65,7 +65,7 @@
             android:text="@string/Select2" />
 
 
-        <com.example.nyismaw.communitypolicing.screens.MySpinner
+        <com.example.nyismaw.communitypolicing.screens.Components.MySpinner
             android:id="@+id/spinner_vt"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

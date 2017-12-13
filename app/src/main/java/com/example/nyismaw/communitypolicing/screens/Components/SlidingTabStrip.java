@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.screens; /**
+package com.example.nyismaw.communitypolicing.screens.Components; /**
  * Created by jarigye on 11/25/2017.
  */
 import android.R;

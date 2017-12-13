@@ -1,5 +1,7 @@
 package com.example.nyismaw.communitypolicing.controller.filters;
 
+import android.util.Log;
+
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 import com.example.nyismaw.communitypolicing.model.Issues;
@@ -27,6 +29,8 @@ public class FallenTressFilter implements FilterChainInterface {
     @Override
     public List<Issues> filter(List<Issues> issues) {
         if (!CurrentUserPreferences.isShowFALLEN_TREES()) {
+            Log.e("pot hole filter"," plot !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! filter beofre "+issues.size());
+
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();

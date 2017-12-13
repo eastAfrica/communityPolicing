@@ -27,6 +27,7 @@ public class PotHoleFilter implements FilterChainInterface {
     @Override
     public List<Issues> filter(List<Issues> issues) {
         if (!CurrentUserPreferences.isShowPOTHOLES()) {
+
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
@@ -37,7 +38,6 @@ public class PotHoleFilter implements FilterChainInterface {
                 }
             }
 
-            Log.e("pot hole filter"," plot hole filter "+filteredIssues.size());
             if (nextFilter == null){
                 Log.e("pot hole filter ","when off  returning "+issues.size());
                 return filteredIssues;
