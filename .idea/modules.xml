@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CommunityPolicing.iml" filepath="$PROJECT_DIR$/CommunityPolicing.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/communityPolicing.iml" filepath="$PROJECT_DIR$/communityPolicing.iml" />
     </modules>
   </component>
 </project>

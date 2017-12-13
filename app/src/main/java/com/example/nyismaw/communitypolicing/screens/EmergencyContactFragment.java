@@ -1,7 +1,6 @@
 package com.example.nyismaw.communitypolicing.screens;
 
-import android.app.Dialog;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -13,15 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
-import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
-import com.example.nyismaw.communitypolicing.Manifest;
 import com.example.nyismaw.communitypolicing.R;
-import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+
 
 /**
  * Created by nyismaw on 12/5/2017.
@@ -41,10 +33,10 @@ public class EmergencyContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.emergencycontacts, container, false);
         call911 = v.findViewById(R.id.call911);
-       final  Intent callIntent = new Intent(Intent.ACTION_DIAL);
+       final  Intent callIntent = new Intent(Intent.ACTION_CALL);
         call911.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-                callIntent.setData(Uri.parse("tel:999"));
+                callIntent.setData(Uri.parse(getString(R.string.tel999)));
 
                 if (checkPermission()) {
                     startActivity(callIntent);
@@ -59,7 +51,7 @@ public class EmergencyContactFragment extends Fragment {
 
         calltraf.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-               callIntent.setData(Uri.parse("tel:113"));
+               callIntent.setData(Uri.parse(getString(R.string.tell13)));
 
                 if (checkPermission()) {
                     startActivity(callIntent);
@@ -74,7 +66,7 @@ public class EmergencyContactFragment extends Fragment {
 
         callfire.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
-                callIntent.setData(Uri.parse("tel:111"));
+                callIntent.setData(Uri.parse(getString(R.string.tel111)));
 
                 if (checkPermission()) {
                     startActivity(callIntent);
