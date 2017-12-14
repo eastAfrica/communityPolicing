@@ -72,9 +72,12 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                             user.setUsername(acct.getDisplayName());
                             user.setEmail(acct.getEmail());
                             FirebaseUser userF = mAuth.getCurrentUser();
+
                             List<String> policeId = FetchedIssues.getPoliceId();
+
                             String userId = userF.getUid();
                             user.setId(userId);
+
                             if (policeId != null) {
                                 for (String string : policeId) {
                                     if (userId.equals(string)) {
