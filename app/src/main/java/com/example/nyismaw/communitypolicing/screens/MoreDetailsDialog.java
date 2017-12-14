@@ -112,6 +112,8 @@ public class MoreDetailsDialog {
                     spinner_type.setEnabled(true);
                 } else {
                     spinner_type.setEnabled(false);
+                    final GridLayout gridLayout = (GridLayout) dialog.findViewById(R.id.description3);
+                    gridLayout.removeAllViews();
                 }
 
             }
