@@ -1,16 +1,12 @@
-package com.example.nyismaw.communitypolicing.controller.signIn;
+package com.example.nyismaw.communitypolicing.controller.signInManagment;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUserPreferences;
-import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
-import com.example.nyismaw.communitypolicing.screens.ReportingTab;
 import com.example.nyismaw.communitypolicing.screens.SignInActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

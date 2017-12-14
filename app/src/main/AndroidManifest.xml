@@ -32,7 +32,7 @@
             >
 
         </activity>
-        <activity android:name=".controller.signIn.SignInWithGoogle"
+        <activity android:name=".controller.signInManagment.SignInWithGoogle"
             >
         </activity>
         <service android:name=".controller.notification.NotificationService"

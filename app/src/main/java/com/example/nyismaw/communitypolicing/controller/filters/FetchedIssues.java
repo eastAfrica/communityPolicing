@@ -84,9 +84,13 @@ public class FetchedIssues {
 
     public static void removeIssue(Issues issue) {
         synchronized (issues) {
+         //   Log.e("CHile is removed", "////////////////////////////////////// child removed");
             Issues issueToBeRemoved = null;
             for (Issues iss : issues) {
                 if (iss.getId().equals(issue.getId())) {
+
+                    Log.e("CHile is removed", ".............................................");
+
                     issueToBeRemoved = (iss);
                 }
             }

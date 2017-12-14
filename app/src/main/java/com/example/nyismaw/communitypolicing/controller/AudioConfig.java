@@ -103,6 +103,9 @@ public class AudioConfig {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+              
+
                 if(mediaRecorder==null){
 
                     Toast.makeText(reportingTab.getActivity(), R.string.Recordnotstarted,
@@ -110,6 +113,7 @@ public class AudioConfig {
                     return;
 
                 }
+
 
                 mediaRecorder.stop();
                 // buttonStop.setEnabled(false);
