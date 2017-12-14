@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -19,9 +20,9 @@ public class IssueConfigProxy {
         this.manageReportedIssues = new FireBaseAPI();
     }
 
-    public void reportIssue(Bitmap bitmap, String description, String category,String severity,List<String> vehicles) {
+    public void reportIssue(Bitmap bitmap, String description, String category, String severity, List<String> vehicles, InputStream stream) {
         manageReportedIssues.reportIssue(bitmap, description, category,
-                severity, vehicles);
+                severity, vehicles,stream);
     }
 
     public void getReportedIssues() {

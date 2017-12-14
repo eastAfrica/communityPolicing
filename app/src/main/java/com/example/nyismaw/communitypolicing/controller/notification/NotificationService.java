@@ -40,6 +40,7 @@ public class NotificationService extends IntentService {
         super(name);
     }
 
+    public static Issues issuesToBeRemoved;
     public NotificationService() {
         super("LocationService");
     }
@@ -68,8 +69,12 @@ public class NotificationService extends IntentService {
                                                     ))), true);
                     List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
 
-                    Log.e("Id filter"," ///////////////////////////,"
-                            +issues);
+
+
+
+
+//                    Log.e("Id filter"," ///////////////////////////,"
+//                            +issues);
 
                     for (Issues iss : issues) {
                         String issueUID="";
@@ -80,6 +85,7 @@ public class NotificationService extends IntentService {
                         if(CurrentUser.user!=null)
                         currentid =CurrentUser.user.getId();
                         boolean checker= issueUID.equals(currentid);
+
                         MyLocation myLocation1 = iss.getLocation();
                         Location issueLocation = new Location("Location");
                         issueLocation.setLatitude(myLocation1.getLatitude());

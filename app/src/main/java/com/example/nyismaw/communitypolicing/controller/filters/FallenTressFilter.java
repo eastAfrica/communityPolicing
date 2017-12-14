@@ -29,7 +29,7 @@ public class FallenTressFilter implements FilterChainInterface {
     @Override
     public List<Issues> filter(List<Issues> issues) {
         if (!CurrentUserPreferences.isShowFALLEN_TREES()) {
-            Log.e("pot hole filter"," plot !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! filter beofre "+issues.size());
+        //    Log.e("pot hole filter"," plot !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! filter beofre "+issues.size());
 
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {

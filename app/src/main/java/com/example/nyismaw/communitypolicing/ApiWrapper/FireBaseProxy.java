@@ -9,7 +9,6 @@ import android.util.Log;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
 import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.maps.MapService;
 import com.example.nyismaw.communitypolicing.controller.maps.MapUpdate;
 import com.example.nyismaw.communitypolicing.controller.notification.NotificationInterface;
 import com.example.nyismaw.communitypolicing.controller.notification.PushNotifications;
@@ -52,7 +51,7 @@ public class FireBaseProxy {
     DatabaseReference myRef;
 
     public FireBaseProxy() {
-        this.mapService = mapService;
+        this.mapService = new MapUpdate();
         mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://communitypolicing-f24cf.appspot.com");
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("issues");
@@ -76,11 +75,12 @@ public class FireBaseProxy {
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 String policeId = (String) dataSnapshot.getValue();
                 FetchedIssues.getPoliceId().add(policeId);
-                Log.e("At least alternate", "police alternting");
-                if (CurrentUser.user != null) {
-                    if (CurrentUser.user.getId() != null) {
+               if (CurrentUser.user != null) {
+                 //  Log.e("inside ", "police 000000000000000000000000000000000000alternting "+policeId +"  , "+CurrentUser.user.getId() );
+
+                   if (CurrentUser.user.getId() != null) {
                         if (CurrentUser.user.getId().equals(policeId)) {
-                            Log.e("You are a ", "**************** Police ***********************");
+                         //   Log.e("You are a ", "**************** Police ***********************");
                             CurrentUser.user.setApolice(true);
                             int x = 1;
                         }
@@ -208,7 +208,7 @@ public class FireBaseProxy {
     }
 
     public void reportIssue(Object object, String description, String categoryName,
-                            String severity, List<String> vehichleInvolved) {
+                            String severity, List<String> vehichleInvolved,InputStream stream) {
 
         List<String> list = null;
         String id = myRef.child("Issues").push().getKey();
@@ -229,17 +229,24 @@ public class FireBaseProxy {
 
 
         }
-        if (AudioConfig.isHasRecorded() == true) {
+        if (AudioConfig.isHasRecorded()) {
+
+            Log.e("asdf","-------------------------------asdfasdfasdfasdfasdf----------  "+id);
             UploadFileInterface fileInterface = new FireBaseAPI();
-            fileInterface.uploadAudio(Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + "/myaudio.3gp", id);
-            AudioConfig.setHasRecorded(true);
+            fileInterface.uploadAudio(stream, id);
+
+
+            AudioConfig.setHasRecorded(false);
 
         }
         issues.setId(id);
         MyLocation mylocation = new MyLocation();
-        mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
-        mylocation.setLongtude(new CurrentLocation().getLocation().getLongitude());
+        if(new CurrentLocation().getLocation()!=null){
+
+            mylocation.setLatitude(new CurrentLocation().getLocation().getLatitude());
+            mylocation.setLongtude(new CurrentLocation().getLocation().getLongitude());
+        }
+
         issues.setLocation(mylocation);
         issues.setTxt(description);
         issues.setUserid(CurrentUser.user);
@@ -272,19 +279,19 @@ public class FireBaseProxy {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Issues issues = dataSnapshot.getValue(Issues.class);
 
-                FetchedIssues.removeIssue(issues);
+               // FetchedIssues.removeIssue(issues);
 
                 FetchedIssues.addIssue(issues);
                 if (!issues.isNotificationIsSent()) {
 
-                    if (CurrentUser.user.getId() == null) {
-                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
-                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
-                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
-                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-
-                    }
+//                    if (CurrentUser.user.getId() == null) {
+//                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+//                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+//                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
+//                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+//                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+//
+//                    }
 
 
                 }
@@ -304,14 +311,15 @@ public class FireBaseProxy {
 
                 if (!issues.isNotificationIsSent()) {
 
-                    if (CurrentUser.user.getId() == null) {
-                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
-                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
-                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
-                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
-
-                    }
+//                    if (CurrentUser.user.getId() == null) {
+//                        NotificationInterface notificationInterface = new PushNotifications();
+//                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+//                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
+//                        if(mapService!=null)
+//                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+//                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+//
+//                    }
 
 
                 }
@@ -365,10 +373,10 @@ public class FireBaseProxy {
 
     }
 
-    public void uploadAudio(String path, String fileName) {
+    public void uploadAudio(InputStream stream, String fileName) {
 
         try {
-            InputStream stream = new FileInputStream(new File(path));
+
             StorageReference riversRef = mStorageRef.child("audio/" + fileName + ".3gp");
             riversRef.putStream(stream)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -384,7 +392,7 @@ public class FireBaseProxy {
                             Log.e("Audio failed", " Faield ************* downloading ");
                         }
                     });
-        } catch (FileNotFoundException ex) {
+        } catch (Exception ex) {
             Log.e("Audio ", "Upload failed ************* " + ex.getMessage());
         }
     }

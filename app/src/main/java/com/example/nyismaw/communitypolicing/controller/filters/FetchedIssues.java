@@ -3,6 +3,7 @@ package com.example.nyismaw.communitypolicing.controller.filters;
 import android.util.Log;
 
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentUser;
+import com.example.nyismaw.communitypolicing.controller.notification.NotificationService;
 import com.example.nyismaw.communitypolicing.model.Issues;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class FetchedIssues {
     private static List<Issues> issues = Collections.synchronizedList(new ArrayList<Issues>());
-    // private static List<String> issuesNotified = Collections.synchronizedList(new ArrayList<String>());
+    private static List<Issues> issuesRemoved = Collections.synchronizedList(new ArrayList<Issues>());
     private static List<String> policeId = Collections.synchronizedList(new ArrayList<String>());
 
     public static List<Issues> getIssues() {
@@ -66,7 +67,7 @@ public class FetchedIssues {
     }
 
     public static void setPoliceId(List<String> policeId) {
-        Log.e("alrnate", "alternate now ");
+      //  Log.e("alrnate", "alternate now ");
         FetchedIssues.policeId = policeId;
     }
 
@@ -89,8 +90,9 @@ public class FetchedIssues {
             for (Issues iss : issues) {
                 if (iss.getId().equals(issue.getId())) {
 
-                    Log.e("CHile is removed", ".............................................");
-
+                   Log.e("CHile is removed", ".............................................");
+                    issuesRemoved.add(iss);
+                    NotificationService.issuesToBeRemoved=issueToBeRemoved;
                     issueToBeRemoved = (iss);
                 }
             }
@@ -107,5 +109,17 @@ public class FetchedIssues {
         }
 
         return null;
+    }
+
+    public static List<Issues> getIssuesRemoved() {
+        return issuesRemoved;
+    }
+
+    public static void setIssuesRemoved(List<Issues> issuesRemoved) {
+        FetchedIssues.issuesRemoved = issuesRemoved;
+    }
+
+    public static void removeIsseuesPending(Issues issues){
+        issuesRemoved=new ArrayList();
     }
 }
