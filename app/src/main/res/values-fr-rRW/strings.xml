@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">"Police de proximité "</string>
+    <string name="anonymous_sign_in">"Connexion anonyme "</string>
+    <string name="community_policing_app_lets_make_our_cities_save">"Application de la police communautaire laissez-nous faire nos villes en toute sécurité "</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="photo">Prendre une photo</string>
+    <string name="Select">Choisir une catégorie</string>
+    <string name="Select1">Sélectionnez la gravité</string>
+    <string name="Select2">Ajouter des véhicules impliqués</string>
+    <string name="ListOfvehicles">Liste des véhicules</string>
+    <string name="menu_home">Carte Accueil</string>
+    <string name="menu_accident">Les accidents</string>
+    <string name="menu_potholes">Potholes</string>
+    <string name="menu_blockedroads">Routes bloquées</string>
+    <string name="menu_issueAnalysis">Plus de réglages</string>
+    <string name="menu_fallen_trees">Arbres tombés</string>
+    <string name="menu_others">Autres</string>
+    <string name="menu_emergencyContact">Contacts d\'urgence</string>
+    <string name="menu_logout">Connectez - Out</string>
+    <string name="Resolve">Résoudre le problème</string>
+    <string name="go">Conduire jusque</string>
+    <string name="descriptionOfIssue">La description</string>
+    <string name="severityOfIssue">Gravité</string>
+    <string name="categoryOfIssues">Catégorie</string>
+    <string name="numbefOFVechicleInvolved">Véhicules impliqués</string>
+    <string name="Reportedby">Rapporté par</string>
+    <string name="playAudio">Jouer l\'audio</string>
+    <string name="emergency_toll_free_numbers">Numéros sans frais d\'urgence</string>
+    <string name="police_dail_999">POLICE DAIL 999</string>
+    <string name="traffic_accidents">Accidents de la circulation 113</string>
+    <string name="fire_department">Service d\'incendie 111</string>
+    <string name="tel999">tel: 999</string>
+    <string name="tell13">tel: 113</string>
+    <string name="tel111">tel: 111</string>
+    <string name="reportIt">Signaler le</string>
+    <string name="map">Carte</string>
+    <string name="emergencyCon">Contacts d'urgence</string>
+    <string name="submit">Soumettre</string>
+</resources>

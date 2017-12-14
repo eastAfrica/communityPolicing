@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="125dp"
-            android:text="Submit">
+            android:text="@string/submit">
 
         </Button>
     </LinearLayout>
