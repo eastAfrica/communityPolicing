@@ -7,35 +7,18 @@ package com.example.nyismaw.communitypolicing.controller.location;
 
 import android.app.Dialog;
 import android.location.Location;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.FallenTressFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.FetchedIssues;
-import com.example.nyismaw.communitypolicing.controller.filters.FilterChainInterface;
-import com.example.nyismaw.communitypolicing.controller.filters.LocationFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.OtherIssuesFilter;
-import com.example.nyismaw.communitypolicing.controller.filters.PotHoleFilter;
 import com.example.nyismaw.communitypolicing.controller.maps.*;
-import com.example.nyismaw.communitypolicing.ApiWrapper.DownloadFileInterface;
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
-import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
 import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.User;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.util.List;
 
 /**
  * Created by nyismaw on 11/7/2017.

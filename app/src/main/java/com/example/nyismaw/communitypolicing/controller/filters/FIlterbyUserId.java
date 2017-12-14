@@ -44,20 +44,29 @@ public class FIlterbyUserId implements FilterChainInterface {
 
             for (Issues iss : issues) {
                 if (CurrentUser.user != null) {
-                    if(iss.getUserid().getId()==null){
+                    if(iss.getUserid()==null){
                         filteredIssues.add(iss);
                         continue;
                     }
+                    Log.e("e","asdfasdfasdfa  "+(iss.getUserid().getId()!=null  & CurrentUser.user.getId()!=null));
+                    if(iss.getUserid().getId()!=null  & CurrentUser.user.getId()!=null){
+                         if (iss.getUserid().getId().equals(CurrentUser.user.getId())){
+                            Log.e("e","asdfasdfasdfasdfasdf asdfasdfasdfasdfasdf asdfasdfasdf");
+                             filteredIssues.add(iss);
+                         }
 
-                    if (!iss.getUserid().getId().equals(CurrentUser.user.getId()))
-                        filteredIssues.add(iss);
+
+                     }
 
                 }
             }
 
+            issues.remove(filteredIssues);
+            Log.e("1","+ ()()()()()()()()()()(   , "+filteredIssues.size());
+
             if (nextFilter == null)
-                return filteredIssues;
-            return nextFilter.filter(filteredIssues);
+                return issues;
+            return nextFilter.filter(issues);
         } else {
             if (nextFilter == null)
                 return issues;

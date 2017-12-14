@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapLoader extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +49,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public static void setmMap(GoogleMap mMap) {
-        MapFragment.mMap = mMap;
+        MapLoader.mMap = mMap;
     }
 
     public static List<Marker> getMarkers() {
@@ -57,14 +57,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public static void setMarkers(List<Marker> markers) {
-        MapFragment.markers = markers;
+        MapLoader.markers = markers;
     }
 
     @Override
     public void onMapReady(GoogleMap mMap) {
         mMap.setPadding(0, 140, 0, 0);
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        MapFragment.mMap = mMap;
+        MapLoader.mMap = mMap;
         Log.e(" after that *****", "********************** Map ready    ");
         Location location = CurrentLocation.location;
         if(location!=null){

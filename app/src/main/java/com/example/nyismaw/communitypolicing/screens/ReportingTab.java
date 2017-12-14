@@ -2,7 +2,6 @@ package com.example.nyismaw.communitypolicing.screens;
 
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,15 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import android.widget.Spinner;
-import android.widget.TextView;
-
 import android.widget.Toast;
 
-import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
-import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.AudioConfig;
+import com.example.nyismaw.communitypolicing.controller.issueConfig.IssueConfigProxy;
 import com.example.nyismaw.communitypolicing.model.Enums.Category;
 
 import java.io.ByteArrayOutputStream;
@@ -123,7 +118,7 @@ public class ReportingTab extends Fragment {
             public void onClick(View vw) {
 
                 String description = editText.getText().toString();
-                ReprotedIssuesInterface manageReportedIssues = new FireBaseAPI();
+                IssueConfigProxy manageReportedIssues = new IssueConfigProxy();
                 Log.e("Reporting failure", bitmap + ", " + description + "," + AudioConfig.isHasRecorded());
                 if (bitmap == null && description.isEmpty()) {
 

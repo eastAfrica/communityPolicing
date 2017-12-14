@@ -57,8 +57,8 @@ public class MapUpdate {
     public void updateMapBasedOnLocation() {
 
 
-        if (MapFragment.getmMap() != null) {
-            MapFragment.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        if (MapLoader.getmMap() != null) {
+            MapLoader.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     if (!marker.getTitle().equals("My Location")) {
@@ -83,19 +83,19 @@ public class MapUpdate {
         }
         ReprotedIssuesInterface entities = new FireBaseAPI();
         entities.getReportedIssues();
-        for (int i = 0; i < MapFragment.getMarkers().size(); i++) {
-            MapFragment.getMarkers().get(i).remove();
-            MapFragment.getMarkers().remove(i);
+        for (int i = 0; i < MapLoader.getMarkers().size(); i++) {
+            MapLoader.getMarkers().get(i).remove();
+            MapLoader.getMarkers().remove(i);
         }
-        if (MapFragment.markers.size() > 0) {
-            MapFragment.getMarkers().get(0).remove();
-            MapFragment.getMarkers().remove(0);
+        if (MapLoader.markers.size() > 0) {
+            MapLoader.getMarkers().get(0).remove();
+            MapLoader.getMarkers().remove(0);
         }
-        if (MapFragment.getmMap() != null) {
-            Marker marker = MapFragment.getmMap().addMarker(new MarkerOptions().position(new
+        if (MapLoader.getmMap() != null) {
+            Marker marker = MapLoader.getmMap().addMarker(new MarkerOptions().position(new
                     LatLng(location.getLatitude(), location.getLongitude())).title("My Location"));
 
-            MapFragment.getMarkers().add(marker);
+            MapLoader.getMarkers().add(marker);
 
 
             FilterChainInterface filterChainInterface =
@@ -122,11 +122,11 @@ public class MapUpdate {
                         LatLng location1 = new LatLng(issue.getLocation()
                                 .getLatitude(), issue.getLocation().getLongtude());
 
-                        Marker marker2 = MapFragment.getmMap().addMarker(new MarkerOptions().position(location1));
+                        Marker marker2 = MapLoader.getmMap().addMarker(new MarkerOptions().position(location1));
                         //marker2.setSnippet();
                         marker2.setTitle(issue.getId());
                         // marker2.hideInfoWindow();
-                        MapFragment.getMarkers().add(marker2);
+                        MapLoader.getMarkers().add(marker2);
 
                     }
 

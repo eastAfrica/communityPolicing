@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.nyismaw.communitypolicing.controller.maps.MapFragment;
+import com.example.nyismaw.communitypolicing.controller.maps.MapLoader;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
@@ -24,8 +24,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             return reportingTab;
         } else if (position == 1)            // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
-            MapFragment mapFragment = new MapFragment();
-            return mapFragment;
+            MapLoader mapLoader = new MapLoader();
+            return mapLoader;
         } else         // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             EmergencyContactFragment emergencyContactFragment = new EmergencyContactFragment();

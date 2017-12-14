@@ -1,4 +1,4 @@
-package com.example.nyismaw.communitypolicing.controller.signIn;
+package com.example.nyismaw.communitypolicing.controller.signInManagment;
 
 import android.app.Activity;
 import android.content.Intent;

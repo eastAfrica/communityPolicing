@@ -299,9 +299,22 @@ public class FireBaseProxy {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //  Log.e("CHile is removed", "////////////////////////////////////// child removed");
                 Issues issues = dataSnapshot.getValue(Issues.class);
                 FetchedIssues.removeIssue(issues);
+
+                if (!issues.isNotificationIsSent()) {
+
+                    if (CurrentUser.user.getId() == null) {
+                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+                    } else if (!(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
+                        NotificationInterface notificationInterface = new PushNotifications(mapService.getMainTabActivity());
+                        notificationInterface.sendNotification("Issue has been Resolved ", issues.getDetails());
+
+                    }
+
+
+                }
 
             }
             // ...
@@ -322,7 +335,7 @@ public class FireBaseProxy {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Log.e("CHile is chageddd", "////////////////////////////////////// child updated");
+                Log.e("CHile is chageddd", "////////////////////////////////////// ");
                 Issues issues = dataSnapshot.getValue(Issues.class);
                 FetchedIssues.addIssue(issues);
                 if (!issues.isNotificationIsSent() & !(CurrentUser.user.getId().equals(issues.getUserid().getId()))) {
@@ -341,7 +354,7 @@ public class FireBaseProxy {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.e("CHile is removed", "////////////////////////////////////// child removed");
+          //      Log.e("CHile is removed", "////////////////////////////////////// child removed");
                 Issues issues = dataSnapshot.getValue(Issues.class);
                 FetchedIssues.addIssue(issues);
 

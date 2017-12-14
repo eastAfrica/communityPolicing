@@ -103,6 +103,7 @@ public class AudioConfig {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mediaPlayer!=null)
                 mediaRecorder.stop();
                // buttonStop.setEnabled(false);
                 playButton.setEnabled(true);

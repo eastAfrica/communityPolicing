@@ -57,7 +57,7 @@ public class NotificationService extends IntentService {
                 try {
 
                     FilterChainInterface filterChainInterface =
-                            new FIlterbyUserId(
+
                                     new UnresolvedIssuesFilter(new LocationFilter(
                                             new AccidentFilter(
                                                     new BlockedRoadsFilter(
@@ -65,15 +65,29 @@ public class NotificationService extends IntentService {
                                                                     new OtherIssuesFilter(
                                                                             new PotHoleFilter()
                                                                     ))
-                                                    ))), true), true);
+                                                    ))), true);
                     List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());
 
+                    Log.e("Id filter"," ///////////////////////////,"
+                            +issues);
+
                     for (Issues iss : issues) {
+                        String issueUID="";
+                        if(iss.getUserid()!=null){
+                            issueUID= iss.getUserid().getId();
+                        }
+                        String currentid="";
+                        if(CurrentUser.user!=null)
+                        currentid =CurrentUser.user.getId();
+                        boolean checker= issueUID.equals(currentid);
                         MyLocation myLocation1 = iss.getLocation();
                         Location issueLocation = new Location("Location");
                         issueLocation.setLatitude(myLocation1.getLatitude());
+                        if(checker)
+                            continue;
                         issueLocation.setLongitude(myLocation1.getLongtude());
-                        if (!iss.isNotificationIsSent()) {
+
+                        if (!iss.isNotificationIsSent() ) {
                             NotificationInterface notificationInterface = new PushNotifications(getApplicationContext());
                             notificationInterface.sendNotification("Issue has been reported in your area", iss.getDetails());
                             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
