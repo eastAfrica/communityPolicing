@@ -103,14 +103,25 @@ public class AudioConfig {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mediaPlayer!=null)
+
+              
+
+                if(mediaRecorder==null){
+
+                    Toast.makeText(reportingTab.getActivity(), R.string.Recordnotstarted,
+                            Toast.LENGTH_LONG).show();
+                    return;
+
+                }
+
+
                 mediaRecorder.stop();
-               // buttonStop.setEnabled(false);
+                // buttonStop.setEnabled(false);
                 playButton.setEnabled(true);
                 recordButton.setEnabled(true);
                 buttonStopPlayingRecording.setEnabled(false);
 
-                Toast.makeText(reportingTab.getActivity(), "Recording Completed",
+                Toast.makeText(reportingTab.getActivity(), R.string.RecordingComplete,
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -121,7 +132,7 @@ public class AudioConfig {
                     SecurityException, IllegalStateException {
 
                 //buttonStop.setEnabled(false);
-                recordButton.setEnabled(false);
+                //  recordButton.setEnabled(false);
                 buttonStopPlayingRecording.setEnabled(true);
 
 
@@ -132,18 +143,23 @@ public class AudioConfig {
                         playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
                         return;
                     }
+
                     mediaPlayer.reset();
-
-
                     mediaPlayer.setDataSource(AudioSavePathInDevice);
                     mediaPlayer.prepare();
                     mediaPlayer.start();
 
-                    Toast.makeText(reportingTab.getActivity(), "Recording Playing",
+                    Toast.makeText(reportingTab.getActivity(), R.string.RecordingPlay,
                             Toast.LENGTH_LONG).show();
                     playButton.setBackgroundResource(R.drawable.ic_pause_black_24dp);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            playButton.setBackgroundResource(R.drawable.ic_play_arrow_black_24dp);
+                        }
+                    });
                 } catch (IOException e) {
-                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded",
+                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded "+AudioSavePathInDevice,
                             Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
@@ -151,22 +167,6 @@ public class AudioConfig {
 
             }
         });
-
-//        buttonStop.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                buttonStop.setEnabled(false);
-//                recordButton.setEnabled(true);
-//               // buttonStopPlayingRecording.setEnabled(false);
-//                playButton.setEnabled(true);
-//
-//                if (mediaPlayer != null) {
-//                    mediaPlayer.stop();
-//                    mediaPlayer.release();
-//                    MediaRecorderReady();
-//                }
-//            }
-//        });
 
 
     }

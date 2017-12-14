@@ -28,13 +28,23 @@
     <string name="Reportedby">Reported by</string>
     <string name="playAudio">Play Audio</string>
     <string name="anonymous_sign_in">Anonymous Sign in</string>
-    <string name="community_policing_app_lets_make_our_cities_save">Community policing app lets make our cities save</string>
+    <string name="community_policing_app_lets_make_our_cities_save">Community policing app let us make our cities safe</string>
     <string name="sounds">Sounds</string>
     <string name="emergency_toll_free_numbers">Emergency Toll-Free Numbers</string>
-    <string name="police_dail_999">POLICE DAIL 999</string>
+    <string name="police_dail_112">POLICE DAIL 112</string>
     <string name="traffic_accidents">Traffic Accidents 113 </string>
     <string name="fire_department">Fire Department 111</string>
-    <string name="tel999">tel:999</string>
+    <string name="tel112">tel:112</string>
     <string name="tell13">tel:113</string>
     <string name="tel111">tel:111</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="reportIt">Report It</string>
+    <string name="map">Map</string>
+    <string name="emergencyCon">Emergency Contacts</string>
+    <string name="submit">Submit</string>
+    <string name="RecordingComplete">Recording Completed</string>
+    <string name="Recordnotstarted">Recording wasn\'t started</string>
+    <string name="RecordingPlay">Recording Playing</string>
+
 </resources>

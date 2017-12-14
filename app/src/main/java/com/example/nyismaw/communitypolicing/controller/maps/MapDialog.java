@@ -101,7 +101,7 @@ public class MapDialog {
         });
         dialog.getWindow().setLayout((6 * width) / 7, (4 * height) / 5);
 
-        if (CurrentUser.user != null)
+        if (CurrentUser.user != null){
             Log.e("Resolve", "current issue11111111 " + CurrentUser.user.isApolice());
         if (CurrentUser.user.isApolice()) {
             Button button = new Button(mainTabActivity);
@@ -125,6 +125,7 @@ public class MapDialog {
             });
 
 
+        }
         }
         try {
             dialog.show();

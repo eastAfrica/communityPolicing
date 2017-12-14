@@ -31,12 +31,6 @@
         android:icon="@android:drawable/btn_star_big_off"
         android:title="@string/menu_others"
         app:actionLayout="@layout/switch_item"/>
-
-    <item
-        android:id="@+id/more_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/menu_issueAnalysis"/>
-
     <item
         android:id="@+id/emergency_contacts"
         android:icon="@android:drawable/sym_action_call"
@@ -46,4 +40,14 @@
         android:id="@+id/logout"
         android:icon="@android:drawable/ic_lock_power_off"
         android:title="@string/menu_logout"></item>
+
+    <item
+        android:id="@+id/more_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/menu_issueAnalysis">
+        <menu>
+            <item android:id="@+id/en" android:title="@string/english"></item>
+            <item android:id="@+id/fr" android:title="@string/french"></item>
+        </menu>
+    </item>
 </menu>
