@@ -22,7 +22,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="@string/police_dail_999"
+            android:text="@string/police_dail_112"
             android:textColor="@color/colorAccent" />
 
         <Button

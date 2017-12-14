@@ -31,10 +31,10 @@
     <string name="community_policing_app_lets_make_our_cities_save">Community policing app let us make our cities safe</string>
     <string name="sounds">Sounds</string>
     <string name="emergency_toll_free_numbers">Emergency Toll-Free Numbers</string>
-    <string name="police_dail_999">POLICE DAIL 999</string>
+    <string name="police_dail_112">POLICE DAIL 112</string>
     <string name="traffic_accidents">Traffic Accidents 113 </string>
     <string name="fire_department">Fire Department 111</string>
-    <string name="tel999">tel:999</string>
+    <string name="tel112">tel:112</string>
     <string name="tell13">tel:113</string>
     <string name="tel111">tel:111</string>
     <string name="english">English</string>
