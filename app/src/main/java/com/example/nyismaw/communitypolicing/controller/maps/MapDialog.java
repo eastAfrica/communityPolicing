@@ -36,6 +36,7 @@ import static com.example.nyismaw.communitypolicing.R.drawable.ic_broken_image_b
 public class MapDialog {
 
     public void showDialog(final MainTabActivity mainTabActivity, final byte[] bytes, final byte[] audio, final Dialog dialog) {
+
         DisplayMetrics metrics = mainTabActivity.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;

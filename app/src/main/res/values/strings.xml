@@ -46,5 +46,6 @@
     <string name="RecordingComplete">Recording Completed</string>
     <string name="Recordnotstarted">Recording wasn\'t started</string>
     <string name="RecordingPlay">Recording Playing</string>
+    <string name="Audionotrecorded">Audio not recorded</string>
 
 </resources>

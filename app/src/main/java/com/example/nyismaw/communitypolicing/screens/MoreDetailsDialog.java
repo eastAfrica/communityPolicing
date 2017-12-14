@@ -112,6 +112,8 @@ public class MoreDetailsDialog {
                     spinner_type.setEnabled(true);
                 } else {
                     spinner_type.setEnabled(false);
+                    final GridLayout gridLayout = (GridLayout) dialog.findViewById(R.id.description3);
+                    gridLayout.removeAllViews();
                 }
 
             }
@@ -133,8 +135,6 @@ public class MoreDetailsDialog {
             }
         });
 
-
-
         ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(reportingTab.getContext(),
                 R.layout.support_simple_spinner_dropdown_item, vt);
         dataAdapter2.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -143,7 +143,6 @@ public class MoreDetailsDialog {
         spinner_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
 
                 final String type = spinner_type.getSelectedItem().toString();
                 if (!type.isEmpty()) {

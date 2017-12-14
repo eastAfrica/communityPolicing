@@ -90,4 +90,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onDetach() {
         super.onDetach();
     }
+
 }
