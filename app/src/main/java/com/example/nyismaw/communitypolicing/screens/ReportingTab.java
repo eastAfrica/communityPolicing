@@ -25,6 +25,8 @@ import com.example.nyismaw.communitypolicing.model.Enums.Category;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 
 /**
@@ -121,39 +123,47 @@ public class ReportingTab extends Fragment {
                 IssueConfigProxy manageReportedIssues = new IssueConfigProxy();
                 Log.e("Reporting failure", bitmap + ", " + description + "," + AudioConfig.isHasRecorded());
                 if (bitmap == null && description.isEmpty()) {
-
                     if (!AudioConfig.isHasRecorded()) {
                         Toast.makeText(getContext(), "Please, at least provide one set of information",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                if(MoreDetailsDialog.categoryType==null){
-                    MoreDetailsDialog.categoryType= Category.ACCIDENTS.toString();
+                InputStream stream=null;
+                try  {
+
+
+
+                    stream = new FileInputStream(new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + "/myaudio.3gp"));
+                    Log.e("12","niigniginiiginiiginiiginiiginiiginiigini  "+stream);
+                } catch (Exception e) {
+
+                    Log.e("12","asdfasdf12123asdfasdfasdfasdfasdf");
                 }
-                manageReportedIssues.reportIssue(bitmap, description, MoreDetailsDialog.categoryType,
-                        MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vehiclesInvolved);
 
-                manageReportedIssues.getReportedIssues();
-                Toast.makeText(getContext(), "Issue reported",
-                        Toast.LENGTH_SHORT).show();
-                imageView.setImageBitmap(null);
-                editText.setText(null);
-                AudioConfig.setHasRecorded(false);
-                String path = Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + "/myaudio.3gp";
-                File file = new File(path);
-                file.delete();
-                MoreDetailsDialog.categoryType = null;
-                MoreDetailsDialog.severityOfIssue = null;
-                MoreDetailsDialog.vt = null;
+                    if (MoreDetailsDialog.categoryType == null) {
+                        MoreDetailsDialog.categoryType = Category.ACCIDENTS.toString();
+                    }
+                    manageReportedIssues.reportIssue(bitmap, description, MoreDetailsDialog.categoryType,
+                            MoreDetailsDialog.severityOfIssue, MoreDetailsDialog.vehiclesInvolved,stream);
+
+                    manageReportedIssues.getReportedIssues();
+                    Toast.makeText(getContext(), "Issue reported",
+                            Toast.LENGTH_SHORT).show();
+                    imageView.setImageBitmap(null);
+                    editText.setText(null);
+
+                    MoreDetailsDialog.categoryType = null;
+                    MoreDetailsDialog.severityOfIssue = null;
+                    MoreDetailsDialog.vt = null;
 
 
-            }
-        });
+                }
+            });
 
         return v;
-    }
+        }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == getActivity().RESULT_OK) {

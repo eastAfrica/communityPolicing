@@ -86,7 +86,6 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                                 }
 
                             }
-                            Log.e("You are ", "Assign users -----------------------------");
                             CurrentUser.user = user;
                             if (startActivity == true)
                                 signInActivity.startMainActivity();
@@ -99,6 +98,7 @@ public class SignInWithGoogle extends Activity implements SignInInterface {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(signInActivity, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+
 
                         }
                     }

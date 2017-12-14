@@ -51,8 +51,7 @@ public class AppLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
-        reprotedIssuesInterface.getReportedIssues();
+
         new CurrentLocation().setLocation(location);
         new MapUpdate(mainTabActivity,location).updateMapBasedOnLocation();
 

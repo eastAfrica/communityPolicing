@@ -39,14 +39,14 @@ public class PotHoleFilter implements FilterChainInterface {
             }
 
             if (nextFilter == null){
-                Log.e("pot hole filter ","when off  returning "+issues.size());
+          //      Log.e("pot hole filter ","when off  returning "+issues.size());
                 return filteredIssues;
             }
 
             return nextFilter.filter(filteredIssues);
         } else {
             if (nextFilter == null){
-                Log.e("pot hole filter ","when on  returning "+issues.size());
+          //      Log.e("pot hole filter ","when on  returning "+issues.size());
                 return issues;
             }
 

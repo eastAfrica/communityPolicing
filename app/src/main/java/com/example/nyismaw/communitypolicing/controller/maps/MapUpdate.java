@@ -56,7 +56,10 @@ public class MapUpdate {
 
     public void updateMapBasedOnLocation() {
 
+        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
+        reprotedIssuesInterface.getReportedIssues();
 
+        reprotedIssuesInterface.fireBasePoliceId();
         if (MapLoader.getmMap() != null) {
             MapLoader.getmMap().setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
@@ -107,8 +110,6 @@ public class MapUpdate {
                                                             new PotHoleFilter()
                                                     ))
                                     )));
-
-
 
 
             List<Issues> issues = filterChainInterface.filter(FetchedIssues.getIssues());

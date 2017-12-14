@@ -48,10 +48,10 @@ public class FIlterbyUserId implements FilterChainInterface {
                         filteredIssues.add(iss);
                         continue;
                     }
-                    Log.e("e","asdfasdfasdfa  "+(iss.getUserid().getId()!=null  & CurrentUser.user.getId()!=null));
+                 //   Log.e("e","asdfasdfasdfa  "+(iss.getUserid().getId()!=null  & CurrentUser.user.getId()!=null));
                     if(iss.getUserid().getId()!=null  & CurrentUser.user.getId()!=null){
                          if (iss.getUserid().getId().equals(CurrentUser.user.getId())){
-                            Log.e("e","asdfasdfasdfasdfasdf asdfasdfasdfasdfasdf asdfasdfasdf");
+                          //  Log.e("e","asdfasdfasdfasdfasdf asdfasdfasdfasdfasdf asdfasdfasdf");
                              filteredIssues.add(iss);
                          }
 

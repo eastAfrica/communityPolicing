@@ -45,7 +45,7 @@ public class LocationFilter implements FilterChainInterface {
             }
 
         }
-        Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
+       // Log.e("Location filter","dist analyis ********************  threhold is "+filteredIssues.size());
 
         if (nextFilter == null)
             return filteredIssues;

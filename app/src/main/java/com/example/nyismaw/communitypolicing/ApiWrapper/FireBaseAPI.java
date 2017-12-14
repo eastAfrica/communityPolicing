@@ -1,7 +1,6 @@
 package com.example.nyismaw.communitypolicing.ApiWrapper;
 
-import com.example.nyismaw.communitypolicing.controller.location.AppLocationListener;
-//import com.example.nyismaw.communitypolicing.controller.maps.MapService;
+
 import com.example.nyismaw.communitypolicing.controller.maps.MapUpdate;
 
 /**

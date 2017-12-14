@@ -37,8 +37,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
-        reprotedIssuesInterface.fireBasePoliceId();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(this.getString(R.string.default_web_client_id))
                 .requestEmail()

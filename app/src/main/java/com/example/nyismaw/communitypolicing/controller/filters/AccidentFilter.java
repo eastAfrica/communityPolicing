@@ -27,7 +27,7 @@ public class AccidentFilter implements FilterChainInterface {
     @Override
     public List<Issues> filter(List<Issues> issues) {
         if (!CurrentUserPreferences.isShowACCIDENTS()) {
-            Log.e("Location filter", "noooot wanna see accieents Filtering with location ");
+        //    Log.e("Location filter", "noooot wanna see accieents Filtering with location ");
             List<Issues> filteredIssues = new ArrayList();
             for (Issues currentIssues : issues) {
                 String categoryOfIssues = currentIssues.getCategoryOfIssues();
@@ -35,7 +35,7 @@ public class AccidentFilter implements FilterChainInterface {
 
                 if (categoryOfIssues != null) {
                     if (!categoryOfIssues.equals(Category.ACCIDENTS.toString())) {
-                        Log.e("Location filter", categoryOfIssues + ", " + Category.ACCIDENTS + " filter " + filteredIssues.size() + " and showing accidents " + CurrentUserPreferences.isShowACCIDENTS());
+                //        Log.e("Location filter", categoryOfIssues + ", " + Category.ACCIDENTS + " filter " + filteredIssues.size() + " and showing accidents " + CurrentUserPreferences.isShowACCIDENTS());
                         filteredIssues.add(currentIssues);
                     }
                 }
@@ -44,7 +44,7 @@ public class AccidentFilter implements FilterChainInterface {
                 return filteredIssues;
             return nextFilter.filter(filteredIssues);
         } else {
-            Log.e("Location filter", "wanna see accieents Filtering with location "+issues.size());
+        //    Log.e("Location filter", "wanna see accieents Filtering with location "+issues.size());
             if (nextFilter == null)
                 return issues;
             return nextFilter.filter(issues);

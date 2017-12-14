@@ -17,6 +17,7 @@ import com.example.nyismaw.communitypolicing.screens.ReportingTab;
 import java.io.IOException;
 import java.util.Random;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -67,6 +68,9 @@ public class AudioConfig {
             @Override
             public void onClick(View view) {
 
+                if(!checkPermission()){
+                    requestPermission();
+                }
                 if (checkPermission()) {
 
                     AudioSavePathInDevice =
@@ -179,15 +183,20 @@ public class AudioConfig {
     public boolean checkPermission() {
         int result = ContextCompat.checkSelfPermission(reportingTab.getActivity(),
                 WRITE_EXTERNAL_STORAGE);
+        int read = ContextCompat.checkSelfPermission(reportingTab.getActivity(),
+                READ_EXTERNAL_STORAGE);
         int result1 = ContextCompat.checkSelfPermission(reportingTab.getActivity(),
                 RECORD_AUDIO);
-        return result == PackageManager.PERMISSION_GRANTED &&
+        Log.e("Checking e"," permission is "+(read==PackageManager.PERMISSION_GRANTED));
+        return result == PackageManager.PERMISSION_GRANTED && read == PackageManager.PERMISSION_GRANTED &&
                 result1 == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermission() {
         ActivityCompat.requestPermissions(reportingTab.getActivity(), new
                 String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO}, reportingTab.RequestPermissionCode);
+        ActivityCompat.requestPermissions(reportingTab.getActivity(), new
+                String[]{READ_EXTERNAL_STORAGE, RECORD_AUDIO}, reportingTab.RequestPermissionCode);
     }
 
 }
