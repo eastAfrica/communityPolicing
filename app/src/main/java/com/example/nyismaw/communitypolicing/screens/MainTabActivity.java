@@ -39,6 +39,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
+import android.content.res.Configuration;
+
+import java.lang.reflect.Array;
+import java.util.Locale;
 
 public class MainTabActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +51,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[] = {"Report IT", "Map", "Emergency contacts"};
+    CharSequence Titles[];
     int Numboftabs = 3;
     GoogleApiClient mGoogleApiClient;
     LocationRequest mLocationRequest;
@@ -57,6 +61,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     private ActionBarDrawerToggle mToggle;
     private SwitchCompat accidents_switch;
     GoogleMap mMap;
+    private Locale locale;
 
     @Override
     protected void onResume() {
@@ -83,6 +88,11 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Titles= new CharSequence[3];
+        Titles[0] = getString(R.string.reportIt);
+        Titles[1] =      getString(R.string.map);
+        Titles[2] =getString(R.string.emergencyCon);
+
         setContentView(R.layout.activity_main_tab);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
@@ -112,6 +122,11 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
         Intent mServiceIntent = new Intent(getApplicationContext(), NotificationService.class);
         getApplicationContext().startService(mServiceIntent);
 
+//        locale = new Locale("fr");
+//        Configuration config = getBaseContext().getResources().getConfiguration();
+//        config.locale = locale;
+//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
 //        Intent mServiceIntent2 = new Intent(getApplicationContext(), MapService.class);
 //        getApplicationContext().startService(mServiceIntent2);
     }
@@ -133,11 +148,26 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
             this.finish();
             Log.e("Logout", "Logout button clicked");
         }
-        if (item.getItemId() == R.id.more_settings) {
-            Log.e("More settings ", " ");
-            //     Dialog dialog = new Dialog(this);
+        if (item.getItemId() == R.id.en) {
+            Log.e("More settings ", "English selected");
+            locale = new Locale("en");
+            Configuration config = getBaseContext().getResources().getConfiguration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            Intent refresh = new Intent(this, MainTabActivity.class);
+            startActivity(refresh);
+            finish();
+        }
 
-            //   dialog.setContentView(R.id.moredetailslayout);
+        if (item.getItemId() == R.id.fr) {
+            Log.e("More settings ", "French selected");
+            locale = new Locale("fr");
+            Configuration config = getBaseContext().getResources().getConfiguration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            Intent refresh = new Intent(this, MainTabActivity.class);
+            startActivity(refresh);
+            finish();
         }
         return false;
     }

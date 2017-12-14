@@ -3,4 +3,8 @@
     <string name="anonymous_sign_in">Anonymous Sign in</string>
     <string name="community_policing_app_lets_make_our_cities_save">Community policing app lets make our cities save</string>
     <string name="sounds">Sounds</string>
+    <string name="reportIt">Report It</string>
+    <string name="map">Map</string>
+    <string name="emergencyCon">Emergency Contacts</string>
+    <string name="submit">Submit</string>
 </resources>
