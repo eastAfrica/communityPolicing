@@ -43,5 +43,8 @@
     <string name="map">Map</string>
     <string name="emergencyCon">Emergency Contacts</string>
     <string name="submit">Submit</string>
+    <string name="RecordingComplete">Recording Completed</string>
+    <string name="Recordnotstarted">Recording wasn\'t started</string>
+    <string name="RecordingPlay">Recording Playing</string>
 
 </resources>

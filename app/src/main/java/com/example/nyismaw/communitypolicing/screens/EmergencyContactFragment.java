@@ -32,8 +32,10 @@ public class EmergencyContactFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.emergencycontacts, container, false);
-        call911 = v.findViewById(R.id.call911);
+
+
        final  Intent callIntent = new Intent(Intent.ACTION_CALL);
+        call911 = v.findViewById(R.id.call911);
         call911.setOnClickListener(new View.OnClickListener() {
             public void onClick(View vw) {
                 callIntent.setData(Uri.parse(getString(R.string.tel999)));
