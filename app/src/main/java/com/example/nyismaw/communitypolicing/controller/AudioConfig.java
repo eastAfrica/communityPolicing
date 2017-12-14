@@ -103,9 +103,6 @@ public class AudioConfig {
         buttonStopPlayingRecording.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-              
-
                 if(mediaRecorder==null){
 
                     Toast.makeText(reportingTab.getActivity(), R.string.Recordnotstarted,
@@ -113,7 +110,6 @@ public class AudioConfig {
                     return;
 
                 }
-
 
                 mediaRecorder.stop();
                 // buttonStop.setEnabled(false);
@@ -125,6 +121,7 @@ public class AudioConfig {
                         Toast.LENGTH_LONG).show();
             }
         });
+
         mediaPlayer = new MediaPlayer();
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,8 +156,7 @@ public class AudioConfig {
                         }
                     });
                 } catch (IOException e) {
-                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded "+AudioSavePathInDevice,
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(reportingTab.getActivity(), "Audio not recorded ",                            Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
 
@@ -171,72 +167,6 @@ public class AudioConfig {
 
     }
 
-    protected boolean hasMicrophone() {
-        PackageManager pmanager = reportingTab.getActivity().getPackageManager();
-        return pmanager.hasSystemFeature(
-                PackageManager.FEATURE_MICROPHONE);
-    }
-
-    public void recordAudio(View view) throws IOException {
-        isRecording = true;
-        //buttonStop.setEnabled(true);
-        playButton.setEnabled(false);
-        recordButton.setEnabled(false);
-
-        try {
-            mediaRecorder = new MediaRecorder();
-            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mediaRecorder.setOutputFile(audioFilePath);
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecorder.prepare();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        mediaRecorder.start();
-    }
-
-    public void stopClicked(View view) {
-
-       // buttonStop.setEnabled(false);
-        playButton.setEnabled(true);
-
-        if (isRecording) {
-            recordButton.setEnabled(false);
-            mediaRecorder.stop();
-            mediaRecorder.release();
-            mediaRecorder = null;
-            isRecording = false;
-        } else {
-            mediaPlayer.release();
-            mediaPlayer = null;
-            recordButton.setEnabled(true);
-        }
-
-    }
-
-    public void playAudio(View view) throws IOException {
-        playButton.setEnabled(false);
-        recordButton.setEnabled(false);
-       // buttonStop.setEnabled(true);
-
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setDataSource(audioFilePath);
-        mediaPlayer.prepare();
-        mediaPlayer.start();
-    }
-
-    public String CreateRandomAudioFileName(int string) {
-        StringBuilder stringBuilder = new StringBuilder(string);
-        int i = 0;
-        while (i < string) {
-            stringBuilder.append(RandomAudioFileName.
-                    charAt(random.nextInt(RandomAudioFileName.length())));
-
-            i++;
-        }
-        return stringBuilder.toString();
-    }
 
     public void MediaRecorderReady() {
         mediaRecorder = new MediaRecorder();
