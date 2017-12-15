@@ -73,8 +73,8 @@ public class NotificationService extends IntentService {
 
 
 
-//                    Log.e("Id filter"," ///////////////////////////,"
-//                            +issues);
+                    Log.e("Id filter"," ///////////////////////////,"
+                         +issues);
 
                     for (Issues iss : issues) {
                         String issueUID="";
@@ -99,6 +99,7 @@ public class NotificationService extends IntentService {
                             DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("issues");
                             if (myRef != null)
                                 myRef.child(iss.getId()).child("notificationIsSent").setValue(true);
+                            iss.setNotificationIsSent(true);
                         }
                     }
                 } catch (Exception e) {

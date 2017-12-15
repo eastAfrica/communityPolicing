@@ -1,6 +1,12 @@
 package com.example.nyismaw.communitypolicing.screens;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +14,7 @@ import android.view.View;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.controller.signInManagment.SignInFactory;
 import com.example.nyismaw.communitypolicing.controller.signInManagment.SignInInterface;
 import com.example.nyismaw.communitypolicing.R;
@@ -18,14 +25,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SignInActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public static final int RC_SIGN_IN = 9001;
     private static final int CAMERA_REQUEST = 1888;
+    public static final int RequestPermissionCode = 1;
     private String TAG = "Main Activity";
     private static GoogleSignInClient mGoogleSignInClient;
     GoogleApiClient mGoogleApiClient;
@@ -37,7 +51,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        checkPermissions();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(this.getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -86,7 +100,7 @@ public class SignInActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 //     signInInterface.authenticate(account);
                 SignInInterface signInInterface = new SignInWithGoogle(SignInActivity.this);
-                Log.e("Sign in with","Step 2,step 2");
+                Log.e("Sign in with", "Step 2,step 2");
                 signInInterface.authenticate(account, true);
                 //  startMainActivity();
 
@@ -103,33 +117,32 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-//    private void assignUserToApp(GoogleSignInAccount account) {
-//
-//        Log.e(""+SignInActivity.class,"Creating user");
-//
-//        User user = new User();
-//        user.setUsername(account.getDisplayName());
-//        user.setEmail(account.getEmail());
-//
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser userF = mAuth.getCurrentUser();
-//        List<String> policeId = FetchedIssues.getPoliceId();
-//        String userId = userF.getUid();
-//        user.setId(userId);
-//        if (policeId != null) {
-//
-//            for (String string : policeId) {
-//
-//                if (userId.equals(string)) {
-//                    user.setApolice(true);
-//                 //   Log.e("You are ", "You are a policeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-//                }
-//            }
-//        }
-//        CurrentUser.user = user;
-//
-//
-//    }
+    public void checkPermissions() {
+        int result = ContextCompat.checkSelfPermission(this,
+                WRITE_EXTERNAL_STORAGE);
+        if (result != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new
+                    String[]{WRITE_EXTERNAL_STORAGE, RECORD_AUDIO}, this.RequestPermissionCode);
+        }
+
+
+        int read = ContextCompat.checkSelfPermission(this,
+                READ_EXTERNAL_STORAGE);
+        if (read != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new
+                    String[]{READ_EXTERNAL_STORAGE, RECORD_AUDIO}, this.RequestPermissionCode);
+
+        }
+
+
+
+
+
+
+
+    }
+
 
     public static GoogleSignInClient getmGoogleSignInClient() {
         return mGoogleSignInClient;

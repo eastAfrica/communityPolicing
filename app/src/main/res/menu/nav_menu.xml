@@ -31,10 +31,7 @@
         android:icon="@android:drawable/btn_star_big_off"
         android:title="@string/menu_others"
         app:actionLayout="@layout/switch_item"/>
-    <item
-        android:id="@+id/emergency_contacts"
-        android:icon="@android:drawable/sym_action_call"
-        android:title="@string/menu_emergencyContact"/>
+
 
     <item
         android:id="@+id/logout"

@@ -1,13 +1,17 @@
 package com.example.nyismaw.communitypolicing.controller.maps;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.nyismaw.communitypolicing.ApiWrapper.DownloadFileInterface;
 import com.example.nyismaw.communitypolicing.ApiWrapper.FireBaseAPI;
 import com.example.nyismaw.communitypolicing.ApiWrapper.ReprotedIssuesInterface;
+import com.example.nyismaw.communitypolicing.AppInfo.CurrentLocation;
 import com.example.nyismaw.communitypolicing.R;
 import com.example.nyismaw.communitypolicing.controller.filters.AccidentFilter;
 import com.example.nyismaw.communitypolicing.controller.filters.BlockedRoadsFilter;
@@ -21,6 +25,7 @@ import com.example.nyismaw.communitypolicing.model.Accident;
 import com.example.nyismaw.communitypolicing.model.Issues;
 import com.example.nyismaw.communitypolicing.model.User;
 import com.example.nyismaw.communitypolicing.screens.MainTabActivity;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -55,6 +60,22 @@ public class MapUpdate {
     Dialog dialog;
 
     public void updateMapBasedOnLocation() {
+
+
+        Log.e(" after that *****", "********************** Map ready    ");
+        Location location = CurrentLocation.location;
+        if(location!=null){
+            LatLng latlong = new LatLng(location.getLatitude(), location.getLongitude());
+          //  MapLoader.getmMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+            MapLoader.getmMap().setMapType(5);
+           // MapLoader.getmMap().animateCamera(CameraUpdateFactory.zoomTo(15f));
+            if (ContextCompat.checkSelfPermission(mainTabActivity, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                MapLoader.getmMap().setMyLocationEnabled(true);
+            }
+
+        }
+
 
         ReprotedIssuesInterface reprotedIssuesInterface = new FireBaseAPI();
         reprotedIssuesInterface.getReportedIssues();
@@ -153,7 +174,8 @@ public class MapUpdate {
     }
 
     private void setItemsToDialog(Dialog dialog, Issues issues) {
-
+            if(issues==null)
+                return;
         TextView description = dialog.findViewById(R.id.description);
         description.setText(issues.getDetails());
 

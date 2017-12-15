@@ -222,20 +222,22 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
                         mGoogleApiClient, mLocationRequest, appLocationListener);
                 CurrentLocation.location = (mLastLocation);
             }
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                LocationServices.FusedLocationApi.requestLocationUpdates(
-                        mGoogleApiClient, mLocationRequest, appLocationListener);
-            }
-            if (mProviderName == null || mProviderName.equals("")) {
-                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-            }
+
         } else {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION);
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSION_ACCESS_FINE_LOCATION);
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+
+
+            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+
+            if (mLastLocation != null) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(
+                        mGoogleApiClient, mLocationRequest, appLocationListener);
+                CurrentLocation.location = (mLastLocation);
+            }
         }
     }
 
@@ -256,6 +258,7 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 666) {
             if (Settings.canDrawOverlays(this)) {
                 // SYSTEM_ALERT_WINDOW permission not granted...
@@ -273,5 +276,53 @@ public class MainTabActivity extends AppCompatActivity implements GoogleApiClien
 //        mGoogleApiClient = null;
 //        Log.e("Remlocationupdates", "Remove location updess when fragment dies");
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_ACCESS_FINE_LOCATION : {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+                   // mMap.setMyLocationEnabled(true);
+                }
+
+
+            }
+            case MY_PERMISSION_ACCESS_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+                    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                            || ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                                mGoogleApiClient);
+
+                        if (mLastLocation != null) {
+                            LocationServices.FusedLocationApi.requestLocationUpdates(
+                                    mGoogleApiClient, mLocationRequest, appLocationListener);
+                            CurrentLocation.location = (mLastLocation);
+
+                        }
+
+                    }
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
